@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import "./LoginForm.css"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -31,7 +32,8 @@ export default class LoginForm extends Component {
                           <button type="submit" className="login-btn">Login</button>
                         </div>
                     
-                      </form>             
+                      </form>     
+                      <Link to="/">Cancel</Link>        
             </section>
         </main>
         )

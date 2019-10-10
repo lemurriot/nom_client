@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export default function Header() {
+    const linkStyles = {textDecoration: 'none', color: 'white' }
     return (
         <header className="header">
             <div>
@@ -20,8 +21,8 @@ export default function Header() {
             </div>
             {/* <Link to="/"><FontAwesomeIcon icon="home" size="lg"/></Link> */}
             <nav>
-                <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Login</Link>
-                <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Register</Link>
+                <Link to="/" style={linkStyles}>Login</Link>
+                <Link to="/" style={linkStyles}>Register</Link>
             </nav>
         </header>
     )
