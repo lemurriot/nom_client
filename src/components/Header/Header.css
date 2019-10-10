@@ -1,6 +1,24 @@
-.header {
+header {
+    background-color: #0e1029;
     height: 100px;
     padding: 2%;
-    background-color: grey;
     display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.brand {
+    display: flex;
+    font-size: 60px;
+    align-items: center;
+}
+.brand h1 {
+    font-size: 40px;
+    margin-left: 3%;
+    color: white;
+}
+.logo {
+    margin-right: 2%;
+}
+nav {
+    margin-right: 10%;
 }
