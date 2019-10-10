@@ -1,0 +1,6 @@
+.header {
+    height: 100px;
+    padding: 2%;
+    background-color: grey;
+    display: flex;
+}
