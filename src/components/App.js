@@ -19,6 +19,7 @@ export default class App extends Component {
             component={Main}
           />
         </Switch>
+        <footer>Footer</footer>
       </div>
     )
   }
