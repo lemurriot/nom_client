@@ -1,0 +1,39 @@
+.login-form-main-page {
+    background-color: #aedee8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-modal {
+    width: 75%;
+    background-color: white;
+    padding: 5%;
+    min-height: 50vh;
+    border: 1px solid #01188a;
+    box-shadow: 11px 12px 12px 0px #2e2e71ad;
+}
+.brand-title {
+    color: purple!important;
+    margin-left: 0%!important;
+    text-shadow: none!important;
+}
+h4 {
+    margin-top: 5%;
+    text-align: center;
+}
+input {
+    height: 35px;
+    padding: 2%;
+    font-size: 20px;
+}
+label {
+    margin-top: 5%;
+}
+.login-btn {
+    height: 30px;
+    margin: 5%;
+    font-size: 20px;
+    background-color: blue;
+    text-align: center;
+}
