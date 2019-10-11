@@ -1,10 +1,15 @@
 import React from 'react'
-import Header from './header/Header'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
-export default function LandingPage() {
+export default function Main() {
     return (
         <>
-            <Header />
+            <Header />  
+            <main className="landing-page-main-container">
+                
+            </main>
+            <Footer />
         </>
     )
 }

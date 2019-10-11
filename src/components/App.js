@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Main from './Main/Main'
+import LandingPage from './LandingPage/LandingPage'
 import LoginForm from './LoginForm/LoginForm'
+import STORE from '../dummy-store.js'
 
 export default class App extends Component {
   constructor(props){
     super(props)
     this.state = {
+      reviews: [],
+      users: [],
+      restaurants: [],
       error: null,
     }
+  }
+  componentDidMount(){
+    this.setState(STORE)
   }
   render() {
     return (
@@ -17,7 +24,8 @@ export default class App extends Component {
           <Route 
             exact 
             path="/" 
-            component={Main}
+            component={LandingPage}
+            render={() => (<LandingPage reviews={this.state.reviews} restaurants={this.state.restaurants}/>)}
           />
           <Route 
             path="/login"
