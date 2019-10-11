@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import ReviewPreview from '../ReviewPreview/ReviewPreview'
+import './LandingPage.css'
 
 export default function LandingPage(props) {
     const arrFromCategories = props.reviews.map(review => review.food_category)

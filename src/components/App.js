@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import LandingPage from './LandingPage/LandingPage'
 import LoginForm from './LoginForm/LoginForm'
+import RegisterForm from './RegisterForm/RegisterForm'
 import STORE from '../dummy-store.js'
+import './App.css'
 
 export default class App extends Component {
   constructor(props){
@@ -29,6 +31,10 @@ export default class App extends Component {
           <Route 
             path="/login"
             component={LoginForm}
+          />
+          <Route 
+            path="/register"
+            component={RegisterForm}
           />
         </Switch>
       </div>

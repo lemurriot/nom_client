@@ -21,8 +21,8 @@ export default function Header() {
             </div>
             {/* <Link to="/"><FontAwesomeIcon icon="home" size="lg"/></Link> */}
             <nav>
-                <Link to="/" style={linkStyles}>Login</Link>
-                <Link to="/" style={linkStyles}>Register</Link>
+                <Link to="/login" style={linkStyles}>Login</Link>
+                <Link to="/register" style={linkStyles}>Register</Link>
             </nav>
         </header>
     )

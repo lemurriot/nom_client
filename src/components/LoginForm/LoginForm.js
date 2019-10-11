@@ -18,15 +18,15 @@ export default class LoginForm extends Component {
                     <h1 className="brand-title">NomsPDX</h1>
                 </div>
                 <form onSubmit={e => this.handleFormSubmit(e)}>
-                        <div className="container">
+                        <div className="fields-container">
                           <h4>Login to your account</h4>
                      
                       
                           <label htmlFor="email">Email or Username</label>
-                          <input type="text" placeholder="Enter Email" name="email" required />
+                          <input type="text" placeholder="Enter Email" name="email" autoComplete="username" required />
                       
                           <label htmlFor="psw">Password</label>
-                          <input type="password" placeholder="Enter Password" name="psw" required />
+                          <input type="password" placeholder="Enter Password" name="psw" autoComplete="current-password" required />
                       
                  
                           <button type="submit" className="login-btn">Login</button>
