@@ -24,7 +24,6 @@ export default class App extends Component {
           <Route 
             exact 
             path="/" 
-            component={LandingPage}
             render={() => (<LandingPage reviews={this.state.reviews} restaurants={this.state.restaurants}/>)}
           />
           <Route 
