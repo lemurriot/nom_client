@@ -7,8 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-export default function Header() {
+export default function Header(props) {
     const linkStyles = {textDecoration: 'none', color: 'white' }
+    const isLoggedIn = props.loggedIn
+    const navLinks = isLoggedIn ? 
+        <nav><Link to="/login" style={linkStyles}>My Reviews</Link><Link to="/register" style={linkStyles}>Home</Link></nav> 
+            : 
+        <nav><Link to="/login" style={linkStyles}>Login</Link><Link to="/register" style={linkStyles}>Register</Link></nav> 
+    
+    
     return (
         <header className="header">
             <div>
@@ -20,10 +27,7 @@ export default function Header() {
             </Link>
             </div>
             {/* <Link to="/"><FontAwesomeIcon icon="home" size="lg"/></Link> */}
-            <nav>
-                <Link to="/login" style={linkStyles}>Login</Link>
-                <Link to="/register" style={linkStyles}>Register</Link>
-            </nav>
+            {navLinks}
         </header>
     )
 }

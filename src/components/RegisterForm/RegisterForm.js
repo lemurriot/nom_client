@@ -36,7 +36,7 @@ export default class RegisterForm extends Component {
 								required
 							/>
 
-							<label htmlFor='first_name'>
+							{/* <label htmlFor='first_name'>
 								First Name
 							</label>
 							<input
@@ -50,7 +50,7 @@ export default class RegisterForm extends Component {
 								type='text'
 								placeholder='Enter Last Name'
 								name='last_name'
-							/>
+							/> */}
 
 							<label htmlFor='username'>
 								Username (required)

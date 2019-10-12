@@ -8,6 +8,8 @@ export default class LoginForm extends Component {
     handleFormSubmit = e => {
         e.preventDefault()
         console.log('form submitted')
+        this.props.onLogin(e)
+        this.props.history.push('/')
     }
     render() {
         return (
