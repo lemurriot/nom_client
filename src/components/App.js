@@ -42,7 +42,7 @@ export default class App extends Component {
           <Route 
             exact 
             path="/" 
-            render={() => (<LandingPage reviews={this.state.reviews} restaurants={this.state.restaurants} loggedIn={this.state.loggedIn}/>)}
+            render={(props) => (<LandingPage {...props} reviews={this.state.reviews} restaurants={this.state.restaurants} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
           />
           <Route 
             path="/login"

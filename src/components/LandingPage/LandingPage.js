@@ -16,7 +16,7 @@ export default function LandingPage(props) {
  
     return (
         <>
-            <Header />  
+            <Header loggedIn={props.loggedIn} onLogout={props.onLogout}/>  
                 <main className="landing-page-main-container">
                     {reviewPreviewList}
                 </main>
