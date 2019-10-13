@@ -3,10 +3,12 @@ import { Switch, Route } from 'react-router-dom'
 import LandingPage from './LandingPage/LandingPage'
 import LoginForm from './LoginForm/LoginForm'
 import RegisterForm from './RegisterForm/RegisterForm'
+import SearchRestaurantsForm from './SearchRestaurantsForm/SearchRestaurantsForm'
 import NotFoundPage from './NotFoundPage/NotFoundPage'
 import STORE from '../dummy-store.js'
 
 import './App.css'
+
 
 export default class App extends Component {
   constructor(props){
@@ -51,6 +53,10 @@ export default class App extends Component {
           <Route 
             path="/register"
             component={RegisterForm}
+          />
+          <Route 
+            path="/search-restaurants"
+            component={SearchRestaurantsForm}
           />
             <Route
               component={NotFoundPage}

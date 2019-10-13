@@ -17,7 +17,7 @@ export default function Header(props) {
     const linkStyles = {textDecoration: 'none', color: 'white' }
     const isLoggedIn = props.loggedIn
     const navLinks = isLoggedIn ? 
-        <nav><Link to="/login" style={linkStyles}>My Reviews</Link><a href="/" style={linkStyles} onClick={e => handleLogoutClick(e)}>Log Out</a></nav> 
+        <nav><Link to="/login" style={linkStyles}>My Stuff</Link><a href="/" style={linkStyles} onClick={e => handleLogoutClick(e)}>Log Out</a></nav> 
             : 
         <nav><Link to="/login" style={linkStyles}>Login</Link><Link to="/register" style={linkStyles}>Register</Link></nav> 
     
