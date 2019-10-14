@@ -14,7 +14,7 @@ library.add(faHome, faHamburger, faCopyright)
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <App/>
     </BrowserRouter>, document.getElementById('root'))
 
 serviceWorker.unregister()

@@ -12,12 +12,12 @@ export default function Header(props) {
         e.preventDefault()
         console.log('form submitted')
         props.onLogout(e)
-        // props.history.push('/')
+        props.history.push('/')
     }
     const linkStyles = {textDecoration: 'none', color: 'white' }
     const isLoggedIn = props.loggedIn
     const navLinks = isLoggedIn ? 
-        <nav><Link to="/login" style={linkStyles}>My Stuff</Link><a href="/" style={linkStyles} onClick={e => handleLogoutClick(e)}>Log Out</a></nav> 
+        <nav><Link to="/my-reviews" style={linkStyles}>My Stuff</Link><a href="/" style={linkStyles} onClick={e => handleLogoutClick(e)}>Log Out</a></nav> 
             : 
         <nav><Link to="/login" style={linkStyles}>Login</Link><Link to="/register" style={linkStyles}>Register</Link></nav> 
     

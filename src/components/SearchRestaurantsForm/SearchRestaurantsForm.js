@@ -5,7 +5,6 @@ import config from '../../config'
 export default class SearchRestaurantsForm extends Component {
 
     componentDidMount(){
-        console.log(process.env)
         fetch(config.RESTAURANT_ENDPOINT,{
             method: 'GET',
             headers: {

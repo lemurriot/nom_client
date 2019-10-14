@@ -3,7 +3,8 @@ import { Switch, Route } from 'react-router-dom'
 import LandingPage from './LandingPage/LandingPage'
 import LoginForm from './LoginForm/LoginForm'
 import RegisterForm from './RegisterForm/RegisterForm'
-import SearchRestaurantsForm from './SearchRestaurantsForm/SearchRestaurantsForm'
+import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm'
+import MyReviews from './MyReviews/MyReviews'
 import NotFoundPage from './NotFoundPage/NotFoundPage'
 import STORE from '../dummy-store.js'
 
@@ -55,8 +56,12 @@ export default class App extends Component {
             component={RegisterForm}
           />
           <Route 
-            path="/search-restaurants"
-            component={SearchRestaurantsForm}
+            path="/add-new-nom"
+            component={AddRestaurantForm}
+          />
+          <Route 
+            path="/my-reviews"
+            render={(props) => (<MyReviews {...props} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
           />
             <Route
               component={NotFoundPage}

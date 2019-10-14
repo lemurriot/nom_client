@@ -21,6 +21,10 @@ src/config.js
 .env.test.local
 .env.production.local
 
+big.json
+big_data/
+mk_data.js
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
