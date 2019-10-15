@@ -5,13 +5,13 @@ import ReviewPreview from '../ReviewPreview/ReviewPreview'
 import './LandingPage.css'
 
 export default function LandingPage(props) {
-    const arrFromCategories = props.reviews.map(review => review.food_category)
+    const arrFromCategories = props.nominated_restaurants.map(nom => nom.food_category)
 
     const uniqueCategories = new Set(arrFromCategories)
 
-    const filteredCategoryReviews = [...uniqueCategories].map(cat => props.reviews.filter(rev => rev.food_category === cat))
+    const filteredCategoryReviews = [...uniqueCategories].map(cat => props.nominated_restaurants.filter(nom => nom.food_category === cat))
     const reviewPreviewList = filteredCategoryReviews.map((cat, i) => 
-     <ReviewPreview key={i} reviews={cat} title={[...uniqueCategories][i]}/>)
+     <ReviewPreview key={i} likesComments={props.likesComments} noms={cat} title={[...uniqueCategories][i]}/>)
   
  
     return (

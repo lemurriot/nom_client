@@ -6,7 +6,7 @@ import RegisterForm from './RegisterForm/RegisterForm'
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm'
 import MyReviews from './MyReviews/MyReviews'
 import NotFoundPage from './NotFoundPage/NotFoundPage'
-import STORE from '../dummy-store.js'
+import STORE from '../store.js'
 
 import './App.css'
 
@@ -16,9 +16,9 @@ export default class App extends Component {
     super(props)
     this.state = {
       loggedIn: false,
-      reviews: [],
+      nominated_restaurants: [],
       users: [],
-      restaurants: [],
+      likes_and_comments: [],
       error: null,
     }
   }
@@ -45,7 +45,7 @@ export default class App extends Component {
           <Route 
             exact 
             path="/" 
-            render={(props) => (<LandingPage {...props} reviews={this.state.reviews} restaurants={this.state.restaurants} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
+            render={(props) => (<LandingPage {...props} likesComments={this.state.likes_and_comments} nominated_restaurants={this.state.nominated_restaurants} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
           />
           <Route 
             path="/login"
@@ -61,7 +61,7 @@ export default class App extends Component {
           />
           <Route 
             path="/my-reviews"
-            render={(props) => (<MyReviews {...props} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
+            render={(props) => (<MyReviews {...props} restaurants={this.state.nominated_restaurants} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
           />
             <Route
               component={NotFoundPage}
