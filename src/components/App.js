@@ -16,6 +16,7 @@ export default class App extends Component {
     super(props)
     this.state = {
       loggedIn: false,
+      userId: 1,
       nominated_restaurants: [],
       users: [],
       likes_and_comments: [],
@@ -24,6 +25,13 @@ export default class App extends Component {
   }
   componentDidMount(){
     this.setState(STORE)
+  }
+
+  handleAddRestaurant = (newRestaurant, newLike) => {
+    this.setState({
+      nominated_restaurants: [...this.state.nominated_restaurants, newRestaurant],
+      likes_and_comments: [...this.state.likes_and_comments, newLike]
+    })
   }
 
   handleLogin = (e) => {
@@ -57,11 +65,11 @@ export default class App extends Component {
           />
           <Route 
             path="/add-new-nom"
-            component={AddRestaurantForm}
+            render={props => (<AddRestaurantForm {...props} handleAddRestaurant={this.handleAddRestaurant} userId={this.state.userId}/>)}
           />
           <Route 
             path="/my-reviews"
-            render={(props) => (<MyReviews {...props} restaurants={this.state.nominated_restaurants} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
+            render={(props) => (<MyReviews {...props} restaurants={this.state.nominated_restaurants} userId={this.state.userId} loggedIn={this.state.loggedIn} onLogout={this.handleLogout}/>)}
           />
             <Route
               component={NotFoundPage}
