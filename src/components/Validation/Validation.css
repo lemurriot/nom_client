@@ -1,0 +1,6 @@
+.validation-message {
+    font-family: 'Courier New', Courier, monospace;
+    color: red;
+    font-size: .95em;
+    text-align: right;
+}

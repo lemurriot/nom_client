@@ -22,13 +22,14 @@ export default class LoginForm extends Component {
                 <form onSubmit={e => this.handleFormSubmit(e)}>
                         <div className="fields-container">
                           <h4>Login to your account</h4>
+                          <h5>(Actually, just click "Login", this form is not wired up to anything at the moment) </h5>
                      
                       
                           <label htmlFor="email">Email or Username</label>
-                          <input type="text" placeholder="Enter Email" name="email" autoComplete="username" required />
+                          <input type="text" placeholder="Enter Email" name="email" autoComplete="username" />
                       
                           <label htmlFor="psw">Password</label>
-                          <input type="password" placeholder="Enter Password" name="psw" autoComplete="current-password" required />
+                          <input type="password" placeholder="Enter Password" name="psw" autoComplete="current-password" />
                       
                  
                           <button type="submit" className="login-btn">Login</button>
