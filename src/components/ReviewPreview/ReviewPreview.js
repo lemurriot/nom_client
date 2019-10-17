@@ -5,7 +5,8 @@ import NominatedRestaurant from '../NominatedRestaurant/NominatedRestaurant'
 export default function ReviewPreview(props) {
 	const RestaurantList = props.noms.map((nom, i) => (
 		<NominatedRestaurant
-			key={i}
+            key={i}
+            id={nom.id}
             name={nom.name}
             loggedIn={props.loggedIn}
 			likesComments={props.likesComments.filter(

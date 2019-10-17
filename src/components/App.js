@@ -17,8 +17,8 @@ export default class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			loggedIn: false,
-			userId: 1,
+			loggedIn: true,
+			userId: "12",
 			nominated_restaurants: [],
 			users: [],
 			likes_and_comments: [],
@@ -37,7 +37,34 @@ export default class App extends Component {
 			],
 			likes_and_comments: [...this.state.likes_and_comments, newLike],
 		})
-	}
+  }
+  
+  handleVoteForRestaurant = (userID, restaurantID) => {
+    const { likes_and_comments } = this.state
+    const selectedRestaurant = likes_and_comments.filter(lc => lc.rest_id === restaurantID)
+    const notSelectedRestaurants = likes_and_comments.filter(lc => lc.rest_id !== restaurantID)
+  
+    const checkIfAlreadyLiked = selectedRestaurant[0].liked_by.filter(like => like.user === userID)
+
+    if (checkIfAlreadyLiked.length){
+      this.setState({
+        error: "User already voted"
+      })
+    } else {
+      const newLikedByObj = {
+        user: this.state.userId,
+        date_liked: Date.now(),
+        comment: ''
+      }
+      const newLikesCommentsObj = {...selectedRestaurant[0]}
+      newLikesCommentsObj.liked_by.push(newLikedByObj)
+      this.setState({
+        likes_and_comments: [...notSelectedRestaurants, newLikesCommentsObj]
+      })
+    }
+  
+    }
+
 
 	handleLogin = e => {
 		e.preventDefault()
@@ -58,8 +85,8 @@ export default class App extends Component {
 			nominated_restaurants: this.state.nominated_restaurants,
 			users: this.state.users,
 			likes_and_comments: this.state.likes_and_comments,
-			addNewRestaurant: this.addNewRestaurant,
-			voteForRestaurant: this.voteForRestaurant,
+			nominateNewRestaurant: this.handleAddRestaurant,
+			voteForRestaurant: this.handleVoteForRestaurant,
 		}
 		return (
 			<NomsContext.Provider value={contextVal}>
