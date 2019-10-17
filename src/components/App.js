@@ -68,6 +68,20 @@ export default class App extends Component {
 		}
 	}
 
+	handleUndoVoteForRestaurant = (userID, restaurantID) => {
+		const { likes_and_comments } = this.state
+		const updatedLikedByArr = likes_and_comments[restaurantID].liked_by.filter(lc => lc.user !== userID)
+
+
+			this.setState(
+				({ likes_and_comments }) =>
+					(likes_and_comments[
+						restaurantID
+					].liked_by = updatedLikedByArr),
+			)
+		}
+	
+
 	handleLogin = e => {
 		e.preventDefault()
 		this.setState({
@@ -89,6 +103,7 @@ export default class App extends Component {
 			likes_and_comments: this.state.likes_and_comments,
 			nominateNewRestaurant: this.handleAddRestaurant,
 			voteForRestaurant: this.handleVoteForRestaurant,
+			undoVoteForRestaurant: this.handleUndoVoteForRestaurant,
 		}
 		return (
 			<NomsContext.Provider value={contextVal}>

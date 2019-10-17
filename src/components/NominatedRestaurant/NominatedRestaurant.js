@@ -3,20 +3,45 @@ import NomsContext from '../../NomsContext'
 import './NominatedRestaurant.css'
 
 export default class NominatedRestaurant extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            userDidLike: false
+        }
+    }
     static contextType = NomsContext
     
     handleOnClickVote = () => {
-        console.log('click')
         this.context.voteForRestaurant(this.context.userId, this.props.id)
     }
+    handleOnClickUndoVote = () => {
+        this.context.undoVoteForRestaurant(this.context.userId, this.props.id)
+    }
 
-    // componentDidUpdate(){
-    //     const findLikeCommentTable = this.context.likes_and_comments.filter(lc => lc.rest_id === this.props.id)
-    //     console.log(findLikeCommentTable)
-    // }
+    checkIfUserAlreadyVoted = () => {
+        const checkIfUserDidLike = this.context.likes_and_comments[this.props.id].liked_by.filter(lk => lk.user === this.context.userId)
+
+        if(checkIfUserDidLike.length){
+            this.setState({
+                userDidLike: true
+            })
+        } else {
+            this.setState({
+                userDidLike: false
+            })
+        }
+    }
+
+    componentWillReceiveProps(){
+        this.checkIfUserAlreadyVoted()
+    }
+    componentDidMount(){
+        this.checkIfUserAlreadyVoted()
+    }
 
 
 	render() {
+
 		return (
 			<div className='preview-nom-box'>
 				<h5>{this.props.name}</h5>
@@ -24,20 +49,20 @@ export default class NominatedRestaurant extends Component {
                     Votes: {this.props.likesComments.liked_by.length}
 				</span>
 				<button
-					className={'upvote-btn'}
+					className={this.state.userDidLike ? 'upvote-btn hide' : 'upvote-btn'}
                     onClick={this.handleOnClickVote}
 					disabled={!this.props.loggedIn}
 				>
 					Upvote!
 				</button>
 				<button
-					className={'upvoted-btn'}
+					className={!this.state.userDidLike ? 'upvoted-btn hide' : 'upvoted-btn'}
                     onClick={this.handleOnClickUndoVote}
 					disabled={!this.props.loggedIn}
 				>
 					You upvoted this
 				</button>
-				<a href='#'>See More</a>
+				{/* <a href='#'>See More</a> */}
 			</div>
 		)
 	}

@@ -9,6 +9,7 @@ const NomsContext = React.createContext({
     likes_and_comments: {},
     addNewRestaurant: () => {},
     voteForRestaurant: () => {},
+    undoVoteForRestaurant: () => {},
 })
 
 export default NomsContext
