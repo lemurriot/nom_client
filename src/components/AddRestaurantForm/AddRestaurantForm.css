@@ -3,3 +3,23 @@
     flex-direction: column;
     padding: 1%;
 }
+
+.current-filtered-list {
+    border: 1px solid black;
+    border-radius: 16px;
+    padding: 1%;
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+.current-filtered-list-name {
+    font-size: .8em;
+}
+.current-filtered-list-category {
+    font-size: .5em;
+}
+.filtered-list-container {
+    margin-top: 5%;
+    padding: 3%;
+}

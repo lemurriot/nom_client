@@ -22,8 +22,8 @@ export default class AddRestaurantForm extends Component {
 				touched: false,
 			},
 		}
-    }
-    static contextType = NomsContext
+	}
+	static contextType = NomsContext
 
 	handleSubmit(e) {
 		e.preventDefault()
@@ -78,13 +78,53 @@ export default class AddRestaurantForm extends Component {
 				touched: true,
 			},
 		})
-    }
-    validateRestaurantName(){
-        const name = this.state.restaurant_name.value.trim()
-        const category = this.state.category.value
-        if (name.length === 0) return 'Restaurant name is required'
-        if (this.context.nominated_restaurants.find(restaurant => restaurant.name === name && restaurant.food_category === category)) return 'A restaurant with that name is already nominated in this category'
-    }
+	}
+	validateRestaurantName() {
+		const name = this.state.restaurant_name.value.trim()
+		const category = this.state.category.value
+		if (name.length === 0) return 'Restaurant name is required'
+		if (
+			this.context.nominated_restaurants.find(
+				restaurant =>
+					restaurant.name === name &&
+					restaurant.food_category === category,
+			)
+		)
+			return 'A restaurant with that name is already nominated in this category'
+	}
+	showCurrentNominatedRestaurants() {
+		const { nominated_restaurants } = this.context
+		const { category, restaurant_name } = this.state
+		let re = new RegExp(restaurant_name.value, 'i')
+		let currentRestaurantFilter
+		if (!category.value) {
+			currentRestaurantFilter = nominated_restaurants
+		} else if (category.value && !restaurant_name.value) {
+			currentRestaurantFilter = nominated_restaurants.filter(
+				restaurant => restaurant.food_category === category.value,
+			)
+		} else {
+			currentRestaurantFilter = nominated_restaurants.filter(
+				restaurant =>
+					restaurant.food_category === category.value &&
+					restaurant.name.match(re),
+			)
+		}
+		if (!currentRestaurantFilter.length) {
+			return <span>No Matches</span>
+		} else {
+			return currentRestaurantFilter.map((restaurant, i) => (
+				<div className='current-filtered-list' key={i}>
+					<span className='current-filtered-list-name'>
+						{restaurant.name}
+					</span>
+					<span className='current-filtered-list-category'>
+						Nominated for Best {restaurant.food_category}
+					</span>
+				</div>
+			))
+		}
+	}
 
 	render() {
 		return (
@@ -145,7 +185,12 @@ export default class AddRestaurantForm extends Component {
 								}
 								required
 							/>
-                            {this.state.restaurant_name.touched && (<ValidationError message={this.validateRestaurantName()} validationId={"restaurantError"}/>)}
+							{this.state.restaurant_name.touched && (
+								<ValidationError
+									message={this.validateRestaurantName()}
+									validationId={'restaurantError'}
+								/>
+							)}
 
 							<label htmlFor='comment'>
 								Comment (optional)
@@ -169,11 +214,19 @@ export default class AddRestaurantForm extends Component {
 									Cancel
 								</button>
 							</Link>
-							<button className='submit-btn' disabled={this.validateRestaurantName()}>
+							<button
+								className='submit-btn'
+								disabled={this.validateRestaurantName()}
+							>
 								Submit
 							</button>
 						</div>
 					</form>
+				</section>
+				<section className='filtered-list-container'>
+					<h3>Current Matching Nominations</h3>
+					<p>Please don't add duplicates</p>
+					{this.showCurrentNominatedRestaurants()}
 				</section>
 			</main>
 		)
