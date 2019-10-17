@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import NomsContext from '../NomsContext'
 import STORE from '../store.js'
+import uuid from 'uuid'
 
 import LandingPage from './LandingPage/LandingPage'
 import LoginForm from './LoginForm/LoginForm'
 import RegisterForm from './RegisterForm/RegisterForm'
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm'
 import MyReviews from './MyReviews/MyReviews'
+import About from './About/About'
 import NotFoundPage from './NotFoundPage/NotFoundPage'
 
 import './App.css'
@@ -17,7 +19,7 @@ export default class App extends Component {
 		super(props)
 		this.state = {
 			loggedIn: true,
-			userId: '12',
+			userId: uuid.v4(),
 			nominated_restaurants: [],
 			users: [],
 			likes_and_comments: [],
@@ -162,6 +164,16 @@ export default class App extends Component {
 											.nominated_restaurants
 									}
 									userId={this.state.userId}
+									loggedIn={this.state.loggedIn}
+									onLogout={this.handleLogout}
+								/>
+							)}
+						/>
+						<Route 
+							path='/about'
+							render={props => (
+								<About 
+									{...props}
 									loggedIn={this.state.loggedIn}
 									onLogout={this.handleLogout}
 								/>
