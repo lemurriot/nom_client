@@ -9,9 +9,7 @@ export default function ReviewPreview(props) {
             id={nom.id}
             name={nom.name}
             loggedIn={props.loggedIn}
-			likesComments={props.likesComments.filter(
-				lc => lc.rest_id === nom.id,
-			)}
+			likesComments={props.likesComments[nom.id]}
 		/>
 	))
 	return (

@@ -43,8 +43,8 @@ export default {
             "username": "salsa_champion12",
         },
     ],
-    "likes_and_comments": [
-        {
+    "likes_and_comments": {
+        "1": {
             "id": "1",
             "rest_id": "1",
             "liked_by": [
@@ -70,7 +70,7 @@ export default {
                 },
             ]
         },
-        {
+        "2": {
             "id": "2",
             "rest_id": "2",
             "liked_by": [
@@ -86,7 +86,7 @@ export default {
                 },
             ]
         },
-        {
+        "3": {
             "id": "3",
             "rest_id": "3",
             "liked_by": [
@@ -102,5 +102,5 @@ export default {
                 },
             ]
         },
-    ]
+    }
 }

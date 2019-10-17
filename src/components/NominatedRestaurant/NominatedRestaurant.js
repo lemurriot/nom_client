@@ -9,12 +9,19 @@ export default class NominatedRestaurant extends Component {
         console.log('click')
         this.context.voteForRestaurant(this.context.userId, this.props.id)
     }
+
+    // componentDidUpdate(){
+    //     const findLikeCommentTable = this.context.likes_and_comments.filter(lc => lc.rest_id === this.props.id)
+    //     console.log(findLikeCommentTable)
+    // }
+
+
 	render() {
 		return (
 			<div className='preview-nom-box'>
 				<h5>{this.props.name}</h5>
 				<span>
-					Votes: {this.props.likesComments[0].liked_by.length}
+                    Votes: {this.props.likesComments.liked_by.length}
 				</span>
 				<button
 					className={'upvote-btn'}
@@ -22,6 +29,13 @@ export default class NominatedRestaurant extends Component {
 					disabled={!this.props.loggedIn}
 				>
 					Upvote!
+				</button>
+				<button
+					className={'upvoted-btn'}
+                    onClick={this.handleOnClickUndoVote}
+					disabled={!this.props.loggedIn}
+				>
+					You upvoted this
 				</button>
 				<a href='#'>See More</a>
 			</div>
