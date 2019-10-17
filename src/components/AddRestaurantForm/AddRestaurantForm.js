@@ -45,7 +45,7 @@ export default class AddRestaurantForm extends Component {
             ]
         }
         // console.log(newNomination, newLikesTable)
-        this.props.handleAddRestaurant(newNomination, newLikesTable)
+        this.props.handleAddRestaurant(newNomination, newLikesTable, newRestaurantId)
         this.props.history.push('/')
     }
     handleCategoryInputChange(e){

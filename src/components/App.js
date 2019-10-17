@@ -28,72 +28,44 @@ export default class App extends Component {
 		this.setState(STORE)
 	}
 
-	handleAddRestaurant = (newRestaurant, newLike) => {
+	handleAddRestaurant = (newRestaurant, newLike, newRestaurantID) => {
+
 		this.setState({
 			nominated_restaurants: [
 				...this.state.nominated_restaurants,
 				newRestaurant,
 			],
-			likes_and_comments: [...this.state.likes_and_comments, newLike],
-		})
+    })
+    this.setState(({ likes_and_comments }) => likes_and_comments[newRestaurantID] = newLike)
 	}
 
 	handleVoteForRestaurant = (userID, restaurantID) => {
-    const { likes_and_comments } = this.state
-    const checkIfAlreadyLiked = likes_and_comments[restaurantID].liked_by.filter(likeObj => likeObj.user === userID)
-    if (checkIfAlreadyLiked.length){
-      			this.setState({
-              error: 'User already voted',
-            })
-    } else {
-      const newLikedByObj = {
+		const { likes_and_comments } = this.state
+		const checkIfAlreadyLiked = likes_and_comments[
+			restaurantID
+		].liked_by.filter(likeObj => likeObj.user === userID)
+		if (checkIfAlreadyLiked.length) {
+			this.setState({
+				error: 'User already voted',
+			})
+		} else {
+			const newLikedByObj = {
 				user: this.state.userId,
 				date_liked: Date.now(),
 				comment: '',
-      }
-      const updatedLikedByArr = [...likes_and_comments[restaurantID].liked_by, newLikedByObj]
+			}
+			const updatedLikedByArr = [
+				...likes_and_comments[restaurantID].liked_by,
+				newLikedByObj,
+			]
 
-      this.setState(({likes_and_comments}) => (likes_and_comments[restaurantID].liked_by = updatedLikedByArr))
-    }
-   
-
-      
-    // this.setState({
-    //   likes_and_comments: {
-    //     ...likes_and_comments,
-    //     likes_and_comments[restaurantID]
-    //   }
-    // })
-		// const selectedRestaurant = likes_and_comments.filter(
-		// 	lc => lc.rest_id === restaurantID,
-		// )
-		// const notSelectedRestaurants = likes_and_comments.filter(
-		// 	lc => lc.rest_id !== restaurantID,
-		// )
-
-		// const checkIfAlreadyLiked = selectedRestaurant[0].liked_by.filter(
-		// 	like => like.user === userID,
-		// )
-
-		// if (checkIfAlreadyLiked.length) {
-		// 	this.setState({
-		// 		error: 'User already voted',
-		// 	})
-		// } else {
-		// 	const newLikedByObj = {
-		// 		user: this.state.userId,
-		// 		date_liked: Date.now(),
-		// 		comment: '',
-		// 	}
-		// 	const newLikesCommentsObj = { ...selectedRestaurant[0] }
-		// 	newLikesCommentsObj.liked_by.push(newLikedByObj)
-		// 	this.setState({
-		// 		likes_and_comments: [
-		// 			...notSelectedRestaurants,
-		// 			newLikesCommentsObj,
-		// 		],
-		// 	})
-		// }
+			this.setState(
+				({ likes_and_comments }) =>
+					(likes_and_comments[
+						restaurantID
+					].liked_by = updatedLikedByArr),
+			)
+		}
 	}
 
 	handleLogin = e => {
