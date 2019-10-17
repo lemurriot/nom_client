@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import ReviewPreview from '../ReviewPreview/ReviewPreview'
@@ -32,6 +33,7 @@ export default function LandingPage(props) {
 				onLogout={props.onLogout}
 			/>
 			<main className='landing-page-main-container'>
+			<Link to="/add-new-nom"><button className="add-new-nom btn">Nominate a New Restaurant!</button></Link>
 				{reviewPreviewList}
 			</main>
 			<Footer />
