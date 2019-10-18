@@ -35,10 +35,10 @@ export default class AddRestaurantForm extends Component {
 			date_nominated: Date.now(),
 			name: this.state.restaurant_name.value,
 			nominated_by_user: this.props.userId,
-			likes_table: newLikesTableId,
+			likes_table: newRestaurantId,
 		}
 		const newLikesTable = {
-			id: newLikesTableId,
+			id: newRestaurantId,
 			rest_id: newRestaurantId,
 			liked_by: [
 				{
@@ -52,6 +52,7 @@ export default class AddRestaurantForm extends Component {
 			newNomination,
 			newLikesTable,
 			newRestaurantId,
+			newLikesTableId
 		)
 		this.props.history.push('/')
 	}

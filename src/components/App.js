@@ -30,9 +30,18 @@ export default class App extends Component {
 	}
 	componentDidMount() {
 		this.setState(STORE)
+
+		//add current user session
+		const newUserId = this.state.userId
+		const newUserObj = {"username": "You"}
+		this.setState(({users}) =>  (users[newUserId] = newUserObj)
+		)
+		
 	}
 
-	handleAddRestaurant = (newRestaurant, newLike, newRestaurantID) => {
+
+
+	handleAddRestaurant = (newRestaurant, newLike, newLikesTableID) => {
 
 		this.setState({
 			nominated_restaurants: [
@@ -40,7 +49,7 @@ export default class App extends Component {
 				newRestaurant,
 			],
     })
-    this.setState(({ likes_and_comments }) => likes_and_comments[newRestaurantID] = newLike)
+    this.setState(({ likes_and_comments }) => likes_and_comments[newLikesTableID] = newLike)
 	}
 
 	handleVoteForRestaurant = (userID, restaurantID) => {
