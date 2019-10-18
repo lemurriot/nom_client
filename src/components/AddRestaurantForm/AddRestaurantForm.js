@@ -225,7 +225,7 @@ export default class AddRestaurantForm extends Component {
 				</section>
 				<section className='filtered-list-container'>
 					<h3>Current Matching Nominations</h3>
-					<p>Please don't add duplicates</p>
+					<p>Please don't add duplicates ;)</p>
 					{this.showCurrentNominatedRestaurants()}
 				</section>
 			</main>

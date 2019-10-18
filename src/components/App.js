@@ -5,6 +5,7 @@ import STORE from '../store.js'
 import uuid from 'uuid'
 
 import LandingPage from './LandingPage/LandingPage'
+import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage'
 import LoginForm from './LoginForm/LoginForm'
 import RegisterForm from './RegisterForm/RegisterForm'
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm'
@@ -13,6 +14,7 @@ import About from './About/About'
 import NotFoundPage from './NotFoundPage/NotFoundPage'
 
 import './App.css'
+
 
 export default class App extends Component {
 	constructor(props) {
@@ -163,6 +165,17 @@ export default class App extends Component {
 										this.state
 											.nominated_restaurants
 									}
+									userId={this.state.userId}
+									loggedIn={this.state.loggedIn}
+									onLogout={this.handleLogout}
+								/>
+							)}
+						/>
+						<Route
+							path='/category/:food_category/:restaurant_id'
+							render={props => (
+								<NominatedRestaurantPage
+									{...props}
 									userId={this.state.userId}
 									loggedIn={this.state.loggedIn}
 									onLogout={this.handleLogout}

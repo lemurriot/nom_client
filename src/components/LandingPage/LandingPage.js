@@ -20,7 +20,7 @@ export default function LandingPage(props) {
 			key={i}
 			likesComments={props.likesComments}
 			noms={cat}
-			title={[...uniqueCategories][i]}
+			category={[...uniqueCategories][i]}
 			loggedIn={props.loggedIn}
 		/>
 	))

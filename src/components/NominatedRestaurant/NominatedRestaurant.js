@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import NomsContext from '../../NomsContext'
 import './NominatedRestaurant.css'
 
@@ -44,7 +45,9 @@ export default class NominatedRestaurant extends Component {
 
 		return (
 			<div className='preview-nom-box'>
-				<h5>{this.props.name}</h5>
+				<Link to={`/category/${this.props.category}/${this.props.id}`}>
+                    <h5>{this.props.name}</h5>
+                </Link>
 				<span>
                     Votes: {this.props.likesComments.liked_by.length}
 				</span>

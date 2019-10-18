@@ -25,24 +25,20 @@ export default {
             "likes_table": "3",
         },
     ],
-    "users": [
-        {
-            "id": "1",
+    "users": {
+        "1": {
             "username": "charlie_pdx",
         },
-        {
-            "id": "2",
+        "2": {
             "username": "jane_doh!",
         },
-        {
-            "id": "3",
+        "3": {
             "username": "simons_say",
         },
-        {
-            "id": "4",
+        "4": {
             "username": "salsa_champion12",
         },
-    ],
+    },
     "likes_and_comments": {
         "1": {
             "id": "1",

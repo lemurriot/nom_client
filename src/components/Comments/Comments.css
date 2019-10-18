@@ -1,0 +1,10 @@
+.comment-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    border: 1px solid black;
+    margin-top: 2%;
+}
+.comment-user {
+    text-align: right;
+}
