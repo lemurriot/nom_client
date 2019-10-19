@@ -1,35 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Comments from '../Comments/Comments'
+import VoteButtons from '../VoteButtons/VoteButtons'
 import './NominatedRestaurantPage.css'
 import NomsContext from '../../NomsContext'
-
-
-// export default class NominatedRestaurantPage extends Component {
-//     static contextType = NomsContext
-//     render() {
-//         return (
-//             <>
-//                     <Header
-//                         {...this.props}
-//                         loggedIn={this.props.loggedIn}
-//                         onLogout={this.props.onLogout}
-//                     />
-//                         <main className="restaurant-page-main-container">
-//                             <h2>{name}</h2>
-//                             <p><span className="restaurant-page-label">Nominated for Best {category} on: </span>{new Date(date_nominated).toDateString()}</p>
-//                             <p><span className="restaurant-page-label">Current Votes: </span> {likesCount}</p>
-//                             <section className="comment-section">
-//                                 <h3>Comments</h3>
-//                                 {comments}
-//                             </section>
-//                         </main>
-//                     <Footer />
-//                     </>
-//         )
-//     }
-// }
 
 
 export default function NominatedRestaurantPage(props) {
@@ -40,7 +15,7 @@ export default function NominatedRestaurantPage(props) {
                 const restaurantInfoContainer = context.nominated_restaurants.find(restaurant => restaurant.id === restaurant_id && restaurant.food_category === food_category)
                 
                 let restaurantInfo
-                restaurantInfoContainer ? restaurantInfo = restaurantInfoContainer : restaurantInfo = {"id": "fake-id", "name": "", "date_nominated": "1970-01-01", "food_category": '', 'likes_table': "1"}
+                restaurantInfoContainer ? restaurantInfo = restaurantInfoContainer : restaurantInfo = {"id": "1", "name": "", "date_nominated": "1970-01-01", "food_category": '', 'likes_table': "1"}
                 const { name, date_nominated, likes_table, food_category: category  } = restaurantInfo
     
                 
@@ -69,6 +44,9 @@ export default function NominatedRestaurantPage(props) {
                     />
                         <main className="restaurant-page-main-container">
                             <h2>{name}</h2>
+                            <VoteButtons 
+                                id={restaurant_id}
+                            />
                             <p><span className="restaurant-page-label">Nominated for Best {category} on: </span>{new Date(date_nominated).toDateString()}</p>
                             <p><span className="restaurant-page-label">Current Votes: </span> {likesCount}</p>
                             <section className="comment-section">

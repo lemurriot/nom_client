@@ -27,7 +27,6 @@ export default class AddRestaurantForm extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault()
-		const newLikesTableId = uuid.v4()
 		const newRestaurantId = uuid.v4()
 		const newNomination = {
 			id: newRestaurantId,
@@ -52,7 +51,6 @@ export default class AddRestaurantForm extends Component {
 			newNomination,
 			newLikesTable,
 			newRestaurantId,
-			newLikesTableId
 		)
 		this.props.history.push('/')
 	}

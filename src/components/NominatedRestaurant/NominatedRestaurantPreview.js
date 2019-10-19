@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import NomsContext from '../../NomsContext'
+import VoteButtons from '../VoteButtons/VoteButtons'
 import './NominatedRestaurant.css'
 
 export default class NominatedRestaurant extends Component {
@@ -51,7 +52,10 @@ export default class NominatedRestaurant extends Component {
 				<span>
                     Votes: {this.props.likesComments.liked_by.length}
 				</span>
-				<button
+                <VoteButtons 
+                    id={this.props.id}
+                />
+				{/* <button
 					className={this.state.userDidLike ? 'upvote-btn hide' : 'upvote-btn'}
                     onClick={this.handleOnClickVote}
 					disabled={!this.props.loggedIn}
@@ -64,7 +68,7 @@ export default class NominatedRestaurant extends Component {
 					disabled={!this.props.loggedIn}
 				>
 					You upvoted this
-				</button>
+				</button> */}
 				{/* <a href='#'>See More</a> */}
 			</div>
 		)

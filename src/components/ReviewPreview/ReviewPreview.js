@@ -1,10 +1,10 @@
 import React from 'react'
 import './ReviewPreview.css'
-import NominatedRestaurant from '../NominatedRestaurant/NominatedRestaurant'
+import NominatedRestaurantPreview from '../NominatedRestaurant/NominatedRestaurantPreview'
 
 export default function ReviewPreview(props) {
 	const RestaurantList = props.noms.map((nom, i) => (
-		<NominatedRestaurant
+		<NominatedRestaurantPreview
 			key={i}
 			id={nom.id}
 			category={nom.food_category}
