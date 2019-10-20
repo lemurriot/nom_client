@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Comments from '../Comments/Comments'
@@ -43,12 +44,13 @@ export default function NominatedRestaurantPage(props) {
                         onLogout={props.onLogout}
                     />
                         <main className="restaurant-page-main-container">
+                            <Link to="/">Go back</Link>
                             <h2>{name}</h2>
                             <VoteButtons 
                                 id={restaurant_id}
                             />
-                            <p><span className="restaurant-page-label">Nominated for Best {category} on: </span>{new Date(date_nominated).toDateString()}</p>
                             <p><span className="restaurant-page-label">Current Votes: </span> {likesCount}</p>
+                            <p><span className="restaurant-page-label">Nominated for Best {category} on: </span>{new Date(date_nominated).toDateString()}</p>
                             <section className="comment-section">
                                 <h3>Comments</h3>
                                 {getComments()}

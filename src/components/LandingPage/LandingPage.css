@@ -1,3 +1,14 @@
 .landing-page-main-container {
     padding: 5%;
 }
+
+.add-new-nom-btn {
+    height: 25px;
+    border-radius: 10px;
+    background-color: #00bb00;
+    color: white;
+}
+.add-new-nom-btn:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 2px black;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './VoteButtons.css'
 import NomsContext from '../../NomsContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export default class VoteButtons extends Component {
@@ -53,14 +54,14 @@ export default class VoteButtons extends Component {
                     onClick={this.handleOnClickVote}
 					disabled={!this.context.loggedIn}
 				>
-					Upvote!
+					Upvote! <FontAwesomeIcon icon="star" color="white"/>
 				</button>
 				<button
 					className={!this.state.userDidLike ? 'upvoted-btn vote-btn hide' : 'upvoted-btn vote-btn'}
                     onClick={this.handleOnClickUndoVote}
 					disabled={!this.context.loggedIn}
 				>
-					You upvoted this
+					You upvoted this <FontAwesomeIcon icon="star" color="gold"/>
 				</button>
 			</div>
 		)

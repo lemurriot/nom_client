@@ -33,7 +33,7 @@ export default function LandingPage(props) {
 				onLogout={props.onLogout}
 			/>
 			<main className='landing-page-main-container'>
-			<Link to="/add-new-nom"><button className="add-new-nom btn">Nominate a New Restaurant!</button></Link>
+			<Link to="/add-new-nom"><button className="add-new-nom-btn btn">Nominate a New Restaurant!</button></Link>
 				{reviewPreviewList}
 			</main>
 			<Footer />

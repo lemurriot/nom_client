@@ -7,9 +7,9 @@ import { BrowserRouter } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faHamburger, faCopyright } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faHamburger, faCopyright, faStar } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faHome, faHamburger, faCopyright)
+library.add(faHome, faHamburger, faCopyright, faStar)
 
 
 ReactDOM.render(
