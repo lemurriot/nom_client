@@ -52,6 +52,7 @@ export default class NominatedRestaurant extends Component {
 				<span>
                     Votes: {this.props.likesComments.liked_by.length}
 				</span>
+                {/* to do -- remove buttons if user is not logged in */}
                 <VoteButtons 
                     id={this.props.id}
                 />
