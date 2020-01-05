@@ -1,62 +1,58 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import NomsContext from '../../NomsContext'
-import VoteButtons from '../VoteButtons/VoteButtons'
-import './NominatedRestaurant.css'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import NomsContext from "../../NomsContext";
+import VoteButtons from "../VoteButtons/VoteButtons";
+import "./NominatedRestaurant.css";
 
 export default class NominatedRestaurant extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            userDidLike: false
-        }
-    }
-    static contextType = NomsContext
-    
-    handleOnClickVote = () => {
-        this.context.voteForRestaurant(this.context.userId, this.props.id)
-    }
-    handleOnClickUndoVote = () => {
-        this.context.undoVoteForRestaurant(this.context.userId, this.props.id)
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      userDidLike: false
+    };
+  }
+  static contextType = NomsContext;
 
-    checkIfUserAlreadyVoted = () => {
-        const checkIfUserDidLike = this.context.likes_and_comments[this.props.id].liked_by.filter(lk => lk.user === this.context.userId)
+  handleOnClickVote = () => {
+    this.context.voteForRestaurant(this.context.userId, this.props.id);
+  };
+  handleOnClickUndoVote = () => {
+    this.context.undoVoteForRestaurant(this.context.userId, this.props.id);
+  };
 
-        if(checkIfUserDidLike.length){
-            this.setState({
-                userDidLike: true
-            })
-        } else {
-            this.setState({
-                userDidLike: false
-            })
-        }
+  checkIfUserAlreadyVoted = () => {
+    const checkIfUserDidLike = this.context.likes_and_comments[
+      this.props.id
+    ].liked_by.filter(lk => lk.user === this.context.userId);
+
+    if (checkIfUserDidLike.length) {
+      this.setState({
+        userDidLike: true
+      });
+    } else {
+      this.setState({
+        userDidLike: false
+      });
     }
+  };
 
-    componentWillReceiveProps(){
-        this.checkIfUserAlreadyVoted()
-    }
-    componentDidMount(){
-        this.checkIfUserAlreadyVoted()
-    }
+  componentWillReceiveProps() {
+    this.checkIfUserAlreadyVoted();
+  }
+  componentDidMount() {
+    this.checkIfUserAlreadyVoted();
+  }
 
-
-	render() {
-
-		return (
-			<div className='preview-nom-box'>
-				<Link to={`/category/${this.props.category}/${this.props.id}`}>
-                    <h5>{this.props.name}</h5>
-                </Link>
-				<span>
-                    Votes: {this.props.likesComments.liked_by.length}
-				</span>
-                {/* to do -- remove buttons if user is not logged in */}
-                <VoteButtons 
-                    id={this.props.id}
-                />
-				{/* <button
+  render() {
+    return (
+      <div className="preview-nom-box">
+        <Link to={`/category/${this.props.category}/${this.props.id}`}>
+          <h5>{this.props.name}</h5>
+        </Link>
+        <span>Votes: {this.props.likesComments.liked_by.length}</span>
+        {/* to do -- remove buttons if user is not logged in */}
+        <VoteButtons id={this.props.id} />
+        {/* <button
 					className={this.state.userDidLike ? 'upvote-btn hide' : 'upvote-btn'}
                     onClick={this.handleOnClickVote}
 					disabled={!this.props.loggedIn}
@@ -70,8 +66,8 @@ export default class NominatedRestaurant extends Component {
 				>
 					You upvoted this
 				</button> */}
-				{/* <a href='#'>See More</a> */}
-			</div>
-		)
-	}
+        {/* <a href='#'>See More</a> */}
+      </div>
+    );
+  }
 }

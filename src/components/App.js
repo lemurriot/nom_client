@@ -180,14 +180,8 @@ export default class App extends Component {
                 />
               )}
             />
-			<Route 
-				path="/termsandconditions"
-				component={TermsAndConditions} 
-			/>
-			<Route 
-				path="/privacypolicy"
-				component={PrivacyPolicy} 
-			/>
+            <Route path="/termsandconditions" component={TermsAndConditions} />
+            <Route path="/privacypolicy" component={PrivacyPolicy} />
             <Route component={NotFoundPage} />
           </Switch>
         </div>

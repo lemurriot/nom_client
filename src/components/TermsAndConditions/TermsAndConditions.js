@@ -9,7 +9,8 @@ function TermsAndConditions() {
         of NomsPDX's Website.
       </p>{" "}
       <br />
-      <span style={{textTransform: "capitalize"}}> NomsPDX</span> is located at:
+      <span style={{ textTransform: "capitalize" }}> NomsPDX</span> is located
+      at:
       <br />
       <address>
         Portland <br />- Oregon , USA
@@ -54,14 +55,20 @@ function TermsAndConditions() {
         Unless otherwise stated, NomsPDX and/or it's licensors own the
         intellectual property rights for all material on NomsPDX. All
         intellectual property rights are reserved. You may view and/or print
-        pages from https://nomspdx.papershack.now.sh/ for your own personal use subject to
-        restrictions set in these terms and conditions.
+        pages from https://nomspdx.papershack.now.sh/ for your own personal use
+        subject to restrictions set in these terms and conditions.
       </p>
       <p>You must not:</p>
       <ol>
         <li>Republish material from https://nomspdx.papershack.now.sh/</li>
-        <li>Sell, rent or sub-license material from https://nomspdx.papershack.now.sh/</li>
-        <li>Reproduce, duplicate or copy material from https://nomspdx.papershack.now.sh/</li>
+        <li>
+          Sell, rent or sub-license material from
+          https://nomspdx.papershack.now.sh/
+        </li>
+        <li>
+          Reproduce, duplicate or copy material from
+          https://nomspdx.papershack.now.sh/
+        </li>
       </ol>
       <p>
         Redistribute content from NomsPDX (unless content is specifically made
@@ -310,7 +317,7 @@ function TermsAndConditions() {
       <p>
         This Terms and conditions page was created at{" "}
         <a
-          style={{color:"inherit", textDecoration: "none", cursor: "text"}}
+          style={{ color: "inherit", textDecoration: "none", cursor: "text" }}
           href="https://termsandconditionstemplate.com"
         >
           termsandconditionstemplate.com
