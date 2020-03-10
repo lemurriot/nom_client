@@ -3,7 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import NomsContext from "../NomsContext";
 import STORE from "../store.js";
 import uuid from "uuid";
-import config from "../config";
+// import config from "../config";
+import { fetchUserData, fetchRestaurantsData } from "../api/routes";
 import LandingPage from "./LandingPage/LandingPage";
 import NominatedRestaurantPage from "./NominatedRestaurantPage/NominatedRestaurantPage";
 import LoginForm from "./LoginForm/LoginForm";
@@ -23,7 +24,7 @@ export default class App extends Component {
     this.state = {
       loggedIn: true,
       userId: uuid.v4(),
-      nominated_restaurants: [],
+      nominatedRestaurants: [],
       users: [],
       user: {},
       likes_and_comments: [],
@@ -37,22 +38,20 @@ export default class App extends Component {
     this.getRestaurants();
     
   }
-  getUser = async () =>
-    await fetch(`${config.API_ENDPOINT}/users`, {
-      method: "GET",
-      credentials: "include"
-    })
-      .then(res => res.json())
-      .then(user => this.setState({ user }, () => {
-        const newUserId = this.state.user.id;
-        const newUserObj = { username: "You" };
-        this.setState(({ users }) => (users[newUserId] = newUserObj));
-      }));
-
+  getUser = () => 
+    fetchUserData().then(user => this.setState({ user }, () => {
+          const newUserId = this.state.user.id;
+          const newUserObj = { username: "You" };
+          this.setState(({ users }) => (users[newUserId] = newUserObj));
+        }));
+  
+  getRestaurants = () => 
+    fetchRestaurantsData().then(nominatedRestaurants => this.setState({ nominatedRestaurants }))
+  
   handleAddRestaurant = (newRestaurant, newLike, newLikesTableID) => {
     this.setState({
-      nominated_restaurants: [
-        ...this.state.nominated_restaurants,
+      nominatedRestaurants: [
+        ...this.state.nominatedRestaurants,
         newRestaurant
       ]
     });
@@ -117,7 +116,7 @@ export default class App extends Component {
     const contextVal = {
       loggedIn: this.state.loggedIn,
       userId: this.state.userId,
-      nominated_restaurants: this.state.nominated_restaurants,
+      nominatedRestaurants: this.state.nominatedRestaurants,
       users: this.state.users,
       likes_and_comments: this.state.likes_and_comments,
       nominateNewRestaurant: this.handleAddRestaurant,
@@ -135,7 +134,7 @@ export default class App extends Component {
                 <LandingPage
                   {...props}
                   likesComments={this.state.likes_and_comments}
-                  nominated_restaurants={this.state.nominated_restaurants}
+                  nominatedRestaurants={this.state.nominatedRestaurants}
                   loggedIn={this.state.loggedIn}
                   onLogout={this.handleLogout}
                 />
@@ -163,7 +162,7 @@ export default class App extends Component {
               render={props => (
                 <MyReviews
                   {...props}
-                  restaurants={this.state.nominated_restaurants}
+                  restaurants={this.state.nominatedRestaurants}
                   userId={this.state.userId}
                   loggedIn={this.state.loggedIn}
                   onLogout={this.handleLogout}
