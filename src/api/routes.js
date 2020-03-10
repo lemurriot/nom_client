@@ -10,8 +10,16 @@ export const fetchUserData = async () => {
 
 export const fetchRestaurantsData = async () => {
   const restaurants = await fetch(`${config.API_ENDPOINT}/restaurants`, {
-    method: "GET",
-    credentials: "include"
+    method: "GET"
+    // credentials: "include"
   }).then(res => res.json());
-  return restaurants
+  return restaurants;
+};
+
+export const fetchLikesAndComments = async restaurantId => {
+  const likesAndComments = await fetch(`${config.API_ENDPOINT}/restaurants/${restaurantId}`, {
+    method: "GET",
+    // credentials: "include"
+  }).then(res => res.json());
+  return likesAndComments;
 };

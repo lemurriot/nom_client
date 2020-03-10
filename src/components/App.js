@@ -28,16 +28,18 @@ export default class App extends Component {
       users: [],
       user: {},
       likes_and_comments: [],
+      likesAndComments: {},
       error: null
     };
   }
+
   componentDidMount() {
     this.setState(STORE);
     //add current user session
     this.getUser();
     this.getRestaurants();
-    
   }
+
   getUser = () => 
     fetchUserData().then(user => this.setState({ user }, () => {
           const newUserId = this.state.user.id;
