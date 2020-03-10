@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import NomsContext from "../NomsContext";
 import STORE from "../store.js";
 import uuid from "uuid";
-
+import config from "../config";
 import LandingPage from "./LandingPage/LandingPage";
 import NominatedRestaurantPage from "./NominatedRestaurantPage/NominatedRestaurantPage";
 import LoginForm from "./LoginForm/LoginForm";
@@ -25,18 +25,29 @@ export default class App extends Component {
       userId: uuid.v4(),
       nominated_restaurants: [],
       users: [],
+      user: {},
       likes_and_comments: [],
       error: null
     };
   }
   componentDidMount() {
     this.setState(STORE);
-
     //add current user session
-    const newUserId = this.state.userId;
-    const newUserObj = { username: "You" };
-    this.setState(({ users }) => (users[newUserId] = newUserObj));
+    this.getUser();
+    this.getRestaurants();
+    
   }
+  getUser = async () =>
+    await fetch(`${config.API_ENDPOINT}/users`, {
+      method: "GET",
+      credentials: "include"
+    })
+      .then(res => res.json())
+      .then(user => this.setState({ user }, () => {
+        const newUserId = this.state.user.id;
+        const newUserObj = { username: "You" };
+        this.setState(({ users }) => (users[newUserId] = newUserObj));
+      }));
 
   handleAddRestaurant = (newRestaurant, newLike, newLikesTableID) => {
     this.setState({
