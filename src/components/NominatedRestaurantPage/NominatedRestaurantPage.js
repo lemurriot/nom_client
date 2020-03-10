@@ -8,13 +8,14 @@ import "./NominatedRestaurantPage.css";
 import { fetchLikesAndComments } from "../../api/routes";
 
 export default function NominatedRestaurantPage(props) {
-  const { restaurant_id } = props.match.params;
+  // eslint-disable-next-line react/destructuring-assignment
+  const { restaurant_id: restaurantId } = props.match.params;
   const [likesAndComments, setLikesAndComments] = useState([]);
 
   const getLikesAndComments = useCallback(async () => {
-    const response = await fetchLikesAndComments(restaurant_id)
-    setLikesAndComments(response)
-  }, [restaurant_id])
+    const response = await fetchLikesAndComments(restaurantId);
+    setLikesAndComments(response);
+  }, [restaurantId]);
 
   useEffect(() => {
     getLikesAndComments();
@@ -28,21 +29,28 @@ export default function NominatedRestaurantPage(props) {
     address,
     category,
     comments,
-    date_nominated,
-    vote_count,
+    date_nominated: dateNominated,
+    vote_count: voteCount
     // id: restaurantId
   } = likesAndComments;
 
   const getComments = () =>
-    comments.map(({ user_name, comment, date_commented, id: commentId }) => (
-      <Comments
-        key={commentId}
-        id={commentId}
-        comment={comment}
-        username={user_name}
-        dateCommented={date_commented}
-      />
-    ));
+    comments.map(
+      ({
+        user_name: username,
+        comment,
+        date_commented: dateCommented,
+        id: commentId
+      }) => (
+        <Comments
+          key={commentId}
+          id={commentId}
+          comment={comment}
+          username={username}
+          dateCommented={dateCommented}
+        />
+      )
+    );
 
   return (
     <>
@@ -58,14 +66,17 @@ export default function NominatedRestaurantPage(props) {
           <h2>{name}</h2>
           {subtitle && <h3>{subtitle}</h3>}
           {address && <h3>{address}</h3>}
-          <VoteButtons id={restaurant_id} />
+          <VoteButtons id={restaurantId} />
           <p>
             <span className="restaurant-page-label">Current Votes: </span>
-            {vote_count}
+            {voteCount}
           </p>
           <p>
             <span className="restaurant-page-label">
-              Nominated for Best {category} on: {new Date(date_nominated).toDateString()}
+              Nominated for Best
+              {category}
+              on:
+              {new Date(dateNominated).toDateString()}
             </span>
           </p>
           <section className="comment-section">
@@ -73,7 +84,8 @@ export default function NominatedRestaurantPage(props) {
             {getComments()}
           </section>
         </article>
-      )};
+      )}
+      ;
       <Footer />
     </>
   );
