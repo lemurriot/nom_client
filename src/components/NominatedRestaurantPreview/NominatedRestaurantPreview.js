@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import NomsContext from "../../NomsContext";
-import VoteButtons from "../VoteButtons/VoteButtons";
-import "./NominatedRestaurant.css";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import NomsContext from '../../NomsContext';
+import VoteButtons from '../VoteButtons/VoteButtons';
+import './NominatedRestaurantPreview.css';
 
 export default class NominatedRestaurant extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userDidLike: false
+      userDidLike: false,
     };
   }
   static contextType = NomsContext;
@@ -27,11 +27,11 @@ export default class NominatedRestaurant extends Component {
 
     if (checkIfUserDidLike.length) {
       this.setState({
-        userDidLike: true
+        userDidLike: true,
       });
     } else {
       this.setState({
-        userDidLike: false
+        userDidLike: false,
       });
     }
   };

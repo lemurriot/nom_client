@@ -1,0 +1,11 @@
+.preview-nom-box {
+  border: 1px solid black;
+  margin-bottom: 2%;
+  padding: 2%;
+}
+.preview-nom-box h5 {
+  margin: 0;
+}
+.hide {
+  display: none;
+}

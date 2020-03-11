@@ -1,8 +1,8 @@
 import React from 'react';
-import './ReviewPreview.css';
+import './CategoryReviewPreview.css';
 import NominatedRestaurantPreview from '../NominatedRestaurantPreview/NominatedRestaurantPreview';
 
-export default function ReviewPreview(props) {
+export default function CategoryReviewPreview(props) {
   const RestaurantList = props.noms.map((nom, i) => (
     <NominatedRestaurantPreview
       key={i}
