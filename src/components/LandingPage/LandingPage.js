@@ -1,42 +1,55 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import ReviewPreview from "../ReviewPreview/ReviewPreview";
-import "./LandingPage.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import CategoryReviewPreview from '../CategoryReviewPreview/CategoryReviewPreview';
+import './LandingPage.css';
+import NomsContext from '../../NomsContext';
 
-export default function LandingPage(props) {
-  const arrFromCategories = props.nominated_restaurants.map(
-    nom => nom.food_category
-  );
+const LandingPage = props => (
+  <NomsContext.Consumer>
+    {context => {
+      const { nominatedRestaurants } = context;
+      const categoryList = nominatedRestaurants.map(
+        restaurant => restaurant.food_category
+      );
+      const uniqueCategories = new Set(categoryList);
+      const restaurantsFilteredByCategory = [
+        ...uniqueCategories,
+      ].map(category =>
+        nominatedRestaurants.filter(
+          restaurant => restaurant.food_category === category
+        )
+      );
+      const reviewPreviewList = restaurantsFilteredByCategory.map(
+        (categoryRestaurants, i) => (
+          <CategoryReviewPreview
+            key={[...uniqueCategories][i]}
+            likesAndComments={context.likesAndComments}
+            categoryRestaurants={categoryRestaurants}
+            category={[...uniqueCategories][i]}
+            // loggedIn={props.loggedIn}
+          />
+        )
+      );
 
-  const uniqueCategories = new Set(arrFromCategories);
+      return (
+        <>
+          <Header {...props} loggedIn onLogout={context.onLogout} />
+          <main className="landing-page-main-container">
+            <Link to="/add-new-nom">
+              <button type="button" className="add-new-nom-btn btn">
+                Nominate a New Restaurant!
+              </button>
+            </Link>
+            {/* Meep Meep */}
+            {reviewPreviewList}
+          </main>
+          <Footer />
+        </>
+      );
+    }}
+  </NomsContext.Consumer>
+);
 
-  const filteredCategoryReviews = [...uniqueCategories].map(cat =>
-    props.nominated_restaurants.filter(nom => nom.food_category === cat)
-  );
-  const reviewPreviewList = filteredCategoryReviews.map((cat, i) => (
-    <ReviewPreview
-      key={i}
-      likesComments={props.likesComments}
-      noms={cat}
-      category={[...uniqueCategories][i]}
-      loggedIn={props.loggedIn}
-    />
-  ));
-
-  return (
-    <>
-      <Header {...props} loggedIn={props.loggedIn} onLogout={props.onLogout} />
-      <main className="landing-page-main-container">
-        <Link to="/add-new-nom">
-          <button className="add-new-nom-btn btn">
-            Nominate a New Restaurant!
-          </button>
-        </Link>
-        {reviewPreviewList}
-      </main>
-      <Footer />
-    </>
-  );
-}
+export default LandingPage;

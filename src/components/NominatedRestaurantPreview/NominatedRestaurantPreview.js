@@ -1,73 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import NomsContext from '../../NomsContext';
 import VoteButtons from '../VoteButtons/VoteButtons';
 import './NominatedRestaurantPreview.css';
 
-export default class NominatedRestaurant extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userDidLike: false,
-    };
-  }
-  static contextType = NomsContext;
+const NominatedRestaurantPreview = props => (
+  <NomsContext.Consumer>
+    {context => {
+      const { category, name, id, voteCount } = props;
+      const { likesAndComments, user } = context;
+      const filterLikesArray = likesAndComments.filter(
+        like => like.restaurant_id === id && like.user_id === user.id
+      );
+      const userDidLike = filterLikesArray ? filterLikesArray.length : false;
 
-  handleOnClickVote = () => {
-    this.context.voteForRestaurant(this.context.userId, this.props.id);
-  };
-  handleOnClickUndoVote = () => {
-    this.context.undoVoteForRestaurant(this.context.userId, this.props.id);
-  };
+      return (
+        <div className="preview-nom-box">
+          <Link to={`/category/${category}/${id}`}>
+            <h5>{name}</h5>
+          </Link>
+          <span>
+            Votes:
+            {voteCount}
+          </span>
+          <VoteButtons id={id} userDidLike={userDidLike} />
+        </div>
+      );
+    }}
+  </NomsContext.Consumer>
+);
 
-  checkIfUserAlreadyVoted = () => {
-    const checkIfUserDidLike = this.context.likes_and_comments[
-      this.props.id
-    ].liked_by.filter(lk => lk.user === this.context.userId);
-
-    if (checkIfUserDidLike.length) {
-      this.setState({
-        userDidLike: true,
-      });
-    } else {
-      this.setState({
-        userDidLike: false,
-      });
-    }
-  };
-
-  componentWillReceiveProps() {
-    this.checkIfUserAlreadyVoted();
-  }
-  componentDidMount() {
-    this.checkIfUserAlreadyVoted();
-  }
-
-  render() {
-    return (
-      <div className="preview-nom-box">
-        <Link to={`/category/${this.props.category}/${this.props.id}`}>
-          <h5>{this.props.name}</h5>
-        </Link>
-        <span>Votes: {this.props.likesComments.liked_by.length}</span>
-        {/* to do -- remove buttons if user is not logged in */}
-        <VoteButtons id={this.props.id} />
-        {/* <button
-					className={this.state.userDidLike ? 'upvote-btn hide' : 'upvote-btn'}
-                    onClick={this.handleOnClickVote}
-					disabled={!this.props.loggedIn}
-				>
-					Upvote!
-				</button>
-				<button
-					className={!this.state.userDidLike ? 'upvoted-btn hide' : 'upvoted-btn'}
-                    onClick={this.handleOnClickUndoVote}
-					disabled={!this.props.loggedIn}
-				>
-					You upvoted this
-				</button> */}
-        {/* <a href='#'>See More</a> */}
-      </div>
-    );
-  }
-}
+export default NominatedRestaurantPreview;

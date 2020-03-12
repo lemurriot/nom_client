@@ -1,14 +1,16 @@
-import React from "react";
+import React from 'react';
 
 const NomsContext = React.createContext({
   loggedIn: false,
   userId: null,
+  user: {},
   nominatedRestaurants: [],
   users: [],
-  likes_and_comments: {},
+  likesAndComments: {},
+  onLogout: () => {},
   addNewRestaurant: () => {},
   voteForRestaurant: () => {},
-  undoVoteForRestaurant: () => {}
+  undoVoteForRestaurant: () => {},
 });
 
 export default NomsContext;

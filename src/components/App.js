@@ -1,22 +1,26 @@
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
-import NomsContext from "../NomsContext";
-import STORE from "../store.js";
-import uuid from "uuid";
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import NomsContext from '../NomsContext';
+import STORE from '../store.js';
+import uuid from 'uuid';
 // import config from "../config";
-import { fetchUserData, fetchRestaurantsData } from "../api/routes";
-import LandingPage from "./LandingPage/LandingPage";
-import NominatedRestaurantPage from "./NominatedRestaurantPage/NominatedRestaurantPage";
-import LoginForm from "./LoginForm/LoginForm";
-import RegisterForm from "./RegisterForm/RegisterForm";
-import AddRestaurantForm from "./AddRestaurantForm/AddRestaurantForm";
-import MyReviews from "./MyReviews/MyReviews";
-import About from "./About/About";
-import TermsAndConditions from "./TermsAndConditions/TermsAndConditions";
-import PrivacyPolicy from "./TermsAndConditions/PrivacyPolicy";
-import NotFoundPage from "./NotFoundPage/NotFoundPage";
+import {
+  fetchUserData,
+  fetchRestaurantsData,
+  fetchAllLikesAndComments,
+} from '../api/routes';
+import LandingPage from './LandingPage/LandingPage';
+import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
+import LoginForm from './LoginForm/LoginForm';
+import RegisterForm from './RegisterForm/RegisterForm';
+import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
+import MyReviews from './MyReviews/MyReviews';
+import About from './About/About';
+import TermsAndConditions from './TermsAndConditions/TermsAndConditions';
+import PrivacyPolicy from './TermsAndConditions/PrivacyPolicy';
+import NotFoundPage from './NotFoundPage/NotFoundPage';
 
-import "./App.css";
+import './App.css';
 
 export default class App extends Component {
   constructor(props) {
@@ -28,8 +32,8 @@ export default class App extends Component {
       users: [],
       user: {},
       likes_and_comments: [],
-      likesAndComments: {},
-      error: null
+      likesAndComments: [],
+      error: null,
     };
   }
 
@@ -38,24 +42,31 @@ export default class App extends Component {
     //add current user session
     this.getUser();
     this.getRestaurants();
+    this.getLikesAndComments();
   }
 
-  getUser = () => 
-    fetchUserData().then(user => this.setState({ user }, () => {
-          const newUserId = this.state.user.id;
-          const newUserObj = { username: "You" };
-          this.setState(({ users }) => (users[newUserId] = newUserObj));
-        }));
-  
-  getRestaurants = () => 
-    fetchRestaurantsData().then(nominatedRestaurants => this.setState({ nominatedRestaurants }))
-  
+  getUser = () =>
+    fetchUserData().then(user =>
+      this.setState({ user }, () => {
+        const newUserId = this.state.user.id;
+        const newUserObj = { username: 'You' };
+        this.setState(({ users }) => (users[newUserId] = newUserObj));
+      })
+    );
+
+  getRestaurants = () =>
+    fetchRestaurantsData().then(nominatedRestaurants =>
+      this.setState({ nominatedRestaurants })
+    );
+
+  getLikesAndComments = () =>
+    fetchAllLikesAndComments().then(likesAndComments =>
+      this.setState({ likesAndComments })
+    );
+
   handleAddRestaurant = (newRestaurant, newLike, newLikesTableID) => {
     this.setState({
-      nominatedRestaurants: [
-        ...this.state.nominatedRestaurants,
-        newRestaurant
-      ]
+      nominatedRestaurants: [...this.state.nominatedRestaurants, newRestaurant],
     });
     this.setState(
       ({ likes_and_comments }) =>
@@ -70,17 +81,17 @@ export default class App extends Component {
     ].liked_by.filter(likeObj => likeObj.user === userID);
     if (checkIfAlreadyLiked.length) {
       this.setState({
-        error: "User already voted"
+        error: 'User already voted',
       });
     } else {
       const newLikedByObj = {
         user: this.state.userId,
         date_liked: Date.now(),
-        comment: ""
+        comment: '',
       };
       const updatedLikedByArr = [
         ...likes_and_comments[restaurantID].liked_by,
-        newLikedByObj
+        newLikedByObj,
       ];
 
       this.setState(
@@ -105,13 +116,13 @@ export default class App extends Component {
   handleLogin = e => {
     e.preventDefault();
     this.setState({
-      loggedIn: true
+      loggedIn: true,
     });
   };
   handleLogout = e => {
     e.preventDefault();
     this.setState({
-      loggedIn: false
+      loggedIn: false,
     });
   };
   render() {
@@ -120,10 +131,11 @@ export default class App extends Component {
       userId: this.state.userId,
       nominatedRestaurants: this.state.nominatedRestaurants,
       users: this.state.users,
-      likes_and_comments: this.state.likes_and_comments,
+      user: this.state.user,
+      likesAndComments: this.state.likesAndComments,
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
-      undoVoteForRestaurant: this.handleUndoVoteForRestaurant
+      undoVoteForRestaurant: this.handleUndoVoteForRestaurant,
     };
     return (
       <NomsContext.Provider value={contextVal}>
@@ -132,13 +144,13 @@ export default class App extends Component {
             <Route
               exact
               path="/"
-              render={props => (
+              render={routerProps => (
                 <LandingPage
-                  {...props}
-                  likesComments={this.state.likes_and_comments}
-                  nominatedRestaurants={this.state.nominatedRestaurants}
-                  loggedIn={this.state.loggedIn}
-                  onLogout={this.handleLogout}
+                  {...routerProps}
+                  // likesAndComments={this.state.likesAndComments}
+                  // nominatedRestaurants={this.state.nominatedRestaurants}
+                  // loggedIn={this.state.loggedIn}
+                  // onLogout={this.handleLogout}
                 />
               )}
             />

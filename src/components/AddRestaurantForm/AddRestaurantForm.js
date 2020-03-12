@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "./AddRestaurantForm.css";
-import NomsContext from "../../NomsContext";
-import ValidationError from "../Validation/Validation";
-import uuid from "uuid";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import './AddRestaurantForm.css';
+import NomsContext from '../../NomsContext';
+import ValidationError from '../Validation/Validation';
+import uuid from 'uuid';
 
 export default class AddRestaurantForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       category: {
-        value: "",
-        touched: false
+        value: '',
+        touched: false,
       },
       restaurant_name: {
-        value: "",
-        touched: false
+        value: '',
+        touched: false,
       },
       comment: {
-        value: "",
-        touched: false
-      }
+        value: '',
+        touched: false,
+      },
     };
   }
   static contextType = NomsContext;
@@ -34,7 +34,7 @@ export default class AddRestaurantForm extends Component {
       date_nominated: Date.now(),
       name: this.state.restaurant_name.value,
       nominated_by_user: this.props.userId,
-      likes_table: newRestaurantId
+      likes_table: newRestaurantId,
     };
     const newLikesTable = {
       id: newRestaurantId,
@@ -43,66 +43,66 @@ export default class AddRestaurantForm extends Component {
         {
           user: this.context.userId,
           date_liked: Date.now(),
-          comment: this.state.comment.value
-        }
-      ]
+          comment: this.state.comment.value,
+        },
+      ],
     };
     this.props.handleAddRestaurant(
       newNomination,
       newLikesTable,
       newRestaurantId
     );
-    this.props.history.push("/");
+    this.props.history.push('/');
   }
   handleCategoryInputChange(e) {
     this.setState({
       category: {
         value: e.target.value,
-        touched: true
-      }
+        touched: true,
+      },
     });
   }
   handleRestaurantNameInputChange(e) {
     this.setState({
       restaurant_name: {
         value: e.target.value,
-        touched: true
-      }
+        touched: true,
+      },
     });
   }
   handleCommentInputChange(e) {
     this.setState({
       comment: {
         value: e.target.value,
-        touched: true
-      }
+        touched: true,
+      },
     });
   }
   validateRestaurantName() {
     const name = this.state.restaurant_name.value.trim();
     const category = this.state.category.value;
-    if (name.length === 0) return "Restaurant name is required";
+    if (name.length === 0) return 'Restaurant name is required';
     if (
-      this.context.nominated_restaurants.find(
+      this.context.nominatedRestaurants.find(
         restaurant =>
           restaurant.name === name && restaurant.food_category === category
       )
     )
-      return "A restaurant with that name is already nominated in this category";
+      return 'A restaurant with that name is already nominated in this category';
   }
   showCurrentNominatedRestaurants() {
-    const { nominated_restaurants } = this.context;
+    const { nominatedRestaurants } = this.context;
     const { category, restaurant_name } = this.state;
-    let re = new RegExp(restaurant_name.value, "i");
+    let re = new RegExp(restaurant_name.value, 'i');
     let currentRestaurantFilter;
     if (!category.value) {
-      currentRestaurantFilter = nominated_restaurants;
+      currentRestaurantFilter = nominatedRestaurants;
     } else if (category.value && !restaurant_name.value) {
-      currentRestaurantFilter = nominated_restaurants.filter(
+      currentRestaurantFilter = nominatedRestaurants.filter(
         restaurant => restaurant.food_category === category.value
       );
     } else {
-      currentRestaurantFilter = nominated_restaurants.filter(
+      currentRestaurantFilter = nominatedRestaurants.filter(
         restaurant =>
           restaurant.food_category === category.value &&
           restaurant.name.match(re)
@@ -145,8 +145,8 @@ export default class AddRestaurantForm extends Component {
                 required
               >
                 <option disabled value="">
-                  {" "}
-                  -- select an option --{" "}
+                  {' '}
+                  -- select an option --{' '}
                 </option>
                 <option value="Burgers">Burger</option>
                 <option value="Burritos">Burrito</option>
@@ -169,7 +169,7 @@ export default class AddRestaurantForm extends Component {
               {this.state.restaurant_name.touched && (
                 <ValidationError
                   message={this.validateRestaurantName()}
-                  validationId={"restaurantError"}
+                  validationId={'restaurantError'}
                 />
               )}
 
