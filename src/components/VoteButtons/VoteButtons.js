@@ -16,7 +16,6 @@ const VoteButtons = props => (
                 ? 'upvote-btn vote-btn hide'
                 : 'upvote-btn vote-btn'
             }
-            // onClick={voteForRestaurant}
             onClick={() => voteForRestaurant(user.id, props.restaurantId)}
             disabled={false}
           >

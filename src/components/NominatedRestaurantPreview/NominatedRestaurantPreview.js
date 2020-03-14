@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import findUserDidLike from '../../utils';
 import NomsContext from '../../NomsContext';
 import VoteButtons from '../VoteButtons/VoteButtons';
 import './NominatedRestaurantPreview.css';
@@ -9,10 +10,12 @@ const NominatedRestaurantPreview = props => (
     {context => {
       const { category, name, id: restaurantId, voteCount } = props;
       const { likesAndComments, user } = context;
-      const filterLikesArray = likesAndComments.filter(
-        like => like.restaurant_id === restaurantId && like.user_id === user.id
+      const findIfUserDidLike = findUserDidLike(
+        likesAndComments,
+        restaurantId,
+        user.id
       );
-      const likeId = filterLikesArray.length ? filterLikesArray[0].id : null;
+      const likeId = findIfUserDidLike.length ? findIfUserDidLike[0].id : null;
 
       return (
         <div className="preview-nom-box">
@@ -25,7 +28,7 @@ const NominatedRestaurantPreview = props => (
           </span>
           <VoteButtons
             restaurantId={restaurantId}
-            userDidLike={filterLikesArray.length}
+            userDidLike={findIfUserDidLike.length}
             likeId={likeId}
           />
         </div>
