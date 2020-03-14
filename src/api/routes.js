@@ -37,10 +37,33 @@ export const fetchLikesAndComments = async restaurantId => {
   return likesAndComments;
 };
 
-export const postNewUpvote = async () => {
+export const postNewUpvote = async (userId, restaurantId) => {
+  console.log(userId, restaurantId);
   const upvoteConfirmation = await fetch(`${config.API_ENDPOINT}/upvotes`, {
-    method: 'POST',
+    method: 'PUT',
     credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+      restaurantId,
+    }),
   }).then(res => res.json());
-  return upvoteConfirmation;
+  return upvoteConfirmation.newUpvoteObject[0];
+};
+
+export const deleteUpvote = async (userId, restaurantId) => {
+  const deleteConfirmation = await fetch(`${config.API_ENDPOINT}/upvotes`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+      restaurantId,
+    }),
+  }).then(res => res.json());
+  return deleteConfirmation;
 };

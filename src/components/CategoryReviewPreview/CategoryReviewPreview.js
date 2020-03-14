@@ -7,11 +7,12 @@ const CategoryReviewPreview = props => (
   <NomsContext.Consumer>
     {context => {
       const { categoryRestaurants } = props;
+      const { voteTallies } = context;
       const CategoryRestaurantList = categoryRestaurants.map(restaurant => (
         <NominatedRestaurantPreview
           key={restaurant.id}
           id={restaurant.id}
-          voteCount={restaurant.vote_count}
+          voteCount={voteTallies[restaurant.id]}
           category={restaurant.food_category}
           name={restaurant.name}
           loggedIn

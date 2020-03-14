@@ -6,7 +6,7 @@ import NomsContext from '../../NomsContext';
 const VoteButtons = props => (
   <NomsContext.Consumer>
     {context => {
-      const { voteForRestaurant } = context;
+      const { voteForRestaurant, undoVoteForRestaurant, user } = context;
       return (
         <div className="buttons-container">
           <button
@@ -17,7 +17,7 @@ const VoteButtons = props => (
                 : 'upvote-btn vote-btn'
             }
             // onClick={voteForRestaurant}
-            onClick={() => alert('clicked vote')}
+            onClick={() => voteForRestaurant(user.id, props.restaurantId)}
             disabled={false}
           >
             Upvote!
@@ -30,7 +30,9 @@ const VoteButtons = props => (
                 ? 'upvoted-btn vote-btn hide'
                 : 'upvoted-btn vote-btn'
             }
-            onClick={() => alert('cliked unvote')}
+            onClick={() =>
+              undoVoteForRestaurant(user.id, props.restaurantId, props.likeId)
+            }
             disabled={false}
           >
             You upvoted this

@@ -7,23 +7,27 @@ import './NominatedRestaurantPreview.css';
 const NominatedRestaurantPreview = props => (
   <NomsContext.Consumer>
     {context => {
-      const { category, name, id, voteCount } = props;
+      const { category, name, id: restaurantId, voteCount } = props;
       const { likesAndComments, user } = context;
       const filterLikesArray = likesAndComments.filter(
-        like => like.restaurant_id === id && like.user_id === user.id
+        like => like.restaurant_id === restaurantId && like.user_id === user.id
       );
-      const userDidLike = filterLikesArray ? filterLikesArray.length : false;
+      const likeId = filterLikesArray.length ? filterLikesArray[0].id : null;
 
       return (
         <div className="preview-nom-box">
-          <Link to={`/category/${category}/${id}`}>
+          <Link to={`/category/${category}/${restaurantId}`}>
             <h5>{name}</h5>
           </Link>
           <span>
             Votes:
             {voteCount}
           </span>
-          <VoteButtons id={id} userDidLike={userDidLike} />
+          <VoteButtons
+            restaurantId={restaurantId}
+            userDidLike={filterLikesArray.length}
+            likeId={likeId}
+          />
         </div>
       );
     }}

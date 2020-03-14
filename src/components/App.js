@@ -8,6 +8,8 @@ import {
   fetchUserData,
   fetchRestaurantsData,
   fetchAllLikesAndComments,
+  postNewUpvote,
+  deleteUpvote,
 } from '../api/routes';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
@@ -33,6 +35,7 @@ export default class App extends Component {
       user: {},
       likes_and_comments: [],
       likesAndComments: [],
+      voteTallies: {},
       error: null,
     };
   }
@@ -56,8 +59,17 @@ export default class App extends Component {
 
   getRestaurants = () =>
     fetchRestaurantsData().then(nominatedRestaurants =>
-      this.setState({ nominatedRestaurants })
+      this.setState({ nominatedRestaurants }, () => this.getVoteTallies())
     );
+
+  getVoteTallies = () => {
+    const voteTallyObj = {};
+    this.state.nominatedRestaurants.forEach(
+      restaurant =>
+        (voteTallyObj[restaurant.id] = Number(restaurant.vote_count))
+    );
+    this.setState({ voteTallies: voteTallyObj });
+  };
 
   getLikesAndComments = () =>
     fetchAllLikesAndComments().then(likesAndComments =>
@@ -74,43 +86,26 @@ export default class App extends Component {
     );
   };
 
-  handleVoteForRestaurant = (userID, restaurantID) => {
-    const { likes_and_comments } = this.state;
-    const checkIfAlreadyLiked = likes_and_comments[
-      restaurantID
-    ].liked_by.filter(likeObj => likeObj.user === userID);
-    if (checkIfAlreadyLiked.length) {
-      this.setState({
-        error: 'User already voted',
-      });
-    } else {
-      const newLikedByObj = {
-        user: this.state.userId,
-        date_liked: Date.now(),
-        comment: '',
-      };
-      const updatedLikedByArr = [
-        ...likes_and_comments[restaurantID].liked_by,
-        newLikedByObj,
-      ];
-
-      this.setState(
-        ({ likes_and_comments }) =>
-          (likes_and_comments[restaurantID].liked_by = updatedLikedByArr)
-      );
-    }
+  handleVoteForRestaurant = async (userId, restaurantId) => {
+    const newUpvote = await postNewUpvote(userId, restaurantId);
+    const newVoteTallies = { ...this.state.voteTallies };
+    ++newVoteTallies[restaurantId];
+    this.setState(prevState => ({
+      likesAndComments: [...prevState.likesAndComments, newUpvote],
+      voteTallies: newVoteTallies,
+    }));
   };
 
-  handleUndoVoteForRestaurant = (userID, restaurantID) => {
-    const { likes_and_comments } = this.state;
-    const updatedLikedByArr = likes_and_comments[restaurantID].liked_by.filter(
-      lc => lc.user !== userID
-    );
-
-    this.setState(
-      ({ likes_and_comments }) =>
-        (likes_and_comments[restaurantID].liked_by = updatedLikedByArr)
-    );
+  handleUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
+    deleteUpvote(userId, restaurantId);
+    const newVoteTallies = { ...this.state.voteTallies };
+    --newVoteTallies[restaurantId];
+    this.setState({
+      likesAndComments: this.state.likesAndComments.filter(
+        ({ id }) => id !== likesCommentsId
+      ),
+      voteTallies: newVoteTallies,
+    });
   };
 
   handleLogin = e => {
@@ -132,6 +127,7 @@ export default class App extends Component {
       nominatedRestaurants: this.state.nominatedRestaurants,
       users: this.state.users,
       user: this.state.user,
+      voteTallies: this.state.voteTallies,
       likesAndComments: this.state.likesAndComments,
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
