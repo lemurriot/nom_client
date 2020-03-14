@@ -41,7 +41,7 @@ const NominatedRestaurantPage = props => {
           name,
           subtitle,
           address,
-          category,
+          food_category: category,
           comments,
           id,
           date_nominated: dateNominated,
@@ -92,9 +92,7 @@ const NominatedRestaurantPage = props => {
                 </p>
                 <p>
                   <span className="restaurant-page-label">
-                    Nominated for Best
-                    {category}
-                    on:
+                    Nominated for Best {category} on:{' '}
                     {new Date(dateNominated).toDateString()}
                   </span>
                 </p>

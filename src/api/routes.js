@@ -38,7 +38,6 @@ export const fetchLikesAndComments = async restaurantId => {
 };
 
 export const postNewUpvote = async (userId, restaurantId) => {
-  console.log(userId, restaurantId);
   const upvoteConfirmation = await fetch(`${config.API_ENDPOINT}/upvotes`, {
     method: 'PUT',
     credentials: 'include',
