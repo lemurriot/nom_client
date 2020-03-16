@@ -8,29 +8,30 @@ import Comments from '../Comments/Comments';
 import VoteButtons from '../VoteButtons/VoteButtons';
 import './NominatedRestaurantPage.css';
 import { fetchLikesAndComments } from '../../api/routes';
+import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
 const NominatedRestaurantPage = props => {
-  const [restaurantLikesAndComments, setRestaurantLikesAndComments] = useState(
-    []
-  );
+  const [restaurantInfo, setrestaurantInfo] = useState([]);
+  const [commentsFormIsShown, showCommentsForm] = useState(false);
   const { restaurant_id } = props.match.params;
   const restaurantId = Number(restaurant_id);
 
-  const getRestaurantLikesAndComments = useCallback(async () => {
+  const getrestaurantInfo = useCallback(async () => {
     const response = await fetchLikesAndComments(restaurantId);
-    setRestaurantLikesAndComments(response);
+    setrestaurantInfo(response);
   }, [restaurantId]);
 
   useEffect(() => {
-    getRestaurantLikesAndComments();
-  }, [getRestaurantLikesAndComments]);
+    getrestaurantInfo();
+  }, [getrestaurantInfo]);
+
   return (
     <NomsContext.Consumer>
       {context => {
-        const { likesAndComments, voteTallies, user } = context;
+        const { likesAndComments, voteTallies, user, addEditComment } = context;
         const findIfUserDidLike = findUserDidLike(
           likesAndComments,
-          Number(restaurantId),
+          restaurantId,
           user.id
         );
         const likeId = findIfUserDidLike.length
@@ -46,7 +47,26 @@ const NominatedRestaurantPage = props => {
           id,
           date_nominated: dateNominated,
           // id: restaurantId
-        } = restaurantLikesAndComments;
+        } = restaurantInfo;
+
+        const closeCommentsForm = () => {
+          showCommentsForm(false);
+        };
+
+        const handleAddEditCommentSubmit = updatedComment => {
+          closeCommentsForm();
+          const newrestaurantInfo = { ...restaurantInfo };
+          const userComment = newrestaurantInfo.comments.findIndex(
+            ({ id }) => id === likeId
+          );
+          newrestaurantInfo.comments[userComment].comment = updatedComment;
+          setrestaurantInfo(newrestaurantInfo);
+        };
+
+        const deleteComment = () => {
+          addEditComment(likeId, '', restaurantId);
+          handleAddEditCommentSubmit('');
+        };
 
         const mapComments = () =>
           comments
@@ -75,7 +95,7 @@ const NominatedRestaurantPage = props => {
               // loggedIn={props.loggedIn}
               // onLogout={props.onLogout}
             />
-            {restaurantLikesAndComments.id && (
+            {restaurantInfo.id && (
               <article className="restaurant-page-main-container">
                 <Link to="/">Go back</Link>
                 <h2>{name}</h2>
@@ -86,6 +106,39 @@ const NominatedRestaurantPage = props => {
                   userDidLike={findIfUserDidLike.length}
                   likeId={likeId}
                 />
+                {likeId && !findIfUserDidLike[0].comment.length && (
+                  <span
+                    className="comment-action"
+                    onClick={() => showCommentsForm(true)}
+                  >
+                    Add Comment
+                  </span>
+                )}
+                {likeId && !!findIfUserDidLike[0].comment.length && (
+                  <>
+                    <span
+                      className="comment-action"
+                      onClick={() => showCommentsForm(true)}
+                    >
+                      Edit Comment
+                    </span>
+                    <span className="comment-action" onClick={deleteComment}>
+                      Delete Comment
+                    </span>
+                  </>
+                )}
+                {commentsFormIsShown && (
+                  <AddCommentForm
+                    restaurantName={name}
+                    restaurantId={restaurantId}
+                    commentId={likeId}
+                    comment={findIfUserDidLike[0].comment}
+                    handleSubmit={handleAddEditCommentSubmit}
+                    addEditComment={addEditComment}
+                    closeCommentsForm={closeCommentsForm}
+                    deleteComment={deleteComment}
+                  />
+                )}
                 <p>
                   <span className="restaurant-page-label">Current Votes: </span>
                   {voteTallies[id]}

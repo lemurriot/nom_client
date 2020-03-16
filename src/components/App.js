@@ -10,6 +10,7 @@ import {
   fetchAllLikesAndComments,
   postNewUpvote,
   deleteUpvote,
+  patchComment,
 } from '../api/routes';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
@@ -108,6 +109,20 @@ export default class App extends Component {
     });
   };
 
+  addEditComment = async (commentId, updatedComment, restaurantId) => {
+    console.log(commentId, updatedComment, this.state.user.id, restaurantId);
+    patchComment(commentId, updatedComment, this.state.user.id, restaurantId);
+    // console.log(commentId, updatedComment)
+    const newLikesAndComments = [...this.state.likesAndComments];
+    console.log(newLikesAndComments);
+    const commentToUpdate = newLikesAndComments.findIndex(
+      ({ id }) => id === commentId
+    );
+    console.log(commentToUpdate);
+    newLikesAndComments[commentToUpdate].comment = updatedComment;
+    this.setState({ likesAndComments: newLikesAndComments });
+  };
+
   handleLogin = e => {
     e.preventDefault();
     this.setState({
@@ -132,6 +147,7 @@ export default class App extends Component {
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
       undoVoteForRestaurant: this.handleUndoVoteForRestaurant,
+      addEditComment: this.addEditComment,
     };
     return (
       <NomsContext.Provider value={contextVal}>

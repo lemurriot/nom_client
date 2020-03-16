@@ -66,3 +66,28 @@ export const deleteUpvote = async (userId, restaurantId) => {
   }).then(res => res.json());
   return deleteConfirmation;
 };
+
+export const patchComment = async (
+  commentId,
+  updatedComment,
+  userId,
+  restaurantId
+) => {
+  const addEditCommentConfirmation = await fetch(
+    `${config.API_ENDPOINT}/comments`,
+    {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        restaurantId,
+        commentId,
+        updatedComment,
+      }),
+    }
+  ).then(res => res.json());
+  return addEditCommentConfirmation;
+};

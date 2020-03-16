@@ -31,6 +31,12 @@ const NominatedRestaurantPreview = props => (
             userDidLike={findIfUserDidLike.length}
             likeId={likeId}
           />
+          {likeId && !findIfUserDidLike[0].comment.length && (
+            <span>Add Comment</span>
+          )}
+          {likeId && !!findIfUserDidLike[0].comment.length && (
+            <span>Edit Comment</span>
+          )}
         </div>
       );
     }}
