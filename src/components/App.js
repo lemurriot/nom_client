@@ -98,6 +98,7 @@ export default class App extends Component {
   };
 
   handleUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
+    this.addEditComment(likesCommentsId, '', restaurantId);
     deleteUpvote(userId, restaurantId);
     const newVoteTallies = { ...this.state.voteTallies };
     --newVoteTallies[restaurantId];
@@ -110,7 +111,6 @@ export default class App extends Component {
   };
 
   addEditComment = async (commentId, updatedComment, restaurantId) => {
-    console.log(commentId, updatedComment, this.state.user.id, restaurantId);
     patchComment(commentId, updatedComment, this.state.user.id, restaurantId);
     // console.log(commentId, updatedComment)
     const newLikesAndComments = [...this.state.likesAndComments];

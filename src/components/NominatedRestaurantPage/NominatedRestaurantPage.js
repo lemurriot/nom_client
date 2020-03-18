@@ -13,6 +13,7 @@ import AddCommentForm from '../AddCommentForm/AddCommentForm';
 const NominatedRestaurantPage = props => {
   const [restaurantInfo, setrestaurantInfo] = useState([]);
   const [commentsFormIsShown, showCommentsForm] = useState(false);
+  const [error, setError] = useState({});
   const { restaurant_id } = props.match.params;
   const restaurantId = Number(restaurant_id);
 
@@ -53,14 +54,19 @@ const NominatedRestaurantPage = props => {
           showCommentsForm(false);
         };
 
-        const handleAddEditCommentSubmit = updatedComment => {
+        const handleAddEditCommentSubmit = async updatedComment => {
           closeCommentsForm();
+          await getrestaurantInfo();
           const newrestaurantInfo = { ...restaurantInfo };
           const userComment = newrestaurantInfo.comments.findIndex(
             ({ id }) => id === likeId
           );
-          newrestaurantInfo.comments[userComment].comment = updatedComment;
-          setrestaurantInfo(newrestaurantInfo);
+          if (userComment !== -1) {
+            newrestaurantInfo.comments[userComment].comment = updatedComment;
+            setrestaurantInfo(newrestaurantInfo);
+          } else {
+            setError({ error: 'Something went wrong' });
+          }
         };
 
         const deleteComment = () => {
@@ -109,6 +115,9 @@ const NominatedRestaurantPage = props => {
                 {likeId && !findIfUserDidLike[0].comment.length && (
                   <span
                     className="comment-action"
+                    role="link"
+                    tabIndex={0}
+                    onKeyDown={() => showCommentsForm(true)}
                     onClick={() => showCommentsForm(true)}
                   >
                     Add Comment
@@ -118,11 +127,20 @@ const NominatedRestaurantPage = props => {
                   <>
                     <span
                       className="comment-action"
+                      role="link"
+                      tabIndex={0}
+                      onKeyDown={() => showCommentsForm(true)}
                       onClick={() => showCommentsForm(true)}
                     >
                       Edit Comment
                     </span>
-                    <span className="comment-action" onClick={deleteComment}>
+                    <span
+                      className="comment-action"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={() => showCommentsForm(true)}
+                      onClick={deleteComment}
+                    >
                       Delete Comment
                     </span>
                   </>
