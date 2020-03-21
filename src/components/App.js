@@ -129,12 +129,14 @@ export default class App extends Component {
       loggedIn: true,
     });
   };
+
   handleLogout = e => {
     e.preventDefault();
     this.setState({
       loggedIn: false,
     });
   };
+
   render() {
     const contextVal = {
       loggedIn: this.state.loggedIn,

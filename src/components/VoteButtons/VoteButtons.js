@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './VoteButtons.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NomsContext from '../../NomsContext';
 
-const VoteButtons = props => (
+const VoteButtons = ({ userDidLike, restaurantId, likeId }) => (
   <NomsContext.Consumer>
     {context => {
       const { voteForRestaurant, undoVoteForRestaurant, user } = context;
@@ -12,11 +13,9 @@ const VoteButtons = props => (
           <button
             type="button"
             className={
-              props.userDidLike
-                ? 'upvote-btn vote-btn hide'
-                : 'upvote-btn vote-btn'
+              userDidLike ? 'upvote-btn vote-btn hide' : 'upvote-btn vote-btn'
             }
-            onClick={() => voteForRestaurant(user.id, props.restaurantId)}
+            onClick={() => voteForRestaurant(user.id, restaurantId)}
             disabled={false}
           >
             Upvote!
@@ -25,13 +24,11 @@ const VoteButtons = props => (
           <button
             type="button"
             className={
-              !props.userDidLike
+              !userDidLike
                 ? 'upvoted-btn vote-btn hide'
                 : 'upvoted-btn vote-btn'
             }
-            onClick={() =>
-              undoVoteForRestaurant(user.id, props.restaurantId, props.likeId)
-            }
+            onClick={() => undoVoteForRestaurant(user.id, restaurantId, likeId)}
             disabled={false}
           >
             You upvoted this
@@ -42,5 +39,11 @@ const VoteButtons = props => (
     }}
   </NomsContext.Consumer>
 );
+
+VoteButtons.propTypes = {
+  likeId: PropTypes.number.isRequired,
+  restaurantId: PropTypes.number.isRequired,
+  userDidLike: PropTypes.number.isRequired,
+};
 
 export default VoteButtons;

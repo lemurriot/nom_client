@@ -1,12 +1,16 @@
 import React from 'react';
 import './CategoryReviewPreview.css';
+import PropTypes from 'prop-types';
+import restaurantType from '../../types';
 import NomsContext from '../../NomsContext';
 import NominatedRestaurantPreview from '../NominatedRestaurantPreview/NominatedRestaurantPreview';
+
+const { string, arrayOf, shape } = PropTypes;
 
 const CategoryReviewPreview = props => (
   <NomsContext.Consumer>
     {context => {
-      const { categoryRestaurants } = props;
+      const { categoryRestaurants, category } = props;
       const { voteTallies } = context;
       const CategoryRestaurantList = categoryRestaurants.map(restaurant => (
         <NominatedRestaurantPreview
@@ -21,7 +25,7 @@ const CategoryReviewPreview = props => (
       ));
       return (
         <section className="category-card">
-          <h3>{props.category}</h3>
+          <h3>{category}</h3>
           <div className="restaurant-review-preview-box">
             {CategoryRestaurantList}
           </div>
@@ -30,5 +34,10 @@ const CategoryReviewPreview = props => (
     }}
   </NomsContext.Consumer>
 );
+
+CategoryReviewPreview.propTypes = {
+  category: string.isRequired,
+  categoryRestaurants: arrayOf(shape(restaurantType)).isRequired,
+};
 
 export default CategoryReviewPreview;

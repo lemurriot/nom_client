@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import findUserDidLike from '../../utils';
 import NomsContext from '../../NomsContext';
@@ -36,5 +37,12 @@ const NominatedRestaurantPreview = props => (
     }}
   </NomsContext.Consumer>
 );
+
+NominatedRestaurantPreview.propTypes = {
+  category: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  voteCount: PropTypes.number.isRequired,
+};
 
 export default NominatedRestaurantPreview;

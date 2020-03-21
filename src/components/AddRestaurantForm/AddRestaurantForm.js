@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './AddRestaurantForm.css';
+import PropTypes from 'prop-types';
 import NomsContext from '../../NomsContext';
 import ValidationError from '../Validation/Validation';
 import uuid from 'uuid';

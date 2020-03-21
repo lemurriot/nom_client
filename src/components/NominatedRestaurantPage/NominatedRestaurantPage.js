@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import findUserDidLike from '../../utils';
 import NomsContext from '../../NomsContext';
@@ -180,6 +181,15 @@ const NominatedRestaurantPage = props => {
       }}
     </NomsContext.Consumer>
   );
+};
+
+NominatedRestaurantPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      food_category: PropTypes.string.isRequired,
+      restaurantId: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default NominatedRestaurantPage;

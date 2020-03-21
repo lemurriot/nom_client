@@ -25,7 +25,7 @@ const LandingPage = props => (
         (categoryRestaurants, i) => (
           <CategoryReviewPreview
             key={[...uniqueCategories][i]}
-            likesAndComments={context.likesAndComments}
+            // likesAndComments={context.likesAndComments}
             categoryRestaurants={categoryRestaurants}
             category={[...uniqueCategories][i]}
             // loggedIn={props.loggedIn}
@@ -42,7 +42,6 @@ const LandingPage = props => (
                 Nominate a New Restaurant!
               </button>
             </Link>
-            {/* Meep Meep */}
             {reviewPreviewList}
           </main>
           <Footer />
