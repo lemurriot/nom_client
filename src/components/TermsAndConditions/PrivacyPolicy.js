@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function PrivacyPolicy() {
   return (
@@ -12,15 +12,15 @@ function PrivacyPolicy() {
         <br />
         Portland <br />- Oregon , USA
         <br />
-        5038789160{" "}
+        5038789160{' '}
       </address>
       <p>
         It is NomsPDX's policy to respect your privacy regarding any information
         we may collect while operating our website. This Privacy Policy applies
-        to{" "}
+        to{' '}
         <a href="https://nomspdx.papershack.now.sh/">
           https://nomspdx.papershack.now.sh/
-        </a>{" "}
+        </a>{' '}
         (hereinafter, "us", "we", or "https://nomspdx.papershack.now.sh/"). We
         respect your privacy and are committed to protecting personally
         identifiable information you may provide us through the Website. We have
@@ -202,13 +202,11 @@ function PrivacyPolicy() {
         change in this Privacy Policy will constitute your acceptance of such
         change.
       </p>
-      <h2></h2>
-      <p></p>
       <h2>Credit & Contact Information</h2>
       <p>
-        This privacy policy was created at{" "}
+        This privacy policy was created at{' '}
         <a
-          style={{ color: "inherit", textDecoration: "none" }}
+          style={{ color: 'inherit', textDecoration: 'none' }}
           href="https://termsandconditionstemplate.com/privacy-policy-generator/"
           title="Privacy policy template generator"
           target="_blank"
@@ -217,7 +215,7 @@ function PrivacyPolicy() {
           termsandconditionstemplate.com
         </a>
         . If you have any questions about this Privacy Policy, please contact us
-        via <a href="mailto:omnomnom.pdx@gmail.com">email</a> or{" "}
+        via <a href="mailto:omnomnom.pdx@gmail.com">email</a> or{' '}
         <a href="tel:5038789160">phone</a>.
       </p>
     </section>

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import NomsContext from '../NomsContext';
-import STORE from '../store.js';
-import uuid from 'uuid';
-// import config from "../config";
 import {
   fetchUserData,
   fetchRestaurantsData,
@@ -16,7 +13,6 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
-import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
 import MyReviews from './MyReviews/MyReviews';
@@ -32,11 +28,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       loggedIn: true,
-      userId: uuid.v4(),
       nominatedRestaurants: [],
-      users: [],
       user: {},
-      likes_and_comments: [],
       likesAndComments: [],
       voteTallies: {},
       error: null,
@@ -44,21 +37,12 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.setState(STORE);
-    //add current user session
     this.getUser();
     this.getRestaurants();
     this.getLikesAndComments();
   }
 
-  getUser = () =>
-    fetchUserData().then(user =>
-      this.setState({ user }, () => {
-        const newUserId = this.state.user.id;
-        const newUserObj = { username: 'You' };
-        this.setState(({ users }) => (users[newUserId] = newUserObj));
-      })
-    );
+  getUser = () => fetchUserData().then(user => this.setState({ user }));
 
   getRestaurants = () =>
     fetchRestaurantsData().then(nominatedRestaurants =>
@@ -129,7 +113,6 @@ export default class App extends Component {
       loggedIn,
       userId,
       nominatedRestaurants,
-      users,
       user,
       voteTallies,
       likesAndComments,
@@ -138,7 +121,6 @@ export default class App extends Component {
       loggedIn,
       userId,
       nominatedRestaurants,
-      users,
       user,
       voteTallies,
       likesAndComments,
@@ -177,25 +159,9 @@ export default class App extends Component {
             />
             <Route
               path="/category/:food_category/:restaurant_id"
-              render={props => (
-                <NominatedRestaurantPage
-                  {...props}
-                  userId={userId}
-                  loggedIn={loggedIn}
-                  onLogout={this.handleLogout}
-                />
-              )}
+              render={props => <NominatedRestaurantPage match={props.match} />}
             />
-            <Route
-              path="/about"
-              render={props => (
-                <About
-                  {...props}
-                  loggedIn={loggedIn}
-                  onLogout={this.handleLogout}
-                />
-              )}
-            />
+            <Route path="/about" component={About} />
             <Route path="/termsandconditions" component={TermsAndConditions} />
             <Route path="/privacypolicy" component={PrivacyPolicy} />
             <Route component={NotFoundPage} />
