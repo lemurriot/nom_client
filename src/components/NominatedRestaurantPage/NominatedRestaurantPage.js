@@ -1,10 +1,9 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import findUserDidLike from '../../utils';
 import NomsContext from '../../NomsContext';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import Comments from '../Comments/Comments';
 import VoteButtons from '../VoteButtons/VoteButtons';
 import './NominatedRestaurantPage.css';
@@ -15,6 +14,7 @@ const NominatedRestaurantPage = props => {
   const [restaurantInfo, setrestaurantInfo] = useState([]);
   const [commentsFormIsShown, showCommentsForm] = useState(false);
   const [error, setError] = useState({});
+  // eslint-disable-next-line react/destructuring-assignment
   const { restaurant_id } = props.match.params;
   const restaurantId = Number(restaurant_id);
 
@@ -36,9 +36,7 @@ const NominatedRestaurantPage = props => {
           restaurantId,
           user.id
         );
-        const likeId = findIfUserDidLike.length
-          ? findIfUserDidLike[0].id
-          : null;
+        const likeId = findIfUserDidLike.length ? findIfUserDidLike[0].id : 0;
 
         const {
           name,
@@ -96,12 +94,6 @@ const NominatedRestaurantPage = props => {
             );
         return (
           <>
-            <Header
-              {...props}
-              loggedIn
-              // loggedIn={props.loggedIn}
-              // onLogout={props.onLogout}
-            />
             {restaurantInfo.id && (
               <article className="restaurant-page-main-container">
                 <Link to="/">Go back</Link>
@@ -113,7 +105,7 @@ const NominatedRestaurantPage = props => {
                   userDidLike={findIfUserDidLike.length}
                   likeId={likeId}
                 />
-                {likeId && !findIfUserDidLike[0].comment.length && (
+                {!!likeId && !findIfUserDidLike[0].comment.length && (
                   <span
                     className="comment-action"
                     role="link"
@@ -124,7 +116,7 @@ const NominatedRestaurantPage = props => {
                     Add Comment
                   </span>
                 )}
-                {likeId && !!findIfUserDidLike[0].comment.length && (
+                {!!likeId && !!findIfUserDidLike[0].comment.length && (
                   <>
                     <span
                       className="comment-action"
@@ -175,7 +167,6 @@ const NominatedRestaurantPage = props => {
               </article>
             )}
             ;
-            <Footer />
           </>
         );
       }}
@@ -187,8 +178,8 @@ NominatedRestaurantPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       food_category: PropTypes.string.isRequired,
-      restaurantId: PropTypes.string.isRequired,
-    }),
+      restaurant_id: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
 };
 

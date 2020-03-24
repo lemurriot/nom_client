@@ -16,7 +16,7 @@ const NominatedRestaurantPreview = props => (
         restaurantId,
         user.id
       );
-      const likeId = findIfUserDidLike.length ? findIfUserDidLike[0].id : null;
+      const likeId = findIfUserDidLike.length ? findIfUserDidLike[0].id : 0;
 
       return (
         <div className="preview-nom-box">
@@ -42,7 +42,11 @@ NominatedRestaurantPreview.propTypes = {
   category: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  voteCount: PropTypes.number.isRequired,
+  voteCount: PropTypes.number,
+};
+
+NominatedRestaurantPreview.defaultProps = {
+  voteCount: 0,
 };
 
 export default NominatedRestaurantPreview;
