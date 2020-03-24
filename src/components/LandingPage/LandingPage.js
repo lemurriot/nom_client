@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import CategoryReviewPreview from '../CategoryReviewPreview/CategoryReviewPreview';
 import './LandingPage.css';
 import NomsContext from '../../NomsContext';
 
-const LandingPage = props => (
+const LandingPage = () => (
   <NomsContext.Consumer>
     {context => {
       const { nominatedRestaurants } = context;
@@ -35,7 +33,6 @@ const LandingPage = props => (
 
       return (
         <>
-          <Header {...props} loggedIn onLogout={context.onLogout} />
           <main className="landing-page-main-container">
             <Link to="/add-new-nom">
               <button type="button" className="add-new-nom-btn btn">
@@ -44,7 +41,6 @@ const LandingPage = props => (
             </Link>
             {reviewPreviewList}
           </main>
-          <Footer />
         </>
       );
     }}

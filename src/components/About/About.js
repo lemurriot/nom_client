@@ -1,13 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import "./About.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './About.css';
 
-export default function About(props) {
+export default function About() {
   return (
     <>
-      <Header {...props} loggedIn={props.loggedIn} onLogout={props.onLogout} />
       <Link to="/">Go back</Link>
       <main className="about-main-container">
         <h2>Hello! Welcome to NomsPDX</h2>
@@ -39,7 +36,6 @@ export default function About(props) {
           </p>
         </article>
       </main>
-      <Footer />
     </>
   );
 }

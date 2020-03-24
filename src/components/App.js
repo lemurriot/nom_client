@@ -12,6 +12,8 @@ import {
   deleteUpvote,
   patchComment,
 } from '../api/routes';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
 import LoginForm from './LoginForm/LoginForm';
@@ -111,41 +113,35 @@ export default class App extends Component {
   };
 
   addEditComment = async (commentId, updatedComment, restaurantId) => {
-    patchComment(commentId, updatedComment, this.state.user.id, restaurantId);
+    const { user, likesAndComments } = this.state;
+    patchComment(commentId, updatedComment, user.id, restaurantId);
     // console.log(commentId, updatedComment)
-    const newLikesAndComments = [...this.state.likesAndComments];
-    console.log(newLikesAndComments);
+    const newLikesAndComments = [...likesAndComments];
     const commentToUpdate = newLikesAndComments.findIndex(
       ({ id }) => id === commentId
     );
-    console.log(commentToUpdate);
     newLikesAndComments[commentToUpdate].comment = updatedComment;
     this.setState({ likesAndComments: newLikesAndComments });
   };
 
-  handleLogin = e => {
-    e.preventDefault();
-    this.setState({
-      loggedIn: true,
-    });
-  };
-
-  handleLogout = e => {
-    e.preventDefault();
-    this.setState({
-      loggedIn: false,
-    });
-  };
-
   render() {
+    const {
+      loggedIn,
+      userId,
+      nominatedRestaurants,
+      users,
+      user,
+      voteTallies,
+      likesAndComments,
+    } = this.state;
     const contextVal = {
-      loggedIn: this.state.loggedIn,
-      userId: this.state.userId,
-      nominatedRestaurants: this.state.nominatedRestaurants,
-      users: this.state.users,
-      user: this.state.user,
-      voteTallies: this.state.voteTallies,
-      likesAndComments: this.state.likesAndComments,
+      loggedIn,
+      userId,
+      nominatedRestaurants,
+      users,
+      user,
+      voteTallies,
+      likesAndComments,
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
       undoVoteForRestaurant: this.handleUndoVoteForRestaurant,
@@ -154,26 +150,9 @@ export default class App extends Component {
     return (
       <NomsContext.Provider value={contextVal}>
         <div className="App">
+          <Header />
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={routerProps => (
-                <LandingPage
-                  {...routerProps}
-                  // likesAndComments={this.state.likesAndComments}
-                  // nominatedRestaurants={this.state.nominatedRestaurants}
-                  // loggedIn={this.state.loggedIn}
-                  // onLogout={this.handleLogout}
-                />
-              )}
-            />
-            <Route
-              path="/login"
-              render={props => (
-                <LoginForm {...props} onLogin={this.handleLogin} />
-              )}
-            />
+            <Route exact path="/" component={LandingPage} />
             <Route path="/register" component={RegisterForm} />
             <Route
               path="/add-new-nom"
@@ -181,7 +160,7 @@ export default class App extends Component {
                 <AddRestaurantForm
                   {...props}
                   handleAddRestaurant={this.handleAddRestaurant}
-                  userId={this.state.userId}
+                  userId={userId}
                 />
               )}
             />
@@ -190,10 +169,9 @@ export default class App extends Component {
               render={props => (
                 <MyReviews
                   {...props}
-                  restaurants={this.state.nominatedRestaurants}
-                  userId={this.state.userId}
-                  loggedIn={this.state.loggedIn}
-                  onLogout={this.handleLogout}
+                  restaurants={nominatedRestaurants}
+                  userId={userId}
+                  loggedIn={loggedIn}
                 />
               )}
             />
@@ -202,8 +180,8 @@ export default class App extends Component {
               render={props => (
                 <NominatedRestaurantPage
                   {...props}
-                  userId={this.state.userId}
-                  loggedIn={this.state.loggedIn}
+                  userId={userId}
+                  loggedIn={loggedIn}
                   onLogout={this.handleLogout}
                 />
               )}
@@ -213,7 +191,7 @@ export default class App extends Component {
               render={props => (
                 <About
                   {...props}
-                  loggedIn={this.state.loggedIn}
+                  loggedIn={loggedIn}
                   onLogout={this.handleLogout}
                 />
               )}
@@ -222,6 +200,7 @@ export default class App extends Component {
             <Route path="/privacypolicy" component={PrivacyPolicy} />
             <Route component={NotFoundPage} />
           </Switch>
+          <Footer />
         </div>
       </NomsContext.Provider>
     );

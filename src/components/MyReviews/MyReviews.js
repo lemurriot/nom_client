@@ -1,12 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function MyReviews(props) {
+export default function MyReviews() {
   return (
     <>
-      <Header {...props} loggedIn={props.loggedIn} onLogout={props.onLogout} />
       <main className="my-reviews-main-container">
         <Link to="/add-new-nom">
           <button className="add-new-nom btn">
@@ -16,7 +13,6 @@ export default function MyReviews(props) {
         <section className="my-noms"></section>
         <section className="my-upvotes"></section>
       </main>
-      <Footer />
     </>
   );
 }
