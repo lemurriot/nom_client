@@ -8,12 +8,13 @@ import {
   postNewUpvote,
   deleteUpvote,
   patchComment,
+  postNewRestaurant,
 } from '../api/routes';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
-import RegisterForm from './RegisterForm/RegisterForm';
+// import RegisterForm from './RegisterForm/RegisterForm';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
 import MyReviews from './MyReviews/MyReviews';
 import About from './About/About';
@@ -63,14 +64,32 @@ export default class App extends Component {
       this.setState({ likesAndComments })
     );
 
-  handleAddRestaurant = (newRestaurant, newLike, newLikesTableID) => {
-    this.setState({
-      nominatedRestaurants: [...this.state.nominatedRestaurants, newRestaurant],
-    });
-    this.setState(
-      ({ likes_and_comments }) =>
-        (likes_and_comments[newLikesTableID] = newLike)
+  handleAddRestaurant = async (newRestaurant, newLike, newLikesTableID) => {
+    console.log('app 68: ', newRestaurant);
+    const {
+      restaurantName,
+      foodCategory,
+      subtitle,
+      address,
+      nominatedByUser,
+      comment,
+    } = newRestaurant;
+    await postNewRestaurant(
+      restaurantName,
+      foodCategory,
+      subtitle,
+      address,
+      nominatedByUser,
+      comment
     );
+    console.log('posted');
+    // this.setState({
+    //   nominatedRestaurants: [...this.state.nominatedRestaurants, newRestaurant],
+    // });
+    // this.setState(
+    //   ({ likes_and_comments }) =>
+    //     (likes_and_comments[newLikesTableID] = newLike)
+    // );
   };
 
   handleVoteForRestaurant = async (userId, restaurantId) => {
@@ -110,16 +129,12 @@ export default class App extends Component {
 
   render() {
     const {
-      loggedIn,
-      userId,
       nominatedRestaurants,
       user,
       voteTallies,
       likesAndComments,
     } = this.state;
     const contextVal = {
-      loggedIn,
-      userId,
       nominatedRestaurants,
       user,
       voteTallies,
@@ -135,26 +150,12 @@ export default class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route path="/register" component={RegisterForm} />
-            <Route
-              path="/add-new-nom"
-              render={props => (
-                <AddRestaurantForm
-                  {...props}
-                  handleAddRestaurant={this.handleAddRestaurant}
-                  userId={userId}
-                />
-              )}
-            />
+            {/* <Route path="/register" component={RegisterForm} /> */}
+            <Route path="/add-new-nom" component={AddRestaurantForm} />
             <Route
               path="/my-reviews"
               render={props => (
-                <MyReviews
-                  {...props}
-                  restaurants={nominatedRestaurants}
-                  userId={userId}
-                  loggedIn={loggedIn}
-                />
+                <MyReviews {...props} restaurants={nominatedRestaurants} />
               )}
             />
             <Route

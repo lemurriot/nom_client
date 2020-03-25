@@ -91,3 +91,33 @@ export const patchComment = async (
   ).then(res => res.json());
   return addEditCommentConfirmation;
 };
+
+export const postNewRestaurant = async (
+  restaurantName,
+  foodCategory,
+  subtitle,
+  address,
+  nominatedByUser,
+  comment = ''
+) => {
+  const postNewRestaurantConfirmation = await fetch(
+    `${config.API_ENDPOINT}/restaurants`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        restaurant_name: restaurantName,
+        food_category: foodCategory,
+        subtitle,
+        address,
+        nominated_by_user: nominatedByUser,
+        comment,
+      }),
+    }
+  ).then(res => res.json());
+  console.log(postNewRestaurantConfirmation);
+  return postNewRestaurantConfirmation;
+};
