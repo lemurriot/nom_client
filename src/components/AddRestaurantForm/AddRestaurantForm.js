@@ -7,6 +7,8 @@ import NomsContext from '../../NomsContext';
 // import ValidationError from '../Validation/Validation';
 import CurrentNominatedRestaurants from './CurrentNominatedRestaurants';
 import GoogleAutocompleteResults from './GoogleAutocompleteResults';
+import CreateNewRestaurantForm from './CreateNewRestaurantForm';
+import SubmitForm from './SubmitForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const AddRestaurantForm = () => {
@@ -20,16 +22,25 @@ const AddRestaurantForm = () => {
     touched: false,
   });
   const [googleResults, setGoogleResults] = useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState({
+    name: '',
+    subtitle: '',
+    id: '',
+    apiReferred: false,
+  });
+  const [showSubmitForm, setShowSubmitForm] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+
   return (
     <NomsContext.Consumer>
-      {context => {
+      {(context) => {
         const { nominateNewRestaurant, user, nominatedRestaurants } = context;
 
-        const handleCategoryChange = category => {
+        const handleCategoryChange = (category) => {
           setRestaurantCategory({ value: category, touched: true });
         };
 
-        const handleSearchInputChange = searchString => {
+        const handleSearchInputChange = (searchString) => {
           setRestaurantName({
             value: searchString,
             touched: true,
@@ -45,13 +56,26 @@ const AddRestaurantForm = () => {
                 sessionToken: googleSessionId,
               }),
             })
-              .then(res => res.json())
-              .then(res => {
+              .then((res) => res.json())
+              .then((res) => {
                 console.log(res);
                 if (res.status === 'OK') setGoogleResults(res.predictions);
               });
           }
         };
+
+        const handleSelectResult = (resultIndex) => {
+          setSelectedRestaurant({
+            name: googleResults[resultIndex].structured_formatting.main_text,
+            subtitle:
+              googleResults[resultIndex].structured_formatting.secondary_text,
+            id: googleResults[resultIndex].id,
+            apiReferred: true,
+          });
+          setShowSubmitForm(true);
+        };
+
+        const handleSelectCreateNew = () => setShowCreateForm(true);
 
         const submitNewRestaurant = () => {
           const newRestaurant = {
@@ -72,6 +96,13 @@ const AddRestaurantForm = () => {
                 <h1>NomsPDX</h1>
               </div>
               <form onSubmit={() => alert('submit')}>
+                <div className="buttons">
+                  <Link to="/">
+                    <button type="button" className="cxl-btn">
+                      Cancel
+                    </button>
+                  </Link>
+                </div>
                 <div className="container">
                   <h2>Nominate a Restaurant for Best in Category!</h2>
                   <label htmlFor="food-category">Category (required)</label>
@@ -82,7 +113,7 @@ const AddRestaurantForm = () => {
                     aria-label="food category"
                     aria-required="true"
                     aria-describedby="categoryError"
-                    onChange={e => handleCategoryChange(e.target.value)}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
                     required
                   >
                     <option disabled value="">
@@ -94,7 +125,7 @@ const AddRestaurantForm = () => {
                     <option value="Falafel">Falafel</option>
                   </select>
                   <label htmlFor="restaurant-name">
-                    Restaurant Name (required)
+                    Search Restaurants (required)
                   </label>
                   <input
                     type="text"
@@ -105,7 +136,7 @@ const AddRestaurantForm = () => {
                     aria-label="restaurant name"
                     aria-required="true"
                     aria-describedby="restaurantError"
-                    onChange={e => handleSearchInputChange(e.target.value)}
+                    onChange={(e) => handleSearchInputChange(e.target.value)}
                     onFocus={() => setGoogleSessionId(uuid())}
                     disabled={!restaurantCategory.value}
                     required
@@ -116,28 +147,28 @@ const AddRestaurantForm = () => {
                       validationId={'restaurantError'}
                     />
                   )} */}
-                  <GoogleAutocompleteResults results={googleResults} />
-                  {/* <label htmlFor="comment">Comment (optional)</label>
-                  <textarea
-                    name="item-comment"
-                    id="item-comment"
-                    placeholder="Comment on this food item or experience"
-                    value={'meep meep'}
-                    aria-label="comment on this entry"
-                    aria-required="true"
-                    aria-describedby="commentError"
-                    onChange={e => this.handleCommentInputChange(e)}
-                  /> */}
-                </div>
-                <div className="buttons">
-                  <Link to="/">
-                    <button type="button" className="cxl-btn">
-                      Cancel
-                    </button>
-                  </Link>
-                  <button type="submit" className="submit-btn" disabled={false}>
-                    Submit
-                  </button>
+                  {restaurantName.value.length > 2 && (
+                    <GoogleAutocompleteResults
+                      results={googleResults}
+                      onSelectResult={handleSelectResult}
+                      onSelectCreateNew={handleSelectCreateNew}
+                    />
+                  )}
+                  {showSubmitForm && (
+                    <SubmitForm
+                      selectedRestaurant={selectedRestaurant}
+                      setShowSubmitForm={setShowSubmitForm}
+                      category={restaurantCategory.value}
+                    />
+                  )}
+                  {showCreateForm && (
+                    <CreateNewRestaurantForm
+                      selectedRestaurant={selectedRestaurant}
+                      setShowSubmitForm={setShowSubmitForm}
+                      setShowCreateForm={setShowCreateForm}
+                      category={restaurantCategory.value}
+                    />
+                  )}
                 </div>
               </form>
             </section>
