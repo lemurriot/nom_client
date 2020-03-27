@@ -25,6 +25,7 @@ const AddRestaurantForm = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState({
     name: '',
     subtitle: '',
+    address: '',
     id: '',
     apiReferred: false,
   });
@@ -69,6 +70,7 @@ const AddRestaurantForm = () => {
             name: googleResults[resultIndex].structured_formatting.main_text,
             subtitle:
               googleResults[resultIndex].structured_formatting.secondary_text,
+            address: '',
             id: googleResults[resultIndex].id,
             apiReferred: true,
           });
@@ -163,7 +165,7 @@ const AddRestaurantForm = () => {
                   )}
                   {showCreateForm && (
                     <CreateNewRestaurantForm
-                      selectedRestaurant={selectedRestaurant}
+                      setSelectedRestaurant={setSelectedRestaurant}
                       setShowSubmitForm={setShowSubmitForm}
                       setShowCreateForm={setShowCreateForm}
                       category={restaurantCategory.value}

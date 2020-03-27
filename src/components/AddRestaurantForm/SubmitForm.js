@@ -24,7 +24,7 @@ const SubmitForm = ({
             validate={(values) => {
               const errors = {};
               if (values.comment.length > 185) {
-                errors.name = 'Comment cannot exceed 185 characters';
+                errors.comment = 'Comment cannot exceed 185 characters';
               }
               return errors;
             }}

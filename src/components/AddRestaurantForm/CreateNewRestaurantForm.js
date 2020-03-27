@@ -2,27 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-const CreateNewRestaurantForm = ({ setShowCreateForm }) => (
+const CreateNewRestaurantForm = ({
+  setShowCreateForm,
+  setShowSubmitForm,
+  setSelectedRestaurant,
+  category,
+}) => (
   <div className="submit-form--outer">
     <div className="submit-form--inner">
       <button type="button" onClick={() => setShowCreateForm(false)}>
         Cancel
       </button>
       <div className="submit-form--container">
-        <h4>Add a New Restaurant</h4>
+        <h4>Nominate a New Restaurant for Best {category}</h4>
         <Formik
           initialValues={{ name: '', address: '' }}
           validate={(values) => {
             const errors = {};
-            if (values.comment.length > 185) {
+            if (values.name.length > 185) {
               errors.name = 'Comment cannot exceed 185 characters';
             }
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+              setSelectedRestaurant({
+                name: values.name,
+                address: values.address,
+                subtitle: '',
+                id: '',
+                apiReferred: false,
+              });
               setSubmitting(false);
+              setShowSubmitForm(true);
+              setShowCreateForm(false);
             }, 400);
           }}
         >
@@ -46,11 +59,16 @@ const CreateNewRestaurantForm = ({ setShowCreateForm }) => (
 );
 
 CreateNewRestaurantForm.propTypes = {
+  category: PropTypes.string.isRequired,
   setShowCreateForm: PropTypes.func,
+  setShowSubmitForm: PropTypes.func,
+  setSelectedRestaurant: PropTypes.func,
 };
 
 CreateNewRestaurantForm.defaultProps = {
   setShowCreateForm: () => {},
+  setShowSubmitForm: () => {},
+  setSelectedRestaurant: () => {},
 };
 
 export default CreateNewRestaurantForm;
