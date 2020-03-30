@@ -11,8 +11,9 @@ import CreateNewRestaurantForm from './CreateNewRestaurantForm';
 import SubmitForm from './SubmitForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
-const AddRestaurantForm = () => {
+const AddRestaurantForm = ({ history }) => {
   const [googleSessionId, setGoogleSessionId] = useState('');
+  const [googleResults, setGoogleResults] = useState([]);
   const [restaurantName, setRestaurantName] = useState({
     value: '',
     touched: false,
@@ -21,7 +22,6 @@ const AddRestaurantForm = () => {
     value: '',
     touched: false,
   });
-  const [googleResults, setGoogleResults] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState({
     name: '',
     subtitle: '',
@@ -79,17 +79,20 @@ const AddRestaurantForm = () => {
 
         const handleSelectCreateNew = () => setShowCreateForm(true);
 
-        const submitNewRestaurant = () => {
+        const handleSubmitForm = (comment) => {
           const newRestaurant = {
-            restaurantName: 'PDX Pizza',
-            foodCategory: 'Pizza',
-            subtitle: 'SE Belmont',
-            address: '2323 SE Belmont',
+            restaurantName: selectedRestaurant.name,
+            foodCategory: restaurantCategory.value,
+            subtitle: selectedRestaurant.subtitle,
+            address: selectedRestaurant.address,
+            googleId: selectedRestaurant.id,
             nominatedByUser: user.id,
-            comment: 'Classic NY style, no frills, just great pizza',
+            comment,
           };
           nominateNewRestaurant(newRestaurant);
+          history.push('/');
         };
+
         return (
           <main className="add-restaurant-form--page">
             <section className="add-restaurant-form--outer">
@@ -143,12 +146,6 @@ const AddRestaurantForm = () => {
                     disabled={!restaurantCategory.value}
                     required
                   />
-                  {/* {restaurantName.touched && (
-                    <ValidationError
-                      message={this.validateRestaurantName()}
-                      validationId={'restaurantError'}
-                    />
-                  )} */}
                   {restaurantName.value.length > 2 && (
                     <GoogleAutocompleteResults
                       results={googleResults}
@@ -161,6 +158,7 @@ const AddRestaurantForm = () => {
                       selectedRestaurant={selectedRestaurant}
                       setShowSubmitForm={setShowSubmitForm}
                       category={restaurantCategory.value}
+                      onSubmitForm={handleSubmitForm}
                     />
                   )}
                   {showCreateForm && (

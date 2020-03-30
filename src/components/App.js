@@ -28,12 +28,11 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true,
       nominatedRestaurants: [],
       user: {},
       likesAndComments: [],
       voteTallies: {},
-      error: null,
+      // error: null,
     };
   }
 
@@ -43,60 +42,71 @@ export default class App extends Component {
     this.getLikesAndComments();
   }
 
-  getUser = () => fetchUserData().then(user => this.setState({ user }));
+  getUser = () => fetchUserData().then((user) => this.setState({ user }));
 
   getRestaurants = () =>
-    fetchRestaurantsData().then(nominatedRestaurants =>
+    fetchRestaurantsData().then((nominatedRestaurants) =>
       this.setState({ nominatedRestaurants }, () => this.getVoteTallies())
     );
 
   getVoteTallies = () => {
     const voteTallyObj = {};
     this.state.nominatedRestaurants.forEach(
-      restaurant =>
+      (restaurant) =>
         (voteTallyObj[restaurant.id] = Number(restaurant.vote_count))
     );
     this.setState({ voteTallies: voteTallyObj });
   };
 
   getLikesAndComments = () =>
-    fetchAllLikesAndComments().then(likesAndComments =>
+    fetchAllLikesAndComments().then((likesAndComments) =>
       this.setState({ likesAndComments })
     );
 
-  handleAddRestaurant = async (newRestaurant, newLike, newLikesTableID) => {
-    console.log('app 68: ', newRestaurant);
+  handleAddRestaurant = async (newRestaurant) => {
     const {
       restaurantName,
       foodCategory,
       subtitle,
       address,
+      googleId,
       nominatedByUser,
       comment,
     } = newRestaurant;
-    await postNewRestaurant(
+    const newRestaurantFromDb = await postNewRestaurant(
       restaurantName,
       foodCategory,
       subtitle,
       address,
+      googleId,
       nominatedByUser,
       comment
     );
-    console.log('posted');
-    // this.setState({
-    //   nominatedRestaurants: [...this.state.nominatedRestaurants, newRestaurant],
-    // });
-    // this.setState(
-    //   ({ likes_and_comments }) =>
-    //     (likes_and_comments[newLikesTableID] = newLike)
-    // );
+    this.setState(
+      (prevState) => ({
+        nominatedRestaurants: [
+          ...prevState.nominatedRestaurants,
+          newRestaurantFromDb,
+        ],
+      }),
+      () => {
+        const newComment = newRestaurantFromDb.comments[0];
+        this.setState((prevState) => ({
+          likesAndComments: [...prevState.likesAndComments, newComment],
+          voteTallies: {
+            ...prevState.voteTallies,
+            [newRestaurantFromDb.id]: 1,
+          },
+        }));
+      }
+    );
   };
 
   handleVoteForRestaurant = async (userId, restaurantId) => {
     const newUpvote = await postNewUpvote(userId, restaurantId);
     const newVoteTallies = { ...this.state.voteTallies };
     ++newVoteTallies[restaurantId];
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       likesAndComments: [...prevState.likesAndComments, newUpvote],
       voteTallies: newVoteTallies,
     }));
@@ -154,13 +164,15 @@ export default class App extends Component {
             <Route path="/add-new-nom" component={AddRestaurantForm} />
             <Route
               path="/my-reviews"
-              render={props => (
+              render={(props) => (
                 <MyReviews {...props} restaurants={nominatedRestaurants} />
               )}
             />
             <Route
               path="/category/:food_category/:restaurant_id"
-              render={props => <NominatedRestaurantPage match={props.match} />}
+              render={(props) => (
+                <NominatedRestaurantPage match={props.match} />
+              )}
             />
             <Route path="/about" component={About} />
             <Route path="/termsandconditions" component={TermsAndConditions} />

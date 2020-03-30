@@ -4,7 +4,7 @@ export const fetchUserData = async () => {
   const userData = await fetch(`${config.API_ENDPOINT}/users`, {
     method: 'GET',
     credentials: 'include',
-  }).then(res => res.json());
+  }).then((res) => res.json());
   return userData;
 };
 
@@ -12,7 +12,7 @@ export const fetchRestaurantsData = async () => {
   const restaurants = await fetch(`${config.API_ENDPOINT}/restaurants`, {
     method: 'GET',
     // credentials: "include"
-  }).then(res => res.json());
+  }).then((res) => res.json());
   return restaurants;
 };
 
@@ -22,18 +22,18 @@ export const fetchAllLikesAndComments = async () => {
     {
       method: 'Get',
     }
-  ).then(res => res.json());
+  ).then((res) => res.json());
   return likesAndComments;
 };
 
-export const fetchLikesAndComments = async restaurantId => {
+export const fetchLikesAndComments = async (restaurantId) => {
   const likesAndComments = await fetch(
     `${config.API_ENDPOINT}/restaurants/likes/${restaurantId}`,
     {
       method: 'GET',
       // credentials: "include"
     }
-  ).then(res => res.json());
+  ).then((res) => res.json());
   return likesAndComments;
 };
 
@@ -48,7 +48,7 @@ export const postNewUpvote = async (userId, restaurantId) => {
       userId,
       restaurantId,
     }),
-  }).then(res => res.json());
+  }).then((res) => res.json());
   return upvoteConfirmation.newUpvoteObject[0];
 };
 
@@ -63,7 +63,7 @@ export const deleteUpvote = async (userId, restaurantId) => {
       userId,
       restaurantId,
     }),
-  }).then(res => res.json());
+  }).then((res) => res.json());
   return deleteConfirmation;
 };
 
@@ -88,16 +88,17 @@ export const patchComment = async (
         updatedComment,
       }),
     }
-  ).then(res => res.json());
+  ).then((res) => res.json());
   return addEditCommentConfirmation;
 };
 
 export const postNewRestaurant = async (
-  restaurantName,
-  foodCategory,
+  restaurant_name,
+  food_category,
   subtitle,
   address,
-  nominatedByUser,
+  googleid,
+  nominated_by_user,
   comment = ''
 ) => {
   const postNewRestaurantConfirmation = await fetch(
@@ -109,15 +110,16 @@ export const postNewRestaurant = async (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        restaurant_name: restaurantName,
-        food_category: foodCategory,
+        restaurant_name,
+        food_category,
         subtitle,
         address,
-        nominated_by_user: nominatedByUser,
+        googleid,
+        nominated_by_user,
         comment,
       }),
     }
-  ).then(res => res.json());
+  ).then((res) => res.json());
   console.log(postNewRestaurantConfirmation);
   return postNewRestaurantConfirmation;
 };

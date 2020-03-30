@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 const SubmitForm = ({
   selectedRestaurant: { name, subtitle, id, apiReferred },
   setShowSubmitForm,
+  onSubmitForm,
   category,
 }) => {
   const closeSubmitForm = () => setShowSubmitForm(false);
@@ -30,8 +31,9 @@ const SubmitForm = ({
             }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
+                onSubmitForm(values.comment);
                 setSubmitting(false);
+                setShowSubmitForm(false);
               }, 400);
             }}
           >
