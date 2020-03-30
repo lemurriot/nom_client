@@ -2,15 +2,21 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../../../node_modules/gestalt/dist/gestalt.css';
+import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
+import { Box, Button, Flyout, Text, Layer } from 'gestalt';
 import config from '../../config';
 import NomsContext from '../../NomsContext';
 import './Header.css';
 
 const Header = () => {
   const linkStyles = { textDecoration: 'none', color: 'white' };
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const anchorRef = React.useRef();
+
   return (
     <NomsContext.Consumer>
-      {context => {
+      {(context) => {
         const { user } = context;
 
         const loginLink = (
@@ -49,9 +55,21 @@ const Header = () => {
           <header className="header">
             <div>
               <div className="brand">
-                <span className="logo">
-                  <FontAwesomeIcon icon="hamburger" color="#bc47ca" />
-                </span>
+                <Box className="logo" display="inlineBlock" ref={anchorRef}>
+                  <span
+                    accessibilityExpanded={!!openMenu}
+                    accessibilityHaspopup
+                    onClick={() => setOpenMenu(!openMenu)}
+                  >
+                    <FontAwesomeIcon icon="hamburger" color="#bc47ca" />
+                  </span>
+                  {openMenu && (
+                    <FlyoutMenu
+                      anchorRef={anchorRef.current}
+                      setOpenMenu={setOpenMenu}
+                    />
+                  )}
+                </Box>
                 <Link to="/" style={{ textDecoration: 'none', height: '100%' }}>
                   <h1>NomsPDX</h1>
                 </Link>

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import NomsContext from '../NomsContext';
@@ -50,11 +51,11 @@ export default class App extends Component {
     );
 
   getVoteTallies = () => {
+    const { nominatedRestaurants } = this.state;
     const voteTallyObj = {};
-    this.state.nominatedRestaurants.forEach(
-      (restaurant) =>
-        (voteTallyObj[restaurant.id] = Number(restaurant.vote_count))
-    );
+    nominatedRestaurants.forEach((restaurant) => {
+      voteTallyObj[restaurant.id] = Number(restaurant.vote_count);
+    });
     this.setState({ voteTallies: voteTallyObj });
   };
 
@@ -103,8 +104,9 @@ export default class App extends Component {
   };
 
   handleVoteForRestaurant = async (userId, restaurantId) => {
+    const { voteTallies } = this.state;
     const newUpvote = await postNewUpvote(userId, restaurantId);
-    const newVoteTallies = { ...this.state.voteTallies };
+    const newVoteTallies = { ...voteTallies };
     ++newVoteTallies[restaurantId];
     this.setState((prevState) => ({
       likesAndComments: [...prevState.likesAndComments, newUpvote],
@@ -113,12 +115,13 @@ export default class App extends Component {
   };
 
   handleUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
+    const { voteTallies, likesAndComments } = this.state;
     this.addEditComment(likesCommentsId, '', restaurantId);
     deleteUpvote(userId, restaurantId);
-    const newVoteTallies = { ...this.state.voteTallies };
+    const newVoteTallies = { ...voteTallies };
     --newVoteTallies[restaurantId];
     this.setState({
-      likesAndComments: this.state.likesAndComments.filter(
+      likesAndComments: likesAndComments.filter(
         ({ id }) => id !== likesCommentsId
       ),
       voteTallies: newVoteTallies,
@@ -170,9 +173,7 @@ export default class App extends Component {
             />
             <Route
               path="/category/:food_category/:restaurant_id"
-              render={(props) => (
-                <NominatedRestaurantPage match={props.match} />
-              )}
+              render={({ match }) => <NominatedRestaurantPage match={match} />}
             />
             <Route path="/about" component={About} />
             <Route path="/termsandconditions" component={TermsAndConditions} />
