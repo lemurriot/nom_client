@@ -11,18 +11,33 @@ import './FlyoutMenu.css';
 const FlyoutMenu = ({ anchorRef, setMenuIsOpen }) => {
   const menuAnimation = useSpring({
     opacity: 1,
-    from: { opacity: 0 },
-    duration: 4000,
+    from: { opacity: 0.3 },
+    duration: 3500,
   });
 
   const linksList = [
-    <Link to="/">Home</Link>,
-    <Link to="/">Profile</Link>,
-    <Link to="/about">About</Link>,
-    <Link to="/termsandconditions">Terms and Conditions</Link>,
-    <Link to="/privacypolicy">Privacy Policy</Link>,
+    {
+      id: 1,
+      path: '/',
+      text: 'Home',
+    },
+    {
+      id: 2,
+      path: '/profile',
+      text: 'Profile',
+    },
+    {
+      id: 3,
+      path: '/about',
+      text: 'About',
+    },
+    {
+      id: 4,
+      path: '/termsandconditions',
+      text: 'Terms and Conditions',
+    },
   ];
-  const config = { mass: 5, tension: 2000, friction: 200 };
+  const config = { mass: 5.5, tension: 1200, friction: 110, clamp: true };
   const trail = useTrail(linksList.length, {
     config,
     opacity: 1,
@@ -54,7 +69,7 @@ const FlyoutMenu = ({ anchorRef, setMenuIsOpen }) => {
             <ul>
               {trail.map(({ x, height, ...rest }, index) => (
                 <animated.li
-                  key={linksList[index]}
+                  key={linksList[index].id}
                   className="flyout-menu-links--list-item"
                   onClick={() => setMenuIsOpen(false)}
                   style={{
@@ -62,9 +77,11 @@ const FlyoutMenu = ({ anchorRef, setMenuIsOpen }) => {
                     transform: x.interpolate((x) => `translate3d(0,${x}px,0)`),
                   }}
                 >
-                  <animated.li style={{ height }}>
-                    {linksList[index]}
-                  </animated.li>
+                  <animated.div style={{ height }}>
+                    <Link to={linksList[index].path}>
+                      {linksList[index].text}
+                    </Link>
+                  </animated.div>
                 </animated.li>
               ))}
             </ul>
@@ -76,9 +93,6 @@ const FlyoutMenu = ({ anchorRef, setMenuIsOpen }) => {
                 onClick={() => setMenuIsOpen(false)}
               />
             </Link>
-            {/* <Box paddingX={2} marginTop={3}>
-              <Button color="blue" text="Nominate a New Restaurant" size="sm" />
-            </Box> */}
           </Box>
         </Flyout>
       </animated.div>

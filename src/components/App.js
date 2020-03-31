@@ -15,7 +15,6 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
-// import RegisterForm from './RegisterForm/RegisterForm';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
 import CategoryPage from './CategoryPage/CategoryPage';
 import About from './About/About';
@@ -99,6 +98,7 @@ export default class App extends Component {
       nominatedByUser,
       comment
     );
+    newRestaurantFromDb.vote_count = Number(newRestaurantFromDb.vote_count);
     this.setState(
       (prevState) => ({
         nominatedRestaurants: [
@@ -181,21 +181,14 @@ export default class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            {/* <Route path="/register" component={RegisterForm} /> */}
             <Route path="/add-new-nom" component={AddRestaurantForm} />
-            {/* <Route
-              path="/my-reviews"
-              render={(props) => (
-                <MyReviews {...props} restaurants={nominatedRestaurants} />
-              )}
-            /> */}
-            <Route
-              path="/category/:food_category"
-              render={({ match }) => <CategoryPage match={match} />}
-            />
             <Route
               path="/category/:food_category/:restaurant_id"
               render={({ match }) => <NominatedRestaurantPage match={match} />}
+            />
+            <Route
+              path="/category/:food_category"
+              render={({ match }) => <CategoryPage match={match} />}
             />
             <Route path="/about" component={About} />
             <Route path="/termsandconditions" component={TermsAndConditions} />
