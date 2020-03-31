@@ -6,13 +6,16 @@ export const findUserDidLike = (likesAndCommentsArr, restaurantId, userId) => {
   );
 };
 
-export const sortRestaurants = (restaurantArr, sortBy) => {
+export const sortRestaurants = (restaurantArr, voteTallies, sortBy) => {
   const now = Date.now();
   // TO DO : this methodology can be easily ported to other time intervals
   const oneMonth = 1000 * 60 * 60 * 24 * 30;
   switch (sortBy) {
     case 'ALL_TIME':
-      return restaurantArr.sort((a, b) => b.vote_count - a.vote_count);
+      return restaurantArr.sort((a, b) => {
+        if (voteTallies[b.id] > voteTallies[a.id]) return 1;
+        return -1;
+      });
     case 'MOST_RECENT':
       return restaurantArr.sort((a, b) => {
         const dateA = new Date(a.date_nominated);
@@ -27,7 +30,10 @@ export const sortRestaurants = (restaurantArr, sortBy) => {
           // date_nominated must be larger than the calculated millisecond timestamp of 30 days ago
           return date > now - oneMonth;
         })
-        .sort((a, b) => b.vote_count - a.vote_count);
+        .sort((a, b) => {
+          if (voteTallies[b.id] > voteTallies[a.id]) return 1;
+          return -1;
+        });
     case 'ALPHABETICAL':
       return restaurantArr.sort((a, b) => {
         if (a.name > b.name) return 1;

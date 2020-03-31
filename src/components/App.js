@@ -62,7 +62,7 @@ export default class App extends Component {
       (restaurant) => restaurant.food_category
     );
     const uniqueCategories = new Set(categoryList);
-    this.setState({ uniqueCategories });
+    this.setState({ uniqueCategories: Array.from(uniqueCategories) });
   };
 
   getVoteTallies = () => {
