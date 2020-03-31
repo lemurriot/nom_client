@@ -6,11 +6,14 @@ import NomsContext from '../../NomsContext';
 import VoteButtons from '../VoteButtons/VoteButtons';
 import './NominatedRestaurantPreview.css';
 
-const NominatedRestaurantPreview = (props) => (
+const NominatedRestaurantPreview = ({
+  category,
+  name,
+  id: restaurantId,
+  voteCount,
+}) => (
   <NomsContext.Consumer>
-    {(context) => {
-      const { category, name, id: restaurantId, voteCount } = props;
-      const { likesAndComments, user } = context;
+    {({ likesAndComments, user }) => {
       const findIfUserDidLike = findUserDidLike(
         likesAndComments,
         restaurantId,

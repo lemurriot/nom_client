@@ -17,7 +17,7 @@ import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
 // import RegisterForm from './RegisterForm/RegisterForm';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
-import MyReviews from './MyReviews/MyReviews';
+import CategoryPage from './CategoryPage/CategoryPage';
 import About from './About/About';
 import TermsAndConditions from './TermsAndConditions/TermsAndConditions';
 import PrivacyPolicy from './TermsAndConditions/PrivacyPolicy';
@@ -183,11 +183,15 @@ export default class App extends Component {
             <Route exact path="/" component={LandingPage} />
             {/* <Route path="/register" component={RegisterForm} /> */}
             <Route path="/add-new-nom" component={AddRestaurantForm} />
-            <Route
+            {/* <Route
               path="/my-reviews"
               render={(props) => (
                 <MyReviews {...props} restaurants={nominatedRestaurants} />
               )}
+            /> */}
+            <Route
+              path="/category/:food_category"
+              render={({ match }) => <CategoryPage match={match} />}
             />
             <Route
               path="/category/:food_category/:restaurant_id"

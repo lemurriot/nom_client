@@ -6,8 +6,7 @@ import NomsContext from '../../NomsContext';
 
 const LandingPage = () => (
   <NomsContext.Consumer>
-    {(context) => {
-      const { nominatedRestaurants, uniqueCategories } = context;
+    {({ nominatedRestaurants, uniqueCategories }) => {
       const restaurantsFilteredByCategory = [
         ...uniqueCategories,
       ].map((category) =>
