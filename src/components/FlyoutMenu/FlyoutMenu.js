@@ -11,7 +11,7 @@ import './FlyoutMenu.css';
 const FlyoutMenu = ({ anchorRef, setMenuIsOpen }) => {
   const menuAnimation = useSpring({
     opacity: 1,
-    from: { opacity: 0.3 },
+    from: { opacity: 0.6 },
     duration: 3500,
   });
 
