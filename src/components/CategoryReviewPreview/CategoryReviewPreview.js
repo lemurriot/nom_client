@@ -4,8 +4,6 @@ import { SelectList } from 'gestalt';
 import './CategoryReviewPreview.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import isEqual from 'lodash.isequal';
-import usePrevious from '../../hooks/usePrevious';
 import { sortRestaurants } from '../../utils';
 import restaurantType from '../../types';
 import NomsContext from '../../NomsContext';
@@ -15,7 +13,6 @@ const { string, arrayOf, shape } = PropTypes;
 
 const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
   const { voteTallies } = useContext(NomsContext);
-  const prevState = usePrevious(voteTallies);
   const [sortRestaurantsBy, setSortRestaurantsBy] = useState('ALL_TIME');
   const sortedCategoryRestaurants = sortRestaurants(
     categoryRestaurants,
@@ -23,24 +20,9 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
     sortRestaurantsBy
   );
 
-  /*
-    first useEffect to trigger re-render if uservote changes status of vote order
-    -- requires a deep comparison of voteTallies object, which is provided by lodash isEqual method
-  */
-
-  useEffect(() => {
-    if (prevState && !isEqual(prevState, voteTallies)) {
-      sortRestaurants(categoryRestaurants, voteTallies, sortRestaurantsBy);
-    }
-  }, [prevState, voteTallies, categoryRestaurants, sortRestaurantsBy]);
-
-  /*
-    second useEffect method triggers re-render on change of sort parameters
-  */
-
   useEffect(() => {
     sortRestaurants(categoryRestaurants, voteTallies, sortRestaurantsBy);
-  }, [categoryRestaurants, sortRestaurantsBy]);
+  }, [categoryRestaurants, voteTallies, sortRestaurantsBy]);
 
   const sortConstants = [
     { value: 'ALL_TIME', label: 'All Time' },
@@ -48,7 +30,7 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
     { value: 'LAST_MONTH', label: 'Last Month' },
     { value: 'ALPHABETICAL', label: 'Alphabetical' },
   ];
-  // const { voteTallies } = context;
+
   const CategoryRestaurantList = sortedCategoryRestaurants
     .slice(0, 5)
     .map((restaurant) => (

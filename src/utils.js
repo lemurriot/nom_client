@@ -9,6 +9,7 @@ export const findUserDidLike = (likesAndCommentsArr, restaurantId, userId) => {
 export const sortRestaurants = (restaurantArr, voteTallies, sortBy) => {
   const now = Date.now();
   // TO DO : this methodology can be easily ported to other time intervals
+  // As the app develops over time, currently there is no need for 'past year' 'past week' intervals, et al
   const oneMonth = 1000 * 60 * 60 * 24 * 30;
   switch (sortBy) {
     case 'ALL_TIME':
