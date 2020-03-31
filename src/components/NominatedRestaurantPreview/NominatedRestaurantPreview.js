@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import findUserDidLike from '../../utils';
+import { findUserDidLike } from '../../utils';
 import NomsContext from '../../NomsContext';
 import VoteButtons from '../VoteButtons/VoteButtons';
 import './NominatedRestaurantPreview.css';
 
-const NominatedRestaurantPreview = props => (
+const NominatedRestaurantPreview = (props) => (
   <NomsContext.Consumer>
-    {context => {
+    {(context) => {
       const { category, name, id: restaurantId, voteCount } = props;
       const { likesAndComments, user } = context;
       const findIfUserDidLike = findUserDidLike(

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import findUserDidLike from '../../utils';
+import { findUserDidLike } from '../../utils';
 import NomsContext from '../../NomsContext';
 import Comments from '../Comments/Comments';
 import VoteButtons from '../VoteButtons/VoteButtons';
@@ -10,7 +10,7 @@ import './NominatedRestaurantPage.css';
 import { fetchLikesAndComments } from '../../api/routes';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
-const NominatedRestaurantPage = props => {
+const NominatedRestaurantPage = (props) => {
   const [restaurantInfo, setrestaurantInfo] = useState([]);
   const [commentsFormIsShown, showCommentsForm] = useState(false);
   const [error, setError] = useState({});
@@ -29,7 +29,7 @@ const NominatedRestaurantPage = props => {
 
   return (
     <NomsContext.Consumer>
-      {context => {
+      {(context) => {
         const { likesAndComments, voteTallies, user, addEditComment } = context;
         const findIfUserDidLike = findUserDidLike(
           likesAndComments,
@@ -53,7 +53,7 @@ const NominatedRestaurantPage = props => {
           showCommentsForm(false);
         };
 
-        const handleAddEditCommentSubmit = async updatedComment => {
+        const handleAddEditCommentSubmit = async (updatedComment) => {
           closeCommentsForm();
           await getrestaurantInfo();
           const newrestaurantInfo = { ...restaurantInfo };

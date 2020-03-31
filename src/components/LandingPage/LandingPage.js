@@ -6,17 +6,13 @@ import NomsContext from '../../NomsContext';
 
 const LandingPage = () => (
   <NomsContext.Consumer>
-    {context => {
-      const { nominatedRestaurants } = context;
-      const categoryList = nominatedRestaurants.map(
-        restaurant => restaurant.food_category
-      );
-      const uniqueCategories = new Set(categoryList);
+    {(context) => {
+      const { nominatedRestaurants, uniqueCategories } = context;
       const restaurantsFilteredByCategory = [
         ...uniqueCategories,
-      ].map(category =>
+      ].map((category) =>
         nominatedRestaurants.filter(
-          restaurant => restaurant.food_category === category
+          (restaurant) => restaurant.food_category === category
         )
       );
       const reviewPreviewList = restaurantsFilteredByCategory.map(

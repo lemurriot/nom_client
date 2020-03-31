@@ -10,7 +10,7 @@ const restaurantType = {
   name: string.isRequired,
   nominated_by_user: number.isRequired,
   subtitle: string.isRequired,
-  vote_count: string.isRequired,
+  vote_count: number.isRequired,
 };
 
 export default restaurantType;

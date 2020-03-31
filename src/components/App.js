@@ -33,6 +33,7 @@ export default class App extends Component {
       user: {},
       likesAndComments: [],
       voteTallies: {},
+      uniqueCategories: [],
       // error: null,
     };
   }
@@ -46,9 +47,24 @@ export default class App extends Component {
   getUser = () => fetchUserData().then((user) => this.setState({ user }));
 
   getRestaurants = () =>
-    fetchRestaurantsData().then((nominatedRestaurants) =>
-      this.setState({ nominatedRestaurants }, () => this.getVoteTallies())
+    fetchRestaurantsData().then((nominatedRestaurants) => {
+      nominatedRestaurants.forEach(
+        (restaurant) => (restaurant.vote_count = Number(restaurant.vote_count))
+      );
+      this.setState({ nominatedRestaurants }, () => {
+        this.getVoteTallies();
+        this.getUniqueCategories();
+      });
+    });
+
+  getUniqueCategories = () => {
+    const { nominatedRestaurants } = this.state;
+    const categoryList = nominatedRestaurants.map(
+      (restaurant) => restaurant.food_category
     );
+    const uniqueCategories = new Set(categoryList);
+    this.setState({ uniqueCategories });
+  };
 
   getVoteTallies = () => {
     const { nominatedRestaurants } = this.state;
@@ -146,12 +162,14 @@ export default class App extends Component {
       user,
       voteTallies,
       likesAndComments,
+      uniqueCategories,
     } = this.state;
     const contextVal = {
       nominatedRestaurants,
       user,
       voteTallies,
       likesAndComments,
+      uniqueCategories,
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
       undoVoteForRestaurant: this.handleUndoVoteForRestaurant,
