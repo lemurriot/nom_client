@@ -17,11 +17,11 @@ import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
 import CategoryPage from './CategoryPage/CategoryPage';
+import WarningModal from './WarningModal/WarningModal';
 import About from './About/About';
 import TermsAndConditions from './TermsAndConditions/TermsAndConditions';
 import PrivacyPolicy from './TermsAndConditions/PrivacyPolicy';
 import NotFoundPage from './NotFoundPage/NotFoundPage';
-
 import './App.css';
 
 export default class App extends Component {
@@ -33,6 +33,8 @@ export default class App extends Component {
       likesAndComments: [],
       voteTallies: {},
       uniqueCategories: [],
+      showWarningModal: false,
+      proceedFunction: () => {},
       // error: null,
     };
   }
@@ -131,6 +133,29 @@ export default class App extends Component {
   };
 
   handleUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
+    const { likesAndComments } = this.state;
+    const [userLikeObj] = likesAndComments.filter(
+      ({ id }) => id === likesCommentsId
+    );
+    if (userLikeObj.comment.length) {
+      return this.setState({
+        showWarningModal: true,
+        proceedFunction: () =>
+          this.proceedUndoVoteForRestaurant(
+            userId,
+            restaurantId,
+            likesCommentsId
+          ),
+      });
+    }
+    return this.proceedUndoVoteForRestaurant(
+      userId,
+      restaurantId,
+      likesCommentsId
+    );
+  };
+
+  proceedUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
     const { voteTallies, likesAndComments } = this.state;
     this.addEditComment(likesCommentsId, '', restaurantId);
     deleteUpvote(userId, restaurantId);
@@ -163,6 +188,8 @@ export default class App extends Component {
       voteTallies,
       likesAndComments,
       uniqueCategories,
+      showWarningModal,
+      proceedFunction,
     } = this.state;
     const contextVal = {
       nominatedRestaurants,
@@ -195,6 +222,20 @@ export default class App extends Component {
             <Route path="/privacypolicy" component={PrivacyPolicy} />
             <Route component={NotFoundPage} />
           </Switch>
+          {showWarningModal && (
+            <WarningModal
+              showWarningModal={showWarningModal}
+              setShowWarningModal={() =>
+                this.setState((prevState) => ({
+                  showWarningModal: !prevState.showWarningModal,
+                }))
+              }
+              proceedFunction={proceedFunction}
+              headingText="Your comment for this post will also be deleted"
+              buttonText="Proceed"
+              subtext="To foster a positive community, only those who provide an upvote may leave a comment"
+            />
+          )}
           <Footer />
         </div>
       </NomsContext.Provider>
