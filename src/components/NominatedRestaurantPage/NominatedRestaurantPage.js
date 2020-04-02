@@ -15,7 +15,7 @@ const NominatedRestaurantPage = ({ match }) => {
     NomsContext
   );
   const [restaurantInfo, setrestaurantInfo] = useState([]);
-  const [commentsFormIsShown, showCommentsForm] = useState(false);
+  const [commentsFormIsShown, setShowCommentsForm] = useState(false);
   const [error, setError] = useState({});
   // eslint-disable-next-line react/destructuring-assignment
   const { restaurant_id } = match.params;
@@ -49,7 +49,7 @@ const NominatedRestaurantPage = ({ match }) => {
   } = restaurantInfo;
 
   const closeCommentsForm = () => {
-    showCommentsForm(false);
+    setShowCommentsForm(false);
   };
 
   const handleAddEditCommentSubmit = async (updatedComment) => {
@@ -109,8 +109,8 @@ const NominatedRestaurantPage = ({ match }) => {
               className="comment-action"
               role="link"
               tabIndex={0}
-              onKeyDown={() => showCommentsForm(true)}
-              onClick={() => showCommentsForm(true)}
+              onKeyDown={() => setShowCommentsForm(true)}
+              onClick={() => setShowCommentsForm(true)}
             >
               Add Comment
             </span>
@@ -121,8 +121,8 @@ const NominatedRestaurantPage = ({ match }) => {
                 className="comment-action"
                 role="link"
                 tabIndex={0}
-                onKeyDown={() => showCommentsForm(true)}
-                onClick={() => showCommentsForm(true)}
+                onKeyDown={() => setShowCommentsForm(true)}
+                onClick={() => setShowCommentsForm(true)}
               >
                 Edit Comment
               </span>
@@ -130,7 +130,7 @@ const NominatedRestaurantPage = ({ match }) => {
                 className="comment-action"
                 role="button"
                 tabIndex={0}
-                onKeyDown={() => showCommentsForm(true)}
+                onKeyDown={() => setShowCommentsForm(true)}
                 onClick={deleteComment}
               >
                 Delete Comment
