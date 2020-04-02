@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import NomsContext from '../NomsContext';
 import {
   fetchUserData,
@@ -16,6 +17,7 @@ import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
+import ProfilePage from './ProfilePage/ProfilePage';
 import CategoryPage from './CategoryPage/CategoryPage';
 import WarningModal from './WarningModal/WarningModal';
 import About from './About/About';
@@ -218,6 +220,7 @@ export default class App extends Component {
               render={({ match }) => <CategoryPage match={match} />}
             />
             <Route path="/about" component={About} />
+            <Route path="/profile" component={ProfilePage} />
             <Route path="/termsandconditions" component={TermsAndConditions} />
             <Route path="/privacypolicy" component={PrivacyPolicy} />
             <Route component={NotFoundPage} />
