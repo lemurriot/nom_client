@@ -14,9 +14,12 @@ import SubmitForm from './SubmitForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const AddRestaurantForm = ({ history }) => {
-  const { nominateNewRestaurant, user, nominatedRestaurants } = useContext(
-    NomsContext
-  );
+  const {
+    nominateNewRestaurant,
+    user,
+    nominatedRestaurants,
+    uniqueCategories,
+  } = useContext(NomsContext);
   const [googleSessionId, setGoogleSessionId] = useState('');
   const [googleResults, setGoogleResults] = useState([]);
   const [restaurantName, setRestaurantName] = useState({
@@ -61,7 +64,7 @@ const AddRestaurantForm = ({ history }) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.status === 'OK') setGoogleResults(res.predictions);
         });
     }
@@ -114,10 +117,6 @@ const AddRestaurantForm = ({ history }) => {
   return (
     <main className="add-restaurant-form--page">
       <section className="add-restaurant-form--outer">
-        <div className="brand">
-          <span className="logo">★</span>
-          <h1>NomsPDX</h1>
-        </div>
         <form onSubmit={() => alert('submit')}>
           <div className="buttons">
             <Link to="/">
@@ -142,10 +141,9 @@ const AddRestaurantForm = ({ history }) => {
               <option disabled value="">
                 -- select an option --
               </option>
-              <option value="Burger">Burger</option>
-              <option value="Burrito">Burrito</option>
-              <option value="Pizza">Pizza</option>
-              <option value="Falafel">Falafel</option>
+              {uniqueCategories.map((category) => (
+                <option value={category}>{category}</option>
+              ))}
             </select>
             <label htmlFor="restaurant-name">
               Search Restaurants (required)

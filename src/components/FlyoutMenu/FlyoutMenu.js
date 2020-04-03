@@ -1,102 +1,138 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import {
+  Button,
+  ClickAwayListener,
+  Grow,
+  Paper,
+  Popper,
+  MenuItem,
+  MenuList,
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { useSpring, useTrail, animated } from 'react-spring';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '../../../node_modules/gestalt/dist/gestalt.css';
-import { Box, Button, Flyout, Text, Layer } from 'gestalt';
-// import NomsContext from '../../NomsContext';
-import './FlyoutMenu.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { makeStyles } from '@material-ui/core/styles';
 
-const FlyoutMenu = ({ anchorRef, setMenuIsOpen }) => {
-  const menuAnimation = useSpring({
-    opacity: 1,
-    from: { opacity: 0.6 },
-    duration: 3500,
-  });
+const linksList = [
+  {
+    id: 1,
+    path: '/',
+    text: 'Home',
+  },
+  {
+    id: 2,
+    path: '/profile',
+    text: 'Profile',
+  },
+  {
+    id: 3,
+    path: '/about',
+    text: 'About',
+  },
+  {
+    id: 4,
+    path: '/termsandconditions',
+    text: 'Terms and Conditions',
+  },
+];
 
-  const linksList = [
-    {
-      id: 1,
-      path: '/',
-      text: 'Home',
-    },
-    {
-      id: 2,
-      path: '/profile',
-      text: 'Profile',
-    },
-    {
-      id: 3,
-      path: '/about',
-      text: 'About',
-    },
-    {
-      id: 4,
-      path: '/termsandconditions',
-      text: 'Terms and Conditions',
-    },
-  ];
-  const config = { mass: 5.5, tension: 1200, friction: 110, clamp: true };
-  const trail = useTrail(linksList.length, {
-    config,
-    opacity: 1,
-    x: 0,
-    height: 40,
-    from: { opacity: 0, x: 20, height: 0 },
-  });
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: 'flex',
+//   },
+//   paper: {
+//     marginRight: theme.spacing(2),
+//   },
+// }));
+
+const FlyoutMenu = () => {
+  // const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   return (
-    <Layer className="flyout-menu--body">
-      <animated.div style={menuAnimation}>
-        <Flyout
-          anchor={anchorRef}
-          idealDirection="down"
-          onDismiss={() => setMenuIsOpen(false)}
-          positionRelativeToAnchor={false}
-          size="lg"
-        >
-          <Box
-            padding={3}
-            display="flex"
-            alignItems="center"
-            direction="column"
-            column={12}
+    <div>
+      <Button
+        ref={anchorRef}
+        aria-controls={open ? 'menu-list-grow' : undefined}
+        aria-haspopup="true"
+        onClick={handleToggle}
+      >
+        <FontAwesomeIcon
+          icon="hamburger"
+          color="#bc47ca"
+          style={{ fontSize: 50 }}
+        />
+      </Button>
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === 'bottom' ? 'center top' : 'center bottom',
+            }}
           >
-            <Text align="center" weight="bold">
-              Lorem ipsum dolorum squeegie.
-            </Text>
-            <ul>
-              {trail.map(({ x, height, ...rest }, index) => (
-                <animated.li
-                  key={linksList[index].id}
-                  className="flyout-menu-links--list-item"
-                  onClick={() => setMenuIsOpen(false)}
-                  style={{
-                    ...rest,
-                    transform: x.interpolate((x) => `translate3d(0,${x}px,0)`),
-                  }}
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open}
+                  id="menu-list-grow"
+                  onKeyDown={handleListKeyDown}
                 >
-                  <animated.div style={{ height }}>
-                    <Link to={linksList[index].path}>
-                      {linksList[index].text}
-                    </Link>
-                  </animated.div>
-                </animated.li>
-              ))}
-            </ul>
-            <Link to="/add-new-nom">
-              <Button
-                color="blue"
-                text="Nominate a New Restaurant"
-                size="sm"
-                onClick={() => setMenuIsOpen(false)}
-              />
-            </Link>
-          </Box>
-        </Flyout>
-      </animated.div>
-    </Layer>
+                  {linksList.map((link, index) => (
+                    <MenuItem key={link.id} onClick={handleClose}>
+                      <Link to={linksList[index].path}>
+                        {linksList[index].text}
+                      </Link>
+                    </MenuItem>
+                  ))}
+                  <MenuItem key="new" onClick={handleClose}>
+                    <Button variant="contained" color="primary">
+                      <Link to="/add-new-nom">Nominate a New Restaurant</Link>
+                    </Button>
+                  </MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </div>
   );
 };
 

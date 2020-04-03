@@ -27,17 +27,6 @@ const ProfilePage = () => {
 
   const handleAddEditCommentSubmit = async (updatedComment) => {
     closeCommentsForm();
-    // await getrestaurantInfo();
-    // const newrestaurantInfo = { ...restaurantInfo };
-    // const userComment = newrestaurantInfo.comments.findIndex(
-    //   ({ id }) => id === likeId
-    // );
-    // if (userComment !== -1) {
-    //   newrestaurantInfo.comments[userComment].comment = updatedComment;
-    //   setrestaurantInfo(newrestaurantInfo);
-    // } else {
-    //   setError({ error: 'Something went wrong' });
-    // }
   };
 
   const userDidUpvoteStore = {};
@@ -75,7 +64,7 @@ const ProfilePage = () => {
       userDidUpvoteStore[restaurant.id].restaurantInfo = restaurant;
     }
   });
-  console.log(userDidUpvoteStore);
+  // console.log(userDidUpvoteStore);
   const userDidUpvoteList = Object.keys(userDidUpvoteStore).map((key) => {
     if (userDidUpvoteStore[key].restaurantInfo) {
       const {
