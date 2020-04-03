@@ -1,10 +1,6 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '../../../node_modules/gestalt/dist/gestalt.css';
-import { Box } from 'gestalt';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import config from '../../config';
 import NomsContext from '../../NomsContext';
@@ -17,8 +13,8 @@ const Header = () => {
     // duration: 4000,
   });
   const linkStyles = { textDecoration: 'none', color: 'white' };
-  const [menuIsOpen, setMenuIsOpen] = React.useState(false);
-  const anchorRef = React.useRef();
+  // const [menuIsOpen, setMenuIsOpen] = React.useState(false);
+  // const anchorRef = React.useRef();
 
   return (
     <NomsContext.Consumer>
@@ -61,22 +57,9 @@ const Header = () => {
           <header className="header">
             <div className="brand">
               <animated.div style={logoAnimation}>
-                <Box className="logo" display="inlineBlock" ref={anchorRef}>
-                  <span
-                    accessibilityexpanded={menuIsOpen ? 'true' : 'false'}
-                    accessibilityhaspopup="true"
-                    onClick={() => setMenuIsOpen(!menuIsOpen)}
-                  >
-                    <FontAwesomeIcon icon="hamburger" color="#bc47ca" />
-                  </span>
-                  {menuIsOpen && (
-                    <FlyoutMenu
-                      anchorRef={anchorRef.current}
-                      setMenuIsOpen={setMenuIsOpen}
-                      // menuIsOpen={menuIsOpen}
-                    />
-                  )}
-                </Box>
+                <div className="logo" display="inlineBlock">
+                  <FlyoutMenu />
+                </div>
               </animated.div>
               <Link to="/" style={{ textDecoration: 'none', height: '100%' }}>
                 <h1>NomsPDX</h1>

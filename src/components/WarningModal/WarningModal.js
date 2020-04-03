@@ -1,7 +1,13 @@
 import React from 'react';
-import '../../../node_modules/gestalt/dist/gestalt.css';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@material-ui/core';
 import { string, func, bool } from 'prop-types';
-import { Box, Button, Layer, Modal, Text } from 'gestalt';
 
 const WarningModal = ({
   showWarningModal,
@@ -11,50 +17,27 @@ const WarningModal = ({
   buttonText,
   subtext,
 }) => (
-  <Layer>
-    <Modal
-      accessibilityModalLabel={headingText}
-      heading={headingText}
-      onDismiss={() => {
-        setShowWarningModal(!showWarningModal);
-      }}
-      footer={
-        <Box
-          display="flex"
-          marginLeft={-1}
-          marginRight={-1}
-          justifyContent="center"
-        >
-          <Box padding={1}>
-            <Button
-              size="lg"
-              text="Cancel"
-              onClick={() => {
-                setShowWarningModal(!showWarningModal);
-              }}
-            />
-          </Box>
-          <Box padding={1}>
-            <Button
-              size="lg"
-              color="blue"
-              text={buttonText}
-              onClick={() => {
-                proceedFunction();
-                setShowWarningModal(!showWarningModal);
-              }}
-            />
-          </Box>
-        </Box>
-      }
-      role="alertdialog"
-      size="sm"
-    >
-      <Box paddingX={8}>
-        <Text align="center">{subtext}</Text>
-      </Box>
-    </Modal>
-  </Layer>
+  <Dialog
+    open={showWarningModal}
+    onClose={setShowWarningModal}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">{headingText}</DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+        {subtext}
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={setShowWarningModal} color="default">
+        Cancel
+      </Button>
+      <Button onClick={proceedFunction} color="primary" size="large" autoFocus>
+        {buttonText}
+      </Button>
+    </DialogActions>
+  </Dialog>
 );
 
 WarningModal.propTypes = {

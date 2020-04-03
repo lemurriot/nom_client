@@ -92,7 +92,7 @@ const NominatedRestaurantPage = ({ match }) => {
         )
       );
   return (
-    <>
+    <main style={{ padding: '2%' }}>
       {restaurantInfo.id && (
         <article className="restaurant-page-main-container">
           <Link to="/">Go back</Link>
@@ -166,7 +166,7 @@ const NominatedRestaurantPage = ({ match }) => {
         </article>
       )}
       ;
-    </>
+    </main>
   );
 };
 
