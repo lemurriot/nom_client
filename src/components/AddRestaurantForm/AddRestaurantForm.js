@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './AddRestaurantForm.css';
 import { uuid } from 'uuidv4';
 import config from '../../config';
@@ -13,13 +13,14 @@ import CreateNewRestaurantForm from './CreateNewRestaurantForm';
 import SubmitForm from './SubmitForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
-const AddRestaurantForm = ({ history }) => {
+const AddRestaurantForm = () => {
   const {
     nominateNewRestaurant,
     user,
     nominatedRestaurants,
     uniqueCategories,
   } = useContext(NomsContext);
+  const history = useHistory();
   const [googleSessionId, setGoogleSessionId] = useState('');
   const [googleResults, setGoogleResults] = useState([]);
   const [restaurantName, setRestaurantName] = useState({

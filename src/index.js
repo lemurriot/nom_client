@@ -2,10 +2,8 @@ import 'dotenv';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faHome,
   faHamburger,
   faCopyright,
   faStar,
@@ -14,11 +12,10 @@ import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import './index.css';
 
-library.add(faHome, faHamburger, faCopyright, faStar);
-const history = createBrowserHistory();
+library.add(faHamburger, faCopyright, faStar);
 
 ReactDOM.render(
-  <BrowserRouter history={history}>
+  <BrowserRouter>
     <App />
   </BrowserRouter>,
   document.getElementById('root')

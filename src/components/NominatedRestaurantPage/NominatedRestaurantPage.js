@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import { findUserDidLike } from '../../utils';
 import NomsContext from '../../NomsContext';
 import Comments from '../Comments/Comments';
@@ -10,15 +10,15 @@ import './NominatedRestaurantPage.css';
 import { fetchLikesAndComments } from '../../api/routes';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
-const NominatedRestaurantPage = ({ match }) => {
+const NominatedRestaurantPage = () => {
   const { likesAndComments, voteTallies, user, addEditComment } = useContext(
     NomsContext
   );
   const [restaurantInfo, setrestaurantInfo] = useState([]);
   const [commentsFormIsShown, setShowCommentsForm] = useState(false);
   const [error, setError] = useState({});
-  // eslint-disable-next-line react/destructuring-assignment
-  const { restaurant_id } = match.params;
+  const { goBack } = useHistory();
+  const { restaurant_id } = useParams();
   const restaurantId = Number(restaurant_id);
 
   const getrestaurantInfo = useCallback(async () => {
@@ -95,7 +95,7 @@ const NominatedRestaurantPage = ({ match }) => {
     <main style={{ padding: '2%' }}>
       {restaurantInfo.id && (
         <article className="restaurant-page-main-container">
-          <Link to="/">Go back</Link>
+          <Button onClick={goBack}>Go back</Button>
           <h2>{name}</h2>
           {subtitle && <h3>{subtitle}</h3>}
           {address && <h3>{address}</h3>}
@@ -168,15 +168,6 @@ const NominatedRestaurantPage = ({ match }) => {
       ;
     </main>
   );
-};
-
-NominatedRestaurantPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      food_category: PropTypes.string.isRequired,
-      restaurant_id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
 };
 
 export default NominatedRestaurantPage;
