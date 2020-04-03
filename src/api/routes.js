@@ -120,6 +120,25 @@ export const postNewRestaurant = async (
       }),
     }
   ).then((res) => res.json());
-  console.log(postNewRestaurantConfirmation);
+  // console.log(postNewRestaurantConfirmation);
   return postNewRestaurantConfirmation;
+};
+
+export const putNewUsername = async (newUsername, userId) => {
+  const putNewUsernameConfirmation = await fetch(
+    `${config.API_ENDPOINT}/users/edit-username`,
+    {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        new_username: newUsername,
+      }),
+    }
+  );
+  // console.log(putNewUsernameConfirmation);
+  return putNewUsernameConfirmation;
 };

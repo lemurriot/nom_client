@@ -16,10 +16,10 @@ const ProtectedRoute = ({ component: Component, authenticated, ...rest }) => {
         return (
           <Redirect
             to={{
-              pathname: '/ajajajaja',
-              state: {
-                // explore this
-              },
+              pathname: '/',
+              // state: {
+              //   showWarningModal: true,
+              // },
             }}
           />
         );

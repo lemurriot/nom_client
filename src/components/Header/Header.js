@@ -13,8 +13,6 @@ const Header = () => {
     // duration: 4000,
   });
   const linkStyles = { textDecoration: 'none', color: 'white' };
-  // const [menuIsOpen, setMenuIsOpen] = React.useState(false);
-  // const anchorRef = React.useRef();
 
   return (
     <NomsContext.Consumer>

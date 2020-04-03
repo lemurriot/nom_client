@@ -33,6 +33,7 @@ export default class App extends Component {
     this.state = {
       nominatedRestaurants: [],
       user: {},
+      username: '',
       likesAndComments: [],
       voteTallies: {},
       uniqueCategories: [],
@@ -48,7 +49,17 @@ export default class App extends Component {
     this.getLikesAndComments();
   }
 
-  getUser = () => fetchUserData().then((user) => this.setState({ user }));
+  getUser = () =>
+    fetchUserData().then((user) =>
+      this.setState({
+        user,
+        username: localStorage.getItem('username') || user.user_name,
+      })
+    );
+
+  changeUsernameLocally = (username) => {
+    this.setState({ username });
+  };
 
   getRestaurants = () =>
     fetchRestaurantsData().then((nominatedRestaurants) => {
@@ -188,6 +199,7 @@ export default class App extends Component {
     const {
       nominatedRestaurants,
       user,
+      username,
       voteTallies,
       likesAndComments,
       uniqueCategories,
@@ -197,9 +209,11 @@ export default class App extends Component {
     const contextVal = {
       nominatedRestaurants,
       user,
+      username,
       voteTallies,
       likesAndComments,
       uniqueCategories,
+      changeUsernameLocally: this.changeUsernameLocally,
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
       undoVoteForRestaurant: this.handleUndoVoteForRestaurant,
@@ -214,12 +228,9 @@ export default class App extends Component {
             <Route path="/add-new-nom" component={AddRestaurantForm} />
             <Route
               path="/category/:food_category/:restaurant_id"
-              render={({ match }) => <NominatedRestaurantPage match={match} />}
+              component={NominatedRestaurantPage}
             />
-            <Route
-              path="/category/:food_category"
-              render={({ match }) => <CategoryPage match={match} />}
-            />
+            <Route path="/category/:food_category" component={CategoryPage} />
             <Route path="/about" component={About} />
             <ProtectedRoute
               path="/profile"

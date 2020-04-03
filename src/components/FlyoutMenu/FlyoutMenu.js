@@ -97,7 +97,7 @@ const FlyoutMenu = () => {
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        disablePortal
+        disablePortal={false}
       >
         {({ TransitionProps, placement }) => (
           <Grow

@@ -1,6 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { putNewUsername } from '../../api/routes';
+import FormDialog from '../Dialog/FormDialogue';
 import NomsContext from '../../NomsContext';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import './ProfilePage.css';
@@ -8,11 +11,17 @@ import './ProfilePage.css';
 const ProfilePage = () => {
   const {
     user,
+    username,
     nominatedRestaurants,
     likesAndComments,
     addEditComment,
+    changeUsernameLocally,
   } = useContext(NomsContext);
+  const { goBack } = useHistory();
   const [commentsFormIsShown, setShowCommentsForm] = useState(false);
+  const [changeUsernameFormIsShown, setChangeUsernameFormIsShown] = useState(
+    false
+  );
 
   const [commentsData, setCommentsData] = useState({});
 
@@ -25,7 +34,7 @@ const ProfilePage = () => {
     handleAddEditCommentSubmit('');
   };
 
-  const handleAddEditCommentSubmit = async (updatedComment) => {
+  const handleAddEditCommentSubmit = () => {
     closeCommentsForm();
   };
 
@@ -34,6 +43,14 @@ const ProfilePage = () => {
   const handleShowCommentForm = (commentData) => {
     setCommentsData({ ...commentData });
     setShowCommentsForm(true);
+  };
+
+  const handleChangeUsername = (newUsername) => {
+    handleAddEditCommentSubmit();
+    localStorage.setItem('username', newUsername);
+    putNewUsername(newUsername, user.id);
+    changeUsernameLocally(newUsername);
+    setChangeUsernameFormIsShown(false);
   };
 
   const userNominatedRestaurants = nominatedRestaurants.filter(
@@ -91,7 +108,10 @@ const ProfilePage = () => {
           <div>Total Votes: {vote_count}</div>
           <div>
             {!!comment.length && <span>Your comment: "{comment}"</span>}
-            <span
+            <Button
+              variant="outlined"
+              color="primary"
+              href="#text-buttons"
               onClick={() =>
                 handleShowCommentForm({
                   name,
@@ -102,7 +122,7 @@ const ProfilePage = () => {
               }
             >
               {editFormText}
-            </span>
+            </Button>
           </div>
         </div>
       );
@@ -111,11 +131,16 @@ const ProfilePage = () => {
   });
 
   return (
-    <div className="profile-page--container" style={{ padding: '2%' }}>
-      <h2>Hello {user.user_name}</h2>
-      <a href="#" style={{ fontSize: '.7em' }}>
-        Change Username
-      </a>
+    <main className="profile-page--container" style={{ padding: '2%' }}>
+      <Button onClick={goBack}>Go back</Button>
+      <h2>Hello {username}</h2>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => setChangeUsernameFormIsShown(true)}
+      >
+        Change username
+      </Button>
       <section
         className="user-nominated-restaurants--list"
         style={{ padding: '2%' }}
@@ -145,7 +170,14 @@ const ProfilePage = () => {
           }
         />
       )}
-    </div>
+      {changeUsernameFormIsShown && (
+        <FormDialog
+          open
+          handleClose={() => setChangeUsernameFormIsShown(false)}
+          handleSubmit={(newUsername) => handleChangeUsername(newUsername)}
+        />
+      )}
+    </main>
   );
 };
 
