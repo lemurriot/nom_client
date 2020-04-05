@@ -44,6 +44,7 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
         menuOptions={sortConstants}
         value={sortRestaurantsBy}
         setSortBy={setSortRestaurantsBy}
+        helperText="Sort By"
       />
       <div className="restaurant-review-preview-box">
         {CategoryRestaurantList}

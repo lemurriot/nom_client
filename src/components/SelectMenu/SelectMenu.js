@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  InputLabel,
   makeStyles,
   MenuItem,
   FormHelperText,
@@ -18,7 +19,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectMenu = ({ value, menuOptions, setSortBy }) => {
+const SelectMenu = ({
+  value,
+  menuOptions,
+  setSortBy,
+  helperText,
+  showVerbose = false,
+}) => {
   const classes = useStyles();
 
   const handleChange = (event) => {
@@ -27,20 +34,28 @@ const SelectMenu = ({ value, menuOptions, setSortBy }) => {
 
   return (
     <FormControl className={classes.formControl}>
+      {showVerbose && <InputLabel id="select-menu">Category</InputLabel>}
       <Select
+        labelId="select-menu"
         value={value}
         onChange={handleChange}
         displayEmpty={false}
         renderValue={() => value}
         className={classes.selectEmpty}
       >
+        {showVerbose && (
+          <MenuItem value="" disabled>
+            {' '}
+            -- Select an Option --
+          </MenuItem>
+        )}
         {menuOptions.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText>Sort By</FormHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormControl>
   );
 };
@@ -49,12 +64,14 @@ SelectMenu.propTypes = {
   value: string,
   menuOptions: arrayOf(string),
   setSortBy: func,
+  helperText: string,
 };
 
 SelectMenu.defaultProps = {
   value: '',
   menuOptions: [''],
   setSortBy: () => {},
+  helperText: '',
 };
 
 export default SelectMenu;

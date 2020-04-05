@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
 import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import './AddRestaurantForm.css';
 import { uuid } from 'uuidv4';
 import config from '../../config';
+import SelectMenu from '../SelectMenu/SelectMenu';
 import WarningModal from '../WarningModal/WarningModal';
 import NomsContext from '../../NomsContext';
 // import ValidationError from '../Validation/Validation';
@@ -118,34 +120,19 @@ const AddRestaurantForm = () => {
   return (
     <main className="add-restaurant-form--page">
       <section className="add-restaurant-form--outer">
-        <form onSubmit={() => alert('submit')}>
+        <>
           <div className="buttons">
-            <Link to="/">
-              <button type="button" className="cxl-btn">
-                Cancel
-              </button>
-            </Link>
+            <Button onClick={history.goBack}>Go Back</Button>
           </div>
           <div className="container">
             <h2>Nominate a Restaurant for Best in Category!</h2>
-            <label htmlFor="food-category">Category (required)</label>
-            <select
-              name="food-category"
-              id="food-category"
+            <SelectMenu
+              menuOptions={uniqueCategories}
               value={restaurantCategory.value}
-              aria-label="food category"
-              aria-required="true"
-              aria-describedby="categoryError"
-              onChange={(e) => handleCategoryChange(e.target.value)}
-              required
-            >
-              <option disabled value="">
-                -- select an option --
-              </option>
-              {uniqueCategories.map((category) => (
-                <option value={category}>{category}</option>
-              ))}
-            </select>
+              setSortBy={handleCategoryChange}
+              showVerbose
+              helperText="Select Category (required)"
+            />
             <label htmlFor="restaurant-name">
               Search Restaurants (required)
             </label>
@@ -187,7 +174,7 @@ const AddRestaurantForm = () => {
               />
             )}
           </div>
-        </form>
+        </>
       </section>
       <section className="filtered-list--container">
         <h3>Current Matching Nominations</h3>
