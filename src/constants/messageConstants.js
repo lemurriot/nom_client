@@ -6,7 +6,7 @@ export const deleteUpvoteConstants = {
 };
 
 export const mustLoginInConstants = {
-  headingText: 'You Must In With Google to See this Page',
+  headingText: 'You Must Log In With Google to Vote',
   buttonText: 'Login With Google',
   subtext: 'All Noms users are authenticated through Google OAuth2.0',
 };

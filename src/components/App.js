@@ -1,8 +1,13 @@
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import isEmpty from 'lodash.isempty';
+import config from '../config';
 import NomsContext from '../NomsContext';
-import { deleteUpvoteConstants } from '../constants/messageConstants';
+import {
+  deleteUpvoteConstants,
+  mustLoginInConstants,
+} from '../constants/messageConstants';
 import {
   fetchUserData,
   fetchRestaurantsData,
@@ -137,8 +142,28 @@ export default class App extends Component {
     );
   };
 
+  handleRedirectToLogin = () => {
+    this.setState({
+      showWarningModal: false,
+    });
+    window.location.href = `${config.API_ENDPOINT}/auth/google-oauth`;
+  };
+
   handleVoteForRestaurant = async (userId, restaurantId) => {
-    const { voteTallies } = this.state;
+    const { voteTallies, user } = this.state;
+    if (isEmpty(user)) {
+      this.setState(
+        {
+          warningModalMessages: mustLoginInConstants,
+          warningModalProceedAction: this.handleRedirectToLogin,
+        },
+        () => {
+          this.setState({
+            showWarningModal: true,
+          });
+        }
+      );
+    }
     const newUpvote = await postNewUpvote(userId, restaurantId);
     const newVoteTallies = { ...voteTallies };
     ++newVoteTallies[restaurantId];
@@ -232,7 +257,7 @@ export default class App extends Component {
             <Route exact path="/" component={LandingPage} />
             <ProtectedRoute
               path="/add-new-nom"
-              authenticated={user.id}
+              authenticated={!isEmpty(user)}
               component={AddRestaurantForm}
             />
             <Route
@@ -243,7 +268,7 @@ export default class App extends Component {
             <Route path="/about" component={About} />
             <ProtectedRoute
               path="/profile"
-              authenticated={user.id}
+              authenticated={!isEmpty(user)}
               component={ProfilePage}
             />
             <Route path="/login" component={LoginForm} />
