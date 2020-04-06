@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useContext } from 'react';
-// import NomsContext from '../../NomsContext';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 // set alias of component prop as 'Component' so it passes rendering criteria
@@ -16,10 +15,10 @@ const ProtectedRoute = ({ component: Component, authenticated, ...rest }) => {
         return (
           <Redirect
             to={{
-              pathname: '/',
-              // state: {
-              //   showWarningModal: true,
-              // },
+              pathname: '/login',
+              state: {
+                referrer: '/',
+              },
             }}
           />
         );

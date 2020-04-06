@@ -12,7 +12,7 @@ import { string, func, bool } from 'prop-types';
 const WarningModal = ({
   showWarningModal,
   setShowWarningModal,
-  proceedFunction,
+  proceedAction,
   headingText,
   buttonText,
   subtext,
@@ -33,7 +33,7 @@ const WarningModal = ({
       <Button onClick={setShowWarningModal} color="default">
         Cancel
       </Button>
-      <Button onClick={proceedFunction} color="primary" size="large" autoFocus>
+      <Button onClick={proceedAction} color="primary" size="large" autoFocus>
         {buttonText}
       </Button>
     </DialogActions>
@@ -43,7 +43,7 @@ const WarningModal = ({
 WarningModal.propTypes = {
   showWarningModal: bool,
   setShowWarningModal: func,
-  proceedFunction: func,
+  proceedAction: func,
   headingText: string.isRequired,
   buttonText: string.isRequired,
   subtext: string.isRequired,
@@ -52,7 +52,7 @@ WarningModal.propTypes = {
 WarningModal.defaultProps = {
   showWarningModal: false,
   setShowWarningModal: () => {},
-  proceedFunction: () => {},
+  proceedAction: () => {},
 };
 
 export default WarningModal;

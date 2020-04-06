@@ -1,8 +1,8 @@
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-// import { Redirect } from 'react-router-dom';
 import NomsContext from '../NomsContext';
+import { deleteUpvoteConstants } from '../constants/messageConstants';
 import {
   fetchUserData,
   fetchRestaurantsData,
@@ -15,6 +15,7 @@ import {
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
+import LoginForm from './LoginForm/LoginForm';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
@@ -38,7 +39,8 @@ export default class App extends Component {
       voteTallies: {},
       uniqueCategories: [],
       showWarningModal: false,
-      proceedFunction: () => {},
+      warningModalMessages: {},
+      warningModalProceedAction: () => {},
       // error: null,
     };
   }
@@ -154,7 +156,8 @@ export default class App extends Component {
     if (userLikeObj.comment.length) {
       return this.setState({
         showWarningModal: true,
-        proceedFunction: () =>
+        warningModalMessages: deleteUpvoteConstants,
+        warningModalProceedAction: () =>
           this.proceedUndoVoteForRestaurant(
             userId,
             restaurantId,
@@ -180,6 +183,7 @@ export default class App extends Component {
         ({ id }) => id !== likesCommentsId
       ),
       voteTallies: newVoteTallies,
+      showWarningModal: false,
     });
   };
 
@@ -204,7 +208,8 @@ export default class App extends Component {
       likesAndComments,
       uniqueCategories,
       showWarningModal,
-      proceedFunction,
+      warningModalProceedAction,
+      warningModalMessages: { headingText, subtext, buttonText },
     } = this.state;
     const contextVal = {
       nominatedRestaurants,
@@ -225,7 +230,11 @@ export default class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route path="/add-new-nom" component={AddRestaurantForm} />
+            <ProtectedRoute
+              path="/add-new-nom"
+              authenticated={user.id}
+              component={AddRestaurantForm}
+            />
             <Route
               path="/category/:food_category/:restaurant_id"
               component={NominatedRestaurantPage}
@@ -237,6 +246,7 @@ export default class App extends Component {
               authenticated={user.id}
               component={ProfilePage}
             />
+            <Route path="/login" component={LoginForm} />
             <Route path="/termsandconditions" component={TermsAndConditions} />
             <Route path="/privacypolicy" component={PrivacyPolicy} />
             <Route component={NotFoundPage} />
@@ -249,10 +259,10 @@ export default class App extends Component {
                   showWarningModal: !prevState.showWarningModal,
                 }))
               }
-              proceedFunction={proceedFunction}
-              headingText="Your comment for this post will also be deleted"
-              buttonText="Proceed"
-              subtext="To foster a positive community, only those who provide an upvote may leave a comment"
+              proceedAction={warningModalProceedAction}
+              headingText={headingText}
+              buttonText={buttonText}
+              subtext={subtext}
             />
           )}
           <Footer />

@@ -1,41 +1,23 @@
-// import React, { Component } from "react";
-// import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import config from "../../config";
-// import "./LoginForm.css";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import config from '../../config';
+import './LoginForm.css';
 
-// // eslint-disable-next-line react/prefer-stateless-function
-// export default class LoginForm extends Component {
-//   render() {
-//     return (
-//       <main className="login-form-main-page">
-//         <section className="login-modal">
-//           <div className="brand">
-//             <span className="logo">
-//               <FontAwesomeIcon icon="hamburger" color="purple" />
-//             </span>
-//             <h1 className="brand-title">NomsPDX</h1>
-//           </div>
-//             <div className="fields-container">
-//               {/* <h4>Login to your account</h4>
-//                         <h5>(Actually, just click "Login", this form is not wired up to anything at the moment) </h5>
+const LoginForm = () => {
+  const { goBack } = useHistory();
 
-//                         <label htmlFor="email">Email or Username</label>
-//                         <input type="text" placeholder="Enter Email" name="email" autoComplete="username" />
+  return (
+    <main style={{ padding: '2%' }}>
+      <Button onClick={goBack}>Go Back</Button>
+      <h2>You must be logged in to see this page</h2>
+      <Button>
+        <a href={`${config.API_ENDPOINT}/auth/google-oauth`}>
+          Login with Google
+        </a>
+      </Button>
+    </main>
+  );
+};
 
-//                         <label htmlFor="psw">Password</label>
-//                         <input type="password" placeholder="Enter Password" name="psw" autoComplete="current-password" /> */}
-//               <h4>Login with your Google account</h4>
-
-//               <a href={`${config.API_ENDPOINT}/auth/google-oauth`} className="login-btn google-oauth-btn">
-//                   Login with Google
-//               </a>
-//             </div>
-//           <Link to="/">Cancel</Link>
-//           <br />
-//           <a href={`${config.API_ENDPOINT}/auth/logout`}> Logout </a>
-//         </section>
-//       </main>
-//     );
-//   }
-// }
+export default LoginForm;

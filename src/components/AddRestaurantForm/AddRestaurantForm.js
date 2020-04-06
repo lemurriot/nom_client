@@ -40,7 +40,7 @@ const AddRestaurantForm = () => {
     id: '',
     apiReferred: false,
   });
-  const [redirectFunction, setRedirectFunction] = useState(() => {});
+  const [redirectAction, setRedirectAction] = useState(() => {});
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showWarningModal, setShowWarningModal] = useState(false);
@@ -84,7 +84,7 @@ const AddRestaurantForm = () => {
         value: '',
         touched: false,
       });
-      setRedirectFunction(() => () =>
+      setRedirectAction(() => () =>
         history.push(
           `/category/${restaurantCategory.value}/${googleRestaurantAlreadyNominated[0].id}`
         )
@@ -190,7 +190,7 @@ const AddRestaurantForm = () => {
           showWarningModal={showWarningModal}
           setShowWarningModal={setShowWarningModal}
           category={restaurantCategory}
-          proceedFunction={redirectFunction}
+          proceedAction={redirectAction}
           headingText="This Restaurant is Already Nominated"
           buttonText="Go to Restaurant Page"
           subtext="A restaurant can only be nominated once per category"
