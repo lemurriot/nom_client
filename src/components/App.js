@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import isEmpty from 'lodash.isempty';
 import config from '../config';
+import { generateUniqueCategoriesArray, generateVoteTallies } from '../utils';
 import NomsContext from '../NomsContext';
 import {
   deleteUpvoteConstants,
@@ -81,20 +82,16 @@ export default class App extends Component {
 
   getUniqueCategories = () => {
     const { nominatedRestaurants } = this.state;
-    const categoryList = nominatedRestaurants.map(
-      (restaurant) => restaurant.food_category
+    const uniqueCategories = generateUniqueCategoriesArray(
+      nominatedRestaurants
     );
-    const uniqueCategories = new Set(categoryList);
-    this.setState({ uniqueCategories: Array.from(uniqueCategories) });
+    this.setState({ uniqueCategories });
   };
 
   getVoteTallies = () => {
     const { nominatedRestaurants } = this.state;
-    const voteTallyObj = {};
-    nominatedRestaurants.forEach((restaurant) => {
-      voteTallyObj[restaurant.id] = Number(restaurant.vote_count);
-    });
-    this.setState({ voteTallies: voteTallyObj });
+    const voteTallies = generateVoteTallies(nominatedRestaurants);
+    this.setState({ voteTallies });
   };
 
   getLikesAndComments = () =>
@@ -130,7 +127,7 @@ export default class App extends Component {
         ],
       }),
       () => {
-        const newComment = newRestaurantFromDb.comments[0];
+        const [newComment] = newRestaurantFromDb.comments;
         this.setState((prevState) => ({
           likesAndComments: [...prevState.likesAndComments, newComment],
           voteTallies: {
@@ -163,14 +160,15 @@ export default class App extends Component {
           });
         }
       );
+    } else {
+      const newUpvote = await postNewUpvote(userId, restaurantId);
+      const newVoteTallies = { ...voteTallies };
+      ++newVoteTallies[restaurantId];
+      this.setState((prevState) => ({
+        likesAndComments: [...prevState.likesAndComments, newUpvote],
+        voteTallies: newVoteTallies,
+      }));
     }
-    const newUpvote = await postNewUpvote(userId, restaurantId);
-    const newVoteTallies = { ...voteTallies };
-    ++newVoteTallies[restaurantId];
-    this.setState((prevState) => ({
-      likesAndComments: [...prevState.likesAndComments, newUpvote],
-      voteTallies: newVoteTallies,
-    }));
   };
 
   handleUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
@@ -215,7 +213,6 @@ export default class App extends Component {
   addEditComment = async (commentId, updatedComment, restaurantId) => {
     const { user, likesAndComments } = this.state;
     patchComment(commentId, updatedComment, user.id, restaurantId);
-    // console.log(commentId, updatedComment)
     const newLikesAndComments = [...likesAndComments];
     const commentToUpdate = newLikesAndComments.findIndex(
       ({ id }) => id === commentId

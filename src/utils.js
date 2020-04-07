@@ -6,6 +6,22 @@ export const findUserDidLike = (likesAndCommentsArr, restaurantId, userId) => {
   );
 };
 
+export const generateUniqueCategoriesArray = (restaurantArr) => {
+  const categoryList = restaurantArr.map(
+    (restaurant) => restaurant.food_category
+  );
+  const uniqueCategories = new Set(categoryList);
+  return Array.from(uniqueCategories);
+};
+
+export const generateVoteTallies = (restaurantArr) => {
+  const voteTallyObj = {};
+  restaurantArr.forEach((restaurant) => {
+    voteTallyObj[restaurant.id] = Number(restaurant.vote_count);
+  });
+  return voteTallyObj;
+};
+
 export const sortRestaurants = (restaurantArr, voteTallies, sortBy) => {
   const now = Date.now();
   // TO DO : this methodology can be easily ported to other time intervals
