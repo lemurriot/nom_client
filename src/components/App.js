@@ -30,7 +30,7 @@ import ProfilePage from './ProfilePage/ProfilePage';
 import CategoryPage from './CategoryPage/CategoryPage';
 import WarningModal from './WarningModal/WarningModal';
 import FeedbackSnackbar from './FeedbackSnackbar/FeedbackSnackbar';
-import About from './About/About';
+import AboutPage from './AboutPage/AboutPage';
 import TermsAndConditions from './TermsAndConditions/TermsAndConditions';
 import PrivacyPolicy from './TermsAndConditions/PrivacyPolicy';
 import NotFoundPage from './NotFoundPage/NotFoundPage';
@@ -308,7 +308,7 @@ export default class App extends Component {
               component={NominatedRestaurantPage}
             />
             <Route path="/category/:food_category" component={CategoryPage} />
-            <Route path="/about" component={About} />
+            <Route path="/about" component={AboutPage} />
             <ProtectedRoute
               path="/profile"
               authenticated={!isEmpty(user)}

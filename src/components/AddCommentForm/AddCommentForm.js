@@ -1,21 +1,18 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
+import { number, string, func } from 'prop-types';
 import './AddCommentForm.css';
 
-const { number, string, func } = PropTypes;
-
-const AddCommentForm = (props) => {
-  const {
-    restaurantName,
-    comment,
-    commentId,
-    restaurantId,
-    addEditComment,
-    closeCommentsForm,
-    handleSubmit,
-    deleteComment,
-  } = props;
+const AddCommentForm = ({
+  restaurantName,
+  comment,
+  commentId,
+  restaurantId,
+  addEditComment,
+  closeCommentsForm,
+  handleSubmit,
+  deleteComment,
+}) => {
   const instructionText = comment.length
     ? `Edit your comment for ${restaurantName}`
     : `Add a comment for ${restaurantName}`;

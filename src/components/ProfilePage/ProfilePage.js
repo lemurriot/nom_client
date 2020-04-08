@@ -137,7 +137,7 @@ const ProfilePage = () => {
   });
 
   return (
-    <main className="profile-page--container" style={{ padding: '2%' }}>
+    <main className="page">
       <Button onClick={goBack}>Go back</Button>
       <h2>Hello {username}</h2>
       <Button

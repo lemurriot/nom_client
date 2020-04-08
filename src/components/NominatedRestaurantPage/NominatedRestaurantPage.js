@@ -89,9 +89,9 @@ const NominatedRestaurantPage = () => {
         )
       );
   return (
-    <main style={{ padding: '2%' }}>
+    <main className="page">
       {restaurantInfo.id && (
-        <article className="restaurant-page-main-container">
+        <article>
           <Button onClick={goBack}>Go back</Button>
           <h2>{name}</h2>
           {subtitle && <h3>{subtitle}</h3>}

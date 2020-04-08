@@ -1,15 +1,19 @@
-import React from "react";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
-function TermsAndConditions() {
+const TermsAndConditions = () => {
+  const { goBack } = useHistory();
   return (
-    <section>
+    <main className="page">
+      <Button onClick={goBack}>Go Back</Button>
       <h2>Welcome to NomsPDX</h2>
       <p>
         These terms and conditions outline the rules and regulations for the use
         of NomsPDX's Website.
-      </p>{" "}
+      </p>{' '}
       <br />
-      <span style={{ textTransform: "capitalize" }}> NomsPDX</span> is located
+      <span style={{ textTransform: 'capitalize' }}> NomsPDX</span> is located
       at:
       <br />
       <address>
@@ -203,7 +207,7 @@ function TermsAndConditions() {
       <p>
         If you are among the organizations listed in paragraph 2 above and are
         interested in linking to our website, you must notify us by sending an
-        e-mail to{" "}
+        e-mail to{' '}
         <a
           href="mailto:omnomnom.pdx@gmail.com"
           title="send an email to omnomnom.pdx@gmail.com"
@@ -315,18 +319,18 @@ function TermsAndConditions() {
       <p></p>
       <h2>Credit & Contact Information</h2>
       <p>
-        This Terms and conditions page was created at{" "}
+        This Terms and conditions page was created at{' '}
         <a
-          style={{ color: "inherit", textDecoration: "none", cursor: "text" }}
+          style={{ color: 'inherit', textDecoration: 'none', cursor: 'text' }}
           href="https://termsandconditionstemplate.com"
         >
           termsandconditionstemplate.com
-        </a>{" "}
+        </a>{' '}
         generator. If you have any queries regarding any of our terms, please
         contact us.
       </p>
-    </section>
+    </main>
   );
-}
+};
 
 export default TermsAndConditions;

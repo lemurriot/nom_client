@@ -8,7 +8,7 @@ const LoginForm = () => {
   const { goBack } = useHistory();
 
   return (
-    <main style={{ padding: '2%' }}>
+    <main className="page">
       <Button onClick={goBack}>Go Back</Button>
       <h2>You must be logged in to see this page</h2>
       <Button>

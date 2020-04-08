@@ -1,5 +1,15 @@
-import React from "react";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
-export default function NotFoundPage() {
-  return <div>Error 404: Page not found, check path</div>;
-}
+const NotFoundPage = () => {
+  const { goBack } = useHistory();
+  return (
+    <main className="page">
+      <Button onClick={goBack}>Go Back</Button>
+      <div>Oops page not found.</div>
+    </main>
+  );
+};
+
+export default NotFoundPage;

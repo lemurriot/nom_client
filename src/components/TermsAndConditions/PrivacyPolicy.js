@@ -1,8 +1,12 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 function PrivacyPolicy() {
+  const { goBack } = useHistory();
   return (
-    <section>
+    <main className="page">
+      <Button onClick={goBack}>Go Back</Button>
       <h1>Welcome to our Privacy Policy</h1>
       <h3>Your privacy is critically important to us.</h3>
       NomsPDX is located at:
@@ -218,7 +222,7 @@ function PrivacyPolicy() {
         via <a href="mailto:omnomnom.pdx@gmail.com">email</a> or{' '}
         <a href="tel:5038789160">phone</a>.
       </p>
-    </section>
+    </main>
   );
 }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { IconButton, SnackbarContent } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 // import MuiAlert from '@material-ui/lab/Alert';
@@ -23,30 +22,26 @@ export default function FeedbackSnackbar({ setOpen, open, message }) {
   };
 
   return (
-    <div>
-      <Snackbar
-        className={classes.root}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message={message}
-        action={
-          <>
-            <IconButton
-              size="medium"
-              aria-label="close"
-              color="inherit"
-              onClick={handleClose}
-            >
-              &times;
-            </IconButton>
-          </>
-        }
-      />
-    </div>
+    <Snackbar
+      className={classes.root}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      open={open}
+      autoHideDuration={2200}
+      onClose={handleClose}
+      message={message}
+      action={
+        <IconButton
+          size="medium"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          &times;
+        </IconButton>
+      }
+    />
   );
 }

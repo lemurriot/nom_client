@@ -23,14 +23,12 @@ const LandingPage = () => {
   );
 
   return (
-    <>
-      <main className="landing-page-main-container">
-        <Button type="button" className="add-new-nom-btn btn">
-          <Link to="/add-new-nom">Nominate a New Restaurant!</Link>
-        </Button>
-        {reviewPreviewList}
-      </main>
-    </>
+    <main className="page">
+      <Button type="button" className="add-new-nom-btn btn">
+        <Link to="/add-new-nom">Nominate a New Restaurant!</Link>
+      </Button>
+      {reviewPreviewList}
+    </main>
   );
 };
 

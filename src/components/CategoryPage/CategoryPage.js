@@ -35,11 +35,10 @@ const CategoryPage = () => {
       category={restaurant.food_category}
       name={restaurant.name}
       loggedIn
-      // likesAndComments={context}
     />
   ));
   return (
-    <main style={{ padding: '2%' }}>
+    <main className="page">
       <Button onClick={goBack}>Go back</Button>
       <h3>Nominated for Best {category}</h3>
       <SelectMenu

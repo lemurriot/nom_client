@@ -37,7 +37,7 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
       />
     ));
   return (
-    <section className="category-card">
+    <section className="content-container category-card">
       <h3>{category} - Top 5</h3>
       <Link to={`/category/${category}`}>See All</Link>
       <SelectMenu
