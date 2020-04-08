@@ -16,6 +16,7 @@ const ProfilePage = () => {
     likesAndComments,
     addEditComment,
     changeUsernameLocally,
+    setShowFeedbackSnackbar,
   } = useContext(NomsContext);
   const { goBack } = useHistory();
   const [commentsFormIsShown, setShowCommentsForm] = useState(false);
@@ -45,12 +46,17 @@ const ProfilePage = () => {
     setShowCommentsForm(true);
   };
 
-  const handleChangeUsername = (newUsername) => {
+  const handleChangeUsername = async (newUsername) => {
     handleAddEditCommentSubmit();
     localStorage.setItem('username', newUsername);
-    putNewUsername(newUsername, user.id);
-    changeUsernameLocally(newUsername);
-    setChangeUsernameFormIsShown(false);
+    putNewUsername(newUsername, user.id).then((confirmation) => {
+      if (confirmation.error) {
+        return setShowFeedbackSnackbar(confirmation.error);
+      }
+      changeUsernameLocally(newUsername);
+      setChangeUsernameFormIsShown(false);
+      return setShowFeedbackSnackbar(confirmation.message);
+    });
   };
 
   const userNominatedRestaurants = nominatedRestaurants.filter(

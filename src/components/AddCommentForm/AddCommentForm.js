@@ -5,7 +5,7 @@ import './AddCommentForm.css';
 
 const { number, string, func } = PropTypes;
 
-const AddCommentForm = props => {
+const AddCommentForm = (props) => {
   const {
     restaurantName,
     comment,
@@ -34,11 +34,17 @@ const AddCommentForm = props => {
         <Formik
           initialValues={{ comment }}
           onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              // alert(JSON.stringify(values, null, 2));
-              addEditComment(commentId, values.comment, restaurantId);
+            setTimeout(async () => {
+              const confirmation = await addEditComment(
+                commentId,
+                values.comment,
+                restaurantId
+              );
+              if (!confirmation.error) {
+                handleSubmit(values.comment);
+              }
               setSubmitting(false);
-              handleSubmit(values.comment);
+              closeCommentsForm();
             }, 400);
           }}
         >

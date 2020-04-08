@@ -1,44 +1,84 @@
+/* eslint-disable camelcase */
 import config from '../config';
 
-export const fetchUserData = async () => {
-  const userData = await fetch(`${config.API_ENDPOINT}/users`, {
+export const fetchUserData = () => {
+  const userData = fetch(`${config.API_ENDPOINT}/users`, {
     method: 'GET',
     credentials: 'include',
-  }).then((res) => res.json());
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(`${res.status} Error. Could not fetch user data`);
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return userData;
 };
 
-export const fetchRestaurantsData = async () => {
-  const restaurants = await fetch(`${config.API_ENDPOINT}/restaurants`, {
+export const fetchRestaurantsData = () => {
+  const restaurants = fetch(`${config.API_ENDPOINT}/restaurants`, {
     method: 'GET',
-    // credentials: "include"
-  }).then((res) => res.json());
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(`${res.status} Error. Could not fetch restaurant data`);
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return restaurants;
 };
 
-export const fetchAllLikesAndComments = async () => {
-  const likesAndComments = await fetch(
-    `${config.API_ENDPOINT}/restaurants/likes`,
-    {
-      method: 'Get',
-    }
-  ).then((res) => res.json());
+export const fetchAllLikesAndComments = () => {
+  const likesAndComments = fetch(`${config.API_ENDPOINT}/restaurants/likes`, {
+    method: 'Get',
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(
+        `${res.status} Error. Could not retrieve restaurant data`
+      );
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return likesAndComments;
 };
 
-export const fetchLikesAndComments = async (restaurantId) => {
-  const likesAndComments = await fetch(
+export const fetchLikesAndComments = (restaurantId) => {
+  const likesAndComments = fetch(
     `${config.API_ENDPOINT}/restaurants/likes/${restaurantId}`,
     {
       method: 'GET',
-      // credentials: "include"
     }
-  ).then((res) => res.json());
+  )
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(
+        `${res.status} Error. Could not retrieve restaurant data`
+      );
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return likesAndComments;
 };
 
-export const postNewUpvote = async (userId, restaurantId) => {
-  const upvoteConfirmation = await fetch(`${config.API_ENDPOINT}/upvotes`, {
+export const postNewUpvote = (userId, restaurantId) => {
+  const upvoteConfirmation = fetch(`${config.API_ENDPOINT}/upvotes`, {
     method: 'PUT',
     credentials: 'include',
     headers: {
@@ -48,12 +88,22 @@ export const postNewUpvote = async (userId, restaurantId) => {
       userId,
       restaurantId,
     }),
-  }).then((res) => res.json());
-  return upvoteConfirmation.newUpvoteObject[0];
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error('Something went wrong. Upvote did not post');
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
+  return upvoteConfirmation;
 };
 
-export const deleteUpvote = async (userId, restaurantId) => {
-  const deleteConfirmation = await fetch(`${config.API_ENDPOINT}/upvotes`, {
+export const deleteUpvote = (userId, restaurantId) => {
+  const deleteConfirmation = fetch(`${config.API_ENDPOINT}/upvotes`, {
     method: 'DELETE',
     credentials: 'include',
     headers: {
@@ -63,36 +113,53 @@ export const deleteUpvote = async (userId, restaurantId) => {
       userId,
       restaurantId,
     }),
-  }).then((res) => res.json());
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error('Oops, something went wrong');
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return deleteConfirmation;
 };
 
-export const patchComment = async (
+export const patchComment = (
   commentId,
   updatedComment,
   userId,
   restaurantId
 ) => {
-  const addEditCommentConfirmation = await fetch(
-    `${config.API_ENDPOINT}/comments`,
-    {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId,
-        restaurantId,
-        commentId,
-        updatedComment,
-      }),
-    }
-  ).then((res) => res.json());
+  const addEditCommentConfirmation = fetch(`${config.API_ENDPOINT}/comments`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+      restaurantId,
+      commentId,
+      updatedComment,
+    }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(`${res.status} Error. Could not post comment`);
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return addEditCommentConfirmation;
 };
 
-export const postNewRestaurant = async (
+export const postNewRestaurant = (
   restaurant_name,
   food_category,
   subtitle,
@@ -101,7 +168,7 @@ export const postNewRestaurant = async (
   nominated_by_user,
   comment = ''
 ) => {
-  const postNewRestaurantConfirmation = await fetch(
+  const postNewRestaurantConfirmation = fetch(
     `${config.API_ENDPOINT}/restaurants`,
     {
       method: 'POST',
@@ -119,13 +186,22 @@ export const postNewRestaurant = async (
         comment,
       }),
     }
-  ).then((res) => res.json());
-  // console.log(postNewRestaurantConfirmation);
+  )
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error('Something went wrong. Could not post new restaurant');
+    })
+    .catch((err) => ({
+      error: true,
+      message: err.message,
+    }));
   return postNewRestaurantConfirmation;
 };
 
-export const putNewUsername = async (newUsername, userId) => {
-  const putNewUsernameConfirmation = await fetch(
+export const putNewUsername = (newUsername, userId) => {
+  const putNewUsernameConfirmation = fetch(
     `${config.API_ENDPOINT}/users/edit-username`,
     {
       method: 'PUT',
@@ -138,7 +214,13 @@ export const putNewUsername = async (newUsername, userId) => {
         new_username: newUsername,
       }),
     }
-  );
-  // console.log(putNewUsernameConfirmation);
+  )
+    .then((res) => {
+      if (!res.ok) {
+        return res.json();
+      }
+      return { message: 'Username updated!' };
+    })
+    .then((res) => res);
   return putNewUsernameConfirmation;
 };

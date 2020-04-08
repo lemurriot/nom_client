@@ -7,6 +7,7 @@ const NomsContext = React.createContext({
   likesAndComments: {},
   voteTallies: {},
   uniqueCategories: [],
+  setShowFeedbackSnackbar: () => {},
   addNewRestaurant: () => {},
   changeUsernameLocally: () => {},
   voteForRestaurant: () => {},

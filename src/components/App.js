@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
@@ -28,6 +29,7 @@ import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
 import ProfilePage from './ProfilePage/ProfilePage';
 import CategoryPage from './CategoryPage/CategoryPage';
 import WarningModal from './WarningModal/WarningModal';
+import FeedbackSnackbar from './FeedbackSnackbar/FeedbackSnackbar';
 import About from './About/About';
 import TermsAndConditions from './TermsAndConditions/TermsAndConditions';
 import PrivacyPolicy from './TermsAndConditions/PrivacyPolicy';
@@ -47,7 +49,8 @@ export default class App extends Component {
       showWarningModal: false,
       warningModalMessages: {},
       warningModalProceedAction: () => {},
-      // error: null,
+      feedbackMessage: '',
+      showFeedbackMessage: false,
     };
   }
 
@@ -57,24 +60,32 @@ export default class App extends Component {
     this.getLikesAndComments();
   }
 
-  getUser = () =>
-    fetchUserData().then((user) =>
-      this.setState({
-        user,
-        username: localStorage.getItem('username') || user.user_name,
-      })
-    );
+  getUser = () => {
+    fetchUserData().then((userData) => {
+      if (userData.error) {
+        this.handleShowFeedbackSnackbar(userData.message);
+      }
+      return this.setState({
+        user: userData,
+        username: localStorage.getItem('username') || userData.user_name,
+      });
+    });
+  };
 
   changeUsernameLocally = (username) => {
     this.setState({ username });
   };
 
   getRestaurants = () =>
-    fetchRestaurantsData().then((nominatedRestaurants) => {
-      nominatedRestaurants.forEach(
-        (restaurant) => (restaurant.vote_count = Number(restaurant.vote_count))
-      );
-      this.setState({ nominatedRestaurants }, () => {
+    fetchRestaurantsData().then((restaurantData) => {
+      if (restaurantData.error) {
+        this.handleShowFeedbackSnackbar(restaurantData.message);
+      }
+      restaurantData.forEach((restaurant) => {
+        // eslint-disable-next-line no-param-reassign
+        restaurant.vote_count = Number(restaurant.vote_count);
+      });
+      return this.setState({ nominatedRestaurants: restaurantData }, () => {
         this.getVoteTallies();
         this.getUniqueCategories();
       });
@@ -95,9 +106,12 @@ export default class App extends Component {
   };
 
   getLikesAndComments = () =>
-    fetchAllLikesAndComments().then((likesAndComments) =>
-      this.setState({ likesAndComments })
-    );
+    fetchAllLikesAndComments().then((likesAndComments) => {
+      if (likesAndComments.error) {
+        this.handleShowFeedbackSnackbar(likesAndComments.message);
+      }
+      return this.setState({ likesAndComments });
+    });
 
   handleAddRestaurant = async (newRestaurant) => {
     const {
@@ -118,6 +132,9 @@ export default class App extends Component {
       nominatedByUser,
       comment
     );
+    if (newRestaurantFromDb.error) {
+      this.handleShowFeedbackSnackbar(newRestaurantFromDb.message);
+    }
     newRestaurantFromDb.vote_count = Number(newRestaurantFromDb.vote_count);
     this.setState(
       (prevState) => ({
@@ -162,14 +179,23 @@ export default class App extends Component {
       );
     } else {
       const newUpvote = await postNewUpvote(userId, restaurantId);
+      if (newUpvote.error) {
+        return this.handleShowFeedbackSnackbar(newUpvote.message);
+      }
       const newVoteTallies = { ...voteTallies };
       ++newVoteTallies[restaurantId];
-      this.setState((prevState) => ({
+      return this.setState((prevState) => ({
         likesAndComments: [...prevState.likesAndComments, newUpvote],
         voteTallies: newVoteTallies,
       }));
     }
   };
+
+  handleShowFeedbackSnackbar = (feedbackMessage) =>
+    this.setState({
+      showFeedbackMessage: true,
+      feedbackMessage,
+    });
 
   handleUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
     const { likesAndComments } = this.state;
@@ -198,27 +224,44 @@ export default class App extends Component {
   proceedUndoVoteForRestaurant = (userId, restaurantId, likesCommentsId) => {
     const { voteTallies, likesAndComments } = this.state;
     this.addEditComment(likesCommentsId, '', restaurantId);
-    deleteUpvote(userId, restaurantId);
-    const newVoteTallies = { ...voteTallies };
-    --newVoteTallies[restaurantId];
-    this.setState({
-      likesAndComments: likesAndComments.filter(
-        ({ id }) => id !== likesCommentsId
-      ),
-      voteTallies: newVoteTallies,
-      showWarningModal: false,
+    deleteUpvote(userId, restaurantId).then((confirmation) => {
+      if (confirmation.error) {
+        return this.handleShowFeedbackSnackbar(confirmation.message);
+      }
+      const newVoteTallies = { ...voteTallies };
+      --newVoteTallies[restaurantId];
+      return this.setState({
+        likesAndComments: likesAndComments.filter(
+          ({ id }) => id !== likesCommentsId
+        ),
+        voteTallies: newVoteTallies,
+        showWarningModal: false,
+      });
     });
   };
 
   addEditComment = async (commentId, updatedComment, restaurantId) => {
     const { user, likesAndComments } = this.state;
-    patchComment(commentId, updatedComment, user.id, restaurantId);
+    const confirmation = await patchComment(
+      commentId,
+      updatedComment,
+      user.id,
+      restaurantId
+    );
+    if (confirmation.error) {
+      this.handleShowFeedbackSnackbar(confirmation.message);
+      return confirmation;
+    }
     const newLikesAndComments = [...likesAndComments];
     const commentToUpdate = newLikesAndComments.findIndex(
       ({ id }) => id === commentId
     );
     newLikesAndComments[commentToUpdate].comment = updatedComment;
     this.setState({ likesAndComments: newLikesAndComments });
+    if (updatedComment.length) {
+      this.handleShowFeedbackSnackbar('Success!');
+    }
+    return confirmation;
   };
 
   render() {
@@ -229,6 +272,8 @@ export default class App extends Component {
       voteTallies,
       likesAndComments,
       uniqueCategories,
+      feedbackMessage,
+      showFeedbackMessage,
       showWarningModal,
       warningModalProceedAction,
       warningModalMessages: { headingText, subtext, buttonText },
@@ -240,6 +285,7 @@ export default class App extends Component {
       voteTallies,
       likesAndComments,
       uniqueCategories,
+      setShowFeedbackSnackbar: this.handleShowFeedbackSnackbar,
       changeUsernameLocally: this.changeUsernameLocally,
       nominateNewRestaurant: this.handleAddRestaurant,
       voteForRestaurant: this.handleVoteForRestaurant,
@@ -285,6 +331,17 @@ export default class App extends Component {
               headingText={headingText}
               buttonText={buttonText}
               subtext={subtext}
+            />
+          )}
+          {showFeedbackMessage && (
+            <FeedbackSnackbar
+              open={showFeedbackMessage}
+              setOpen={() =>
+                this.setState({
+                  showFeedbackMessage: false,
+                })
+              }
+              message={feedbackMessage}
             />
           )}
           <Footer />

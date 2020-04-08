@@ -16,7 +16,6 @@ const NominatedRestaurantPage = () => {
   );
   const [restaurantInfo, setrestaurantInfo] = useState([]);
   const [commentsFormIsShown, setShowCommentsForm] = useState(false);
-  const [error, setError] = useState({});
   const { goBack } = useHistory();
   const { restaurant_id } = useParams();
   const restaurantId = Number(restaurant_id);
@@ -53,7 +52,7 @@ const NominatedRestaurantPage = () => {
   };
 
   const handleAddEditCommentSubmit = async (updatedComment) => {
-    closeCommentsForm();
+    // closeCommentsForm();
     await getrestaurantInfo();
     const newrestaurantInfo = { ...restaurantInfo };
     const userComment = newrestaurantInfo.comments.findIndex(
@@ -62,8 +61,6 @@ const NominatedRestaurantPage = () => {
     if (userComment !== -1) {
       newrestaurantInfo.comments[userComment].comment = updatedComment;
       setrestaurantInfo(newrestaurantInfo);
-    } else {
-      setError({ error: 'Something went wrong' });
     }
   };
 
