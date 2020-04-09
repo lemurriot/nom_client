@@ -1,9 +1,15 @@
-.preview-nom-box {
-  border: 1px solid black;
+.restaurant-preview-card {
+  border: 0.5px solid #011627;
+  border-radius: 7px;
   margin-bottom: 2%;
   padding: 2%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
-.preview-nom-box h5 {
+.restaurant-preview-card--left,
+.restaurant-preview-card--right {
+  width: 50%;
+}
+.restaurant-preview-card h5 {
   margin: 0;
 }
 .hide {

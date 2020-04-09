@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
 .App {
   position: relative;
   min-height: 100vh;
@@ -11,10 +13,31 @@
 .content-container {
   background-color: white;
   border-radius: 8px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.flex-container {
+.flex-container--space-around {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.flex-container--space-between {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.flex-container--centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.center {
+  text-align: center;
 }

@@ -6,10 +6,10 @@ import NomsContext from '../../NomsContext';
 
 const VoteButtons = ({ userDidLike, restaurantId, likeId }) => (
   <NomsContext.Consumer>
-    {context => {
+    {(context) => {
       const { voteForRestaurant, undoVoteForRestaurant, user } = context;
       return (
-        <div className="buttons-container">
+        <div className="buttons-container flex-container--centered">
           <button
             type="button"
             className={

@@ -24,10 +24,17 @@ const LandingPage = () => {
 
   return (
     <main className="page">
-      <Button type="button" className="add-new-nom-btn btn">
-        <Link to="/add-new-nom">Nominate a New Restaurant!</Link>
+      <Button variant="contained" color="primary" size="medium">
+        <Link
+          to="/add-new-nom"
+          style={{ textDecoration: 'none', height: '100%', color: 'white' }}
+        >
+          Nominate a New Restaurant!
+        </Link>
       </Button>
-      {reviewPreviewList}
+      <section className="flex-container--space-around">
+        {reviewPreviewList}
+      </section>
     </main>
   );
 };

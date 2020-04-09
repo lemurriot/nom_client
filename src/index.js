@@ -8,6 +8,7 @@ import {
   faCopyright,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import 'normalize.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import './index.css';

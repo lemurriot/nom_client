@@ -33,13 +33,15 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
         voteCount={voteTallies[restaurant.id]}
         category={restaurant.food_category}
         name={restaurant.name}
-        loggedIn
+        subtitle={restaurant.subtitle}
       />
     ));
   return (
     <section className="content-container category-card">
-      <h3>{category} - Top 5</h3>
-      <Link to={`/category/${category}`}>See All</Link>
+      <div className="category-card__title flex-container--space-between">
+        <h3 className="montserrat center">Top 5 {category} Noms</h3>
+        <Link to={`/category/${category}`}>See All</Link>
+      </div>
       <SelectMenu
         menuOptions={sortConstants}
         value={sortRestaurantsBy}

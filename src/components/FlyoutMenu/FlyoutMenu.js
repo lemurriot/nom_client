@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './FlyoutMenu.css';
 // import { makeStyles } from '@material-ui/core/styles';
 
 const linksList = [
@@ -79,18 +80,16 @@ const FlyoutMenu = () => {
   }, [open]);
 
   return (
-    <div>
+    <>
       <Button
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <FontAwesomeIcon
-          icon="hamburger"
-          color="#bc47ca"
-          style={{ fontSize: 50 }}
-        />
+        <div className="burger flex-container--centered">
+          <FontAwesomeIcon icon="hamburger" color="white" />
+        </div>
       </Button>
       <Popper
         open={open}
@@ -132,7 +131,7 @@ const FlyoutMenu = () => {
           </Grow>
         )}
       </Popper>
-    </div>
+    </>
   );
 };
 

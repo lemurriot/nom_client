@@ -1,8 +1,10 @@
 .category-card {
-  border: 1px solid black;
   margin-top: 5%;
   padding: 2%;
+  width: 100%;
+  max-width: 400px;
 }
-h3 {
-  margin: 0;
+
+.category-card__title {
+  margin: 0 5%;
 }

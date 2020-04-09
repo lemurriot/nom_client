@@ -1,0 +1,11 @@
+.burger {
+  font-size: 35px;
+  border-radius: 50%;
+  background-color: #3f51af;
+  height: 65px;
+  width: 65px;
+  padding-bottom: 4px;
+  margin: 0 10px;
+  border: 1px solid #e71d36;
+  box-shadow: 0 0 0 15px #e2e2e2;
+}

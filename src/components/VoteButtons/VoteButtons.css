@@ -1,16 +1,19 @@
+.buttons-container {
+  height: 50px;
+}
 .vote-btn {
-    height: 30px;
-    font-weight: bold;
-    color: white;
-    border-radius: 10px;
+  height: 100%;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
 }
 .vote-btn:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px 2px black;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px black;
 }
 .upvote-btn {
-    background-color: #4351de;
+  background-color: #4351de;
 }
 .upvoted-btn {
-    background-color: #bc47ca;
+  background-color: #bc47ca;
 }

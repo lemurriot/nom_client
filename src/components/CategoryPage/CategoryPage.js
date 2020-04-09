@@ -34,7 +34,7 @@ const CategoryPage = () => {
       voteCount={voteTallies[restaurant.id]}
       category={restaurant.food_category}
       name={restaurant.name}
-      loggedIn
+      subtitle={restaurant.subtitle}
     />
   ));
   return (
