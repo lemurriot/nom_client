@@ -58,29 +58,38 @@ const CategoryPage = () => {
       <Button onClick={goBack} variant="contained" className="go-back-btn">
         Go back
       </Button>
-      <section className="content-container">
+      <section className="content-container page-content-container">
         <h3>Nominated for Best {category}</h3>
-        <SelectMenu
-          menuOptions={sortConstants}
-          value={sortRestaurantsBy}
-          setSortBy={setSortRestaurantsBy}
-          helperText="Sort By"
-        />
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <FontAwesomeIcon icon="search" color="grey" />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-            onChange={(e) => setSearchString(e.target.value)}
+        <div className="content-container-controls flex-container--space-between">
+          <SelectMenu
+            menuOptions={sortConstants}
+            value={sortRestaurantsBy}
+            setSortBy={setSortRestaurantsBy}
+            helperText="Sort By"
           />
+          <span className="flex-container--centered">
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <FontAwesomeIcon icon="search" color="grey" />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => setSearchString(e.target.value)}
+              />
+            </div>
+          </span>
         </div>
         <div className="restaurant-review-preview-box">
+          <div className="restaurant-list-header flex-container--space-between">
+            <span className="restaurant-list-header--left">Restaurant</span>
+            <span className="restaurant-list-header--middle">Vote Count</span>
+            <span className="restaurant-list-header--right">Vote Button</span>
+          </div>
           {CategoryRestaurantList}
         </div>
       </section>

@@ -24,17 +24,16 @@ const RestaurantPreview = ({
 
       return (
         <div className="restaurant-preview-card flex-container--space-between">
-          <div className="restaurant-preview-card--left">
+          <div className="restaurant-preview-card--left restaurant-preview-card--section">
             <Link to={`/category/${category}/${restaurantId}`}>
               <h5>{name}</h5>
             </Link>
             <h6>{subtitle}</h6>
           </div>
-          <div className="restaurant-preview-card--right">
-            <span>
-              Votes:
-              {voteCount}
-            </span>
+          <div className="restaurant-preview-card--middle restaurant-preview-card--section flex-container--centered">
+            {voteCount}
+          </div>
+          <div className="restaurant-preview-card--right restaurant-preview-card--section flex-container--centered">
             <VoteButtons
               restaurantId={restaurantId}
               userDidLike={findIfUserDidLike.length}

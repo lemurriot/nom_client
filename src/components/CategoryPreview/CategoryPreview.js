@@ -49,6 +49,11 @@ const CategoryPreview = ({ categoryRestaurants, category }) => {
         helperText="Sort By"
       />
       <div className="restaurant-review-preview-box">
+        <div className="restaurant-list-header flex-container--space-between">
+          <span className="restaurant-list-header--left">Restaurant</span>
+          <span className="restaurant-list-header--middle">Vote Count</span>
+          <span className="restaurant-list-header--right">Vote Button</span>
+        </div>
         {CategoryRestaurantList}
       </div>
     </section>

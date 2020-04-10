@@ -4,10 +4,14 @@
   padding: 2%;
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.55);
+  display: flex;
 }
-.restaurant-preview-card--left,
-.restaurant-preview-card--right {
-  width: 50%;
+.restaurant-preview-card--left {
+  width: 40%;
+}
+.restaurant-preview-card--right,
+.restaurant-preview-card--middle {
+  width: 30%;
 }
 .restaurant-preview-card h5 {
   margin: 0;
