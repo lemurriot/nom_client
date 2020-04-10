@@ -6,11 +6,11 @@ import { findUserDidLike } from '../../utils';
 import NomsContext from '../../NomsContext';
 import Comments from '../Comments/Comments';
 import VoteButtons from '../VoteButtons/VoteButtons';
-import './NominatedRestaurantPage.css';
+import './RestaurantPage.css';
 import { fetchLikesAndComments } from '../../api/routes';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
-const NominatedRestaurantPage = () => {
+const RestaurantPage = () => {
   const { likesAndComments, voteTallies, user, addEditComment } = useContext(
     NomsContext
   );
@@ -167,4 +167,4 @@ const NominatedRestaurantPage = () => {
   );
 };
 
-export default NominatedRestaurantPage;
+export default RestaurantPage;

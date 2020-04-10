@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import CategoryReviewPreview from '../CategoryReviewPreview/CategoryReviewPreview';
+import CategoryPreview from '../CategoryPreview/CategoryPreview';
 import './LandingPage.css';
 import NomsContext from '../../NomsContext';
 
@@ -12,9 +12,9 @@ const LandingPage = () => {
       (restaurant) => restaurant.food_category === category
     )
   );
-  const reviewPreviewList = restaurantsFilteredByCategory.map(
+  const categoryPreviewList = restaurantsFilteredByCategory.map(
     (categoryRestaurants, i) => (
-      <CategoryReviewPreview
+      <CategoryPreview
         key={[...uniqueCategories][i]}
         categoryRestaurants={categoryRestaurants}
         category={[...uniqueCategories][i]}
@@ -33,7 +33,7 @@ const LandingPage = () => {
         </Link>
       </Button>
       <section className="flex-container--space-around">
-        {reviewPreviewList}
+        {categoryPreviewList}
       </section>
     </main>
   );

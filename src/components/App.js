@@ -24,7 +24,7 @@ import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
 import LoginForm from './LoginForm/LoginForm';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
-import NominatedRestaurantPage from './NominatedRestaurantPage/NominatedRestaurantPage';
+import RestaurantPage from './RestaurantPage/RestaurantPage';
 import AddRestaurantForm from './AddRestaurantForm/AddRestaurantForm';
 import ProfilePage from './ProfilePage/ProfilePage';
 import CategoryPage from './CategoryPage/CategoryPage';
@@ -305,7 +305,7 @@ export default class App extends Component {
             />
             <Route
               path="/category/:food_category/:restaurant_id"
-              component={NominatedRestaurantPage}
+              component={RestaurantPage}
             />
             <Route path="/category/:food_category" component={CategoryPage} />
             <Route path="/about" component={AboutPage} />

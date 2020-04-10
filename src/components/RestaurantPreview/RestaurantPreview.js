@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, number } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { findUserDidLike } from '../../utils';
 import NomsContext from '../../NomsContext';
 import VoteButtons from '../VoteButtons/VoteButtons';
-import './NominatedRestaurantPreview.css';
+import './RestaurantPreview.css';
 
-const NominatedRestaurantPreview = ({
+const RestaurantPreview = ({
   category,
   name,
   subtitle,
@@ -47,15 +47,16 @@ const NominatedRestaurantPreview = ({
   </NomsContext.Consumer>
 );
 
-NominatedRestaurantPreview.propTypes = {
-  category: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  voteCount: PropTypes.number,
+RestaurantPreview.propTypes = {
+  category: string.isRequired,
+  name: string.isRequired,
+  subtitle: string.isRequired,
+  id: number.isRequired,
+  voteCount: number,
 };
 
-NominatedRestaurantPreview.defaultProps = {
+RestaurantPreview.defaultProps = {
   voteCount: 0,
 };
 
-export default NominatedRestaurantPreview;
+export default RestaurantPreview;

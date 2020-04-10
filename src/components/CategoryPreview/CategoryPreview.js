@@ -6,12 +6,12 @@ import { sortRestaurants } from '../../utils';
 import { sortConstants } from '../../constants/sortConstants';
 import restaurantType from '../../types';
 import NomsContext from '../../NomsContext';
-import NominatedRestaurantPreview from '../NominatedRestaurantPreview/NominatedRestaurantPreview';
-import './CategoryReviewPreview.css';
+import RestaurantPreview from '../RestaurantPreview/RestaurantPreview';
+import './CategoryPreview.css';
 
 const { string, arrayOf, shape } = PropTypes;
 
-const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
+const CategoryPreview = ({ categoryRestaurants, category }) => {
   const { voteTallies } = useContext(NomsContext);
   const [sortRestaurantsBy, setSortRestaurantsBy] = useState('All Time');
   const sortedCategoryRestaurants = sortRestaurants(
@@ -27,7 +27,7 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
   const CategoryRestaurantList = sortedCategoryRestaurants
     .slice(0, 5)
     .map((restaurant) => (
-      <NominatedRestaurantPreview
+      <RestaurantPreview
         key={restaurant.id}
         id={restaurant.id}
         voteCount={voteTallies[restaurant.id]}
@@ -55,9 +55,9 @@ const CategoryReviewPreview = ({ categoryRestaurants, category }) => {
   );
 };
 
-CategoryReviewPreview.propTypes = {
+CategoryPreview.propTypes = {
   category: string.isRequired,
   categoryRestaurants: arrayOf(shape(restaurantType)).isRequired,
 };
 
-export default CategoryReviewPreview;
+export default CategoryPreview;
