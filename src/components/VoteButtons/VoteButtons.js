@@ -16,23 +16,25 @@ const VoteButtons = ({ userDidLike, restaurantId, likeId }) => (
               userDidLike ? 'upvote-btn vote-btn hide' : 'upvote-btn vote-btn'
             }
             onClick={() => voteForRestaurant(user.id, restaurantId)}
-            disabled={false}
           >
-            Upvote!
-            <FontAwesomeIcon icon="star" color="white" />
+            {/* Upvote! */}
+            <FontAwesomeIcon icon="check-square" color="white" />
           </button>
           <button
             type="button"
             className={
               !userDidLike
                 ? 'upvoted-btn vote-btn hide'
-                : 'upvoted-btn vote-btn'
+                : 'upvoted-btn vote-btn flex-container--centered'
             }
             onClick={() => undoVoteForRestaurant(user.id, restaurantId, likeId)}
-            disabled={false}
           >
-            You upvoted this
-            <FontAwesomeIcon icon="star" color="gold" />
+            {/* You upvoted this */}
+            <FontAwesomeIcon
+              icon="check"
+              color="red"
+              transform="right-2 up-3"
+            />
           </button>
         </div>
       );
