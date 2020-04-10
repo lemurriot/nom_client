@@ -6,7 +6,9 @@ const TermsAndConditions = () => {
   const { goBack } = useHistory();
   return (
     <main className="page">
-      <Button onClick={goBack}>Go Back</Button>
+      <Button onClick={goBack} variant="contained" className="go-back-btn">
+        Go Back
+      </Button>
       <h2>Welcome to NomsPDX</h2>
       <p>
         These terms and conditions outline the rules and regulations for the use

@@ -6,7 +6,9 @@ function PrivacyPolicy() {
   const { goBack } = useHistory();
   return (
     <main className="page">
-      <Button onClick={goBack}>Go Back</Button>
+      <Button onClick={goBack} variant="contained" className="go-back-btn">
+        Go Back
+      </Button>
       <h1>Welcome to our Privacy Policy</h1>
       <h3>Your privacy is critically important to us.</h3>
       NomsPDX is located at:

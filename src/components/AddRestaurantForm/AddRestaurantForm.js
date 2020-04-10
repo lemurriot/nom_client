@@ -122,7 +122,13 @@ const AddRestaurantForm = () => {
       <section className="add-restaurant-form--outer">
         <>
           <div className="buttons">
-            <Button onClick={history.goBack}>Go Back</Button>
+            <Button
+              onClick={history.goBack}
+              variant="contained"
+              className="go-back-btn"
+            >
+              Go Back
+            </Button>
           </div>
           <div className="container">
             <h2>Nominate a Restaurant for Best in Category!</h2>

@@ -12,6 +12,7 @@
 
 .content-container {
   background-color: white;
+  padding: 2%;
   border-radius: 8px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
@@ -40,4 +41,10 @@
 
 .center {
   text-align: center;
+}
+
+.go-back-btn {
+  background-color: #9a069a !important;
+  color: white !important;
+  margin: 2% 0 !important;
 }

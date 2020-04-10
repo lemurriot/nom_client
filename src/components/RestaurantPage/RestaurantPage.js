@@ -92,7 +92,9 @@ const RestaurantPage = () => {
     <main className="page">
       {restaurantInfo.id && (
         <article>
-          <Button onClick={goBack}>Go back</Button>
+          <Button onClick={goBack} variant="contained" className="go-back-btn">
+            Go back
+          </Button>
           <h2>{name}</h2>
           {subtitle && <h3>{subtitle}</h3>}
           {address && <h3>{address}</h3>}

@@ -138,7 +138,9 @@ const ProfilePage = () => {
 
   return (
     <main className="page">
-      <Button onClick={goBack}>Go back</Button>
+      <Button onClick={goBack} variant="contained" className="go-back-btn">
+        Go back
+      </Button>
       <h2>Hello {username}</h2>
       <Button
         variant="outlined"

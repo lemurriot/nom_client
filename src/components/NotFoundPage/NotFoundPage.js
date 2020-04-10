@@ -6,7 +6,9 @@ const NotFoundPage = () => {
   const { goBack } = useHistory();
   return (
     <main className="page">
-      <Button onClick={goBack}>Go Back</Button>
+      <Button onClick={goBack} variant="contained" className="go-back-btn">
+        Go Back
+      </Button>
       <div>Oops page not found.</div>
     </main>
   );

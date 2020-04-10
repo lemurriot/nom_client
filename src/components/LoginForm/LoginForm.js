@@ -9,7 +9,9 @@ const LoginForm = () => {
 
   return (
     <main className="page">
-      <Button onClick={goBack}>Go Back</Button>
+      <Button onClick={goBack} variant="contained" className="go-back-btn">
+        Go Back
+      </Button>
       <h2>You must be logged in to see this page</h2>
       <Button>
         <a href={`${config.API_ENDPOINT}/auth/google-oauth`}>
