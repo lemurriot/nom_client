@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import { portlandZipCodes } from './constants/portlandGeoConstants';
+
 export const findUserDidLike = (likesAndCommentsArr, restaurantId, userId) => {
   return likesAndCommentsArr.filter(
     ({ restaurant_id, user_id }) =>
@@ -59,4 +61,11 @@ export const sortRestaurants = (restaurantArr, voteTallies, sortBy) => {
     default:
       return restaurantArr;
   }
+};
+
+export const validateZipCode = (zipCode) => {
+  if (Number(zipCode) < 99000 && Number(zipCode > 96999)) {
+    return true;
+  }
+  return false;
 };

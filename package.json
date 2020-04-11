@@ -17,7 +17,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "react-spring": "^8.0.27",
-    "uuidv4": "^6.0.6"
+    "uuidv4": "^6.0.6",
+    "yup": "^0.28.3"
   },
   "husky": {
     "hooks": {

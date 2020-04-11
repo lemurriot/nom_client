@@ -7,7 +7,7 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
-import { func, arrayOf, string } from 'prop-types';
+import { func, arrayOf, string, bool } from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -65,6 +65,7 @@ SelectMenu.propTypes = {
   menuOptions: arrayOf(string),
   setSortBy: func,
   helperText: string,
+  showVerbose: bool,
 };
 
 SelectMenu.defaultProps = {
@@ -72,6 +73,7 @@ SelectMenu.defaultProps = {
   menuOptions: [''],
   setSortBy: () => {},
   helperText: '',
+  showVerbose: false,
 };
 
 export default SelectMenu;

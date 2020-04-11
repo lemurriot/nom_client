@@ -8,6 +8,7 @@
 .page {
   padding: 5%;
   background-color: rgb(226, 226, 226);
+  min-height: 100vh;
 }
 
 .content-container {

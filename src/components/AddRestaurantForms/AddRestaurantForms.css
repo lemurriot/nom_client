@@ -1,0 +1,8 @@
+.current-restaurants-container {
+  width: 100%;
+  padding: 2%;
+  border-radius: 10px;
+  height: 250px;
+  background-color: rgb(226, 226, 226);
+  overflow: scroll;
+}

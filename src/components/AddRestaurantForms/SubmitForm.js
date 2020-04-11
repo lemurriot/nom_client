@@ -1,20 +1,22 @@
 import React from 'react';
 import { shape, string, bool, func } from 'prop-types';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Button } from '@material-ui/core';
 
 const SubmitForm = ({
   selectedRestaurant: { name, subtitle, id, apiReferred },
-  setShowSubmitForm,
+  // setShowSubmitForm,
+  setCurrentForm,
   onSubmitForm,
   category,
 }) => {
-  const closeSubmitForm = () => setShowSubmitForm(false);
+  // const closeSubmitForm = () => setShowSubmitForm(false);
   return (
     <div className="submit-form--outer">
       <div className="submit-form--inner">
-        <button type="button" onClick={closeSubmitForm}>
+        {/* <button type="button" onClick={closeSubmitForm}>
           Cancel
-        </button>
+        </button> */}
         <div className="submit-form--container">
           <div className="prepop-title">You Are Nominating</div>
           <div className="restaurant-title">{name}</div>
@@ -33,7 +35,7 @@ const SubmitForm = ({
               setTimeout(() => {
                 onSubmitForm(values.comment);
                 setSubmitting(false);
-                setShowSubmitForm(false);
+                setCurrentForm('');
               }, 400);
             }}
           >
@@ -48,6 +50,27 @@ const SubmitForm = ({
               </Form>
             )}
           </Formik>
+        </div>
+        <div className="form-buttons">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={
+              apiReferred
+                ? () => setCurrentForm('search')
+                : () => setCurrentForm('create')
+            }
+          >
+            Previous
+          </Button>
+          {/* <Button
+        disabled={!value}
+        variant="contained"
+        color="primary"
+        onClick={() => setCurrentForm('search')}
+      >
+        Next
+      </Button> */}
         </div>
       </div>
     </div>
