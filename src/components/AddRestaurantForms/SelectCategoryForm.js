@@ -11,6 +11,7 @@ const SelectCategoryForm = ({
   <>
     <h3>First select a Category</h3>
     <SelectMenu
+      required
       menuOptions={menuOptions}
       value={value}
       setSortBy={setSortBy}
@@ -18,14 +19,7 @@ const SelectCategoryForm = ({
       autoFocus
       helperText="Select Category (required)"
     />
-    <div className="form-buttons">
-      {/* <Button
-        disabled
-        variant="contained"
-        color="primary"
-      >
-        Previous
-      </Button> */}
+    <div className="form-btns__container category-select__next-btn-container">
       <Button
         disabled={!value}
         variant="contained"

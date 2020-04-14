@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types';
+import { number, string, arrayOf, shape, object, array } from 'prop-types';
 
-const { number, string } = PropTypes;
-
-const restaurantType = {
+export const restaurantType = {
   id: number.isRequired,
   address: string.isRequired,
   date_nominated: string.isRequired,
@@ -13,4 +11,18 @@ const restaurantType = {
   vote_count: number.isRequired,
 };
 
-export default restaurantType;
+export const googleSearchResultsShape = {
+  description: string.isRequired,
+  id: string.isRequired,
+  matched_substrings: arrayOf(
+    shape({
+      length: number.isRequired,
+      offset: number.isRequired,
+    })
+  ),
+  place_id: string.isRequired,
+  reference: string.isRequired,
+  structured_formatting: object,
+  terms: array,
+  types: arrayOf(string.isRequired).isRequired,
+};

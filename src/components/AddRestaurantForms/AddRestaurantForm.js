@@ -7,12 +7,9 @@ import SelectCategoryForm from './SelectCategoryForm';
 import SearchRestaurantsForm from './SearchRestaurantsForm';
 import WarningModal from '../WarningModal/WarningModal';
 import NomsContext from '../../NomsContext';
-// import ValidationError from '../Validation/Validation';
 // import CurrentNominatedRestaurants from './CurrentNominatedRestaurants';
-// import GoogleAutocompleteResults from './GoogleAutocompleteResults';
 import CreateNewRestaurantForm from './CreateNewRestaurantForm';
 import SubmitForm from './SubmitForm';
-// import SelectCategoryForm from './SelectCategoryForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const AddRestaurantForm = () => {
@@ -20,10 +17,7 @@ const AddRestaurantForm = () => {
     NomsContext
   );
   const history = useHistory();
-  const [restaurantName, setRestaurantName] = useState({
-    value: '',
-    touched: false,
-  });
+  const [restaurantName, setRestaurantName] = useState('');
   const [category, setCategory] = useState('');
   const [selectedRestaurant, setSelectedRestaurant] = useState({
     name: '',
@@ -36,8 +30,6 @@ const AddRestaurantForm = () => {
   });
   const [redirectAction, setRedirectAction] = useState(() => {});
   const [currentForm, setCurrentForm] = useState('category');
-  const [showSubmitForm, setShowSubmitForm] = useState(false);
-  const [showCreateForm, setShowCreateForm] = useState(false);
   const [showWarningModal, setShowWarningModal] = useState(false);
 
   const handleCategoryChange = (foodCategory) => {
@@ -59,7 +51,7 @@ const AddRestaurantForm = () => {
   };
 
   return (
-    <main className="add-restaurant-form--page page">
+    <main className="add-restaurant-form--page page" id="add-restaurant-view">
       <section className="add-restaurant-form--outer">
         <>
           <div className="buttons">
@@ -71,10 +63,9 @@ const AddRestaurantForm = () => {
               Cancel
             </Button>
           </div>
-          <div className="content-container page-content-container">
-            <h2>
-              Nominate a Restaurant for Best{' '}
-              {category ? category : 'in Category'}
+          <div className="content-container page-content-container flex-container--column add-new-restaurant__container">
+            <h2 className="center add-new-restaurant__title montserrat">
+              Nominate a Restaurant for Best {category || 'in Category'}
             </h2>
             {currentForm === 'category' && (
               <SelectCategoryForm
@@ -93,7 +84,6 @@ const AddRestaurantForm = () => {
                 setSelectedRestaurant={setSelectedRestaurant}
                 setRedirectAction={setRedirectAction}
                 setShowWarningModal={setShowWarningModal}
-                setShowCreateForm={setShowCreateForm}
               />
             )}
             {currentForm === 'create' && (
@@ -106,7 +96,6 @@ const AddRestaurantForm = () => {
             {currentForm === 'submit' && (
               <SubmitForm
                 selectedRestaurant={selectedRestaurant}
-                // setShowSubmitForm={setShowSubmitForm}
                 setCurrentForm={setCurrentForm}
                 category={category}
                 onSubmitForm={handleSubmitForm}

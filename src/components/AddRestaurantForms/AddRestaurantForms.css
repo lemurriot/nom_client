@@ -1,8 +1,65 @@
-.current-restaurants-container {
+.add-new-restaurant__container {
+  min-height: 300px;
+  max-width: 550px !important;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.create-form__fields {
+  width: 80%;
+  margin: 0 auto;
+}
+#city-select-menu {
+  font-size: 0.7em;
+}
+.create-form__fields--inline {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.create-form__zip-field {
+  margin-left: 5% !important;
+}
+.form-buttons__container {
   width: 100%;
-  padding: 2%;
-  border-radius: 10px;
-  height: 250px;
-  background-color: rgb(226, 226, 226);
-  overflow: scroll;
+  display: flex;
+}
+.category-select__next-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.search-form__input-field {
+  width: 100%;
+}
+.result-list-item--api {
+  padding: 5px;
+  background-color: #f9f9f9;
+  border-bottom: 0.5px solid grey;
+  transition: 0.1s linear;
+  border-radius: 8px;
+}
+.result-list-item--api:hover {
+  background-color: rgb(253, 253, 199);
+  cursor: pointer;
+}
+.result-list__name {
+  font-size: 0.85em;
+}
+.result-list__subtitle {
+  font-size: 0.7em;
+}
+.add-new__list-item {
+  padding: 5px 5px 0;
+}
+.results-container {
+  list-style: none;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(236, 235, 235);
+  padding: 1%;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  border-top: none;
 }

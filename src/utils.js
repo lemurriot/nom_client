@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import { portlandZipCodes } from './constants/portlandGeoConstants';
-
 export const findUserDidLike = (likesAndCommentsArr, restaurantId, userId) => {
   return likesAndCommentsArr.filter(
     ({ restaurant_id, user_id }) =>

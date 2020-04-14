@@ -1,10 +1,17 @@
-import React, { useState, useContext } from 'react';
+/* eslint-disable camelcase */
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 import { uuid } from 'uuidv4';
+import { string, func } from 'prop-types';
 import config from '../../config';
 import NomsContext from '../../NomsContext';
-import { string, func, arr } from 'prop-types';
 // import CurrentNominatedRestaurants from './CurrentNominatedRestaurants';
 import GoogleAutocompleteResults from './GoogleAutocompleteResults';
 
@@ -13,7 +20,6 @@ const SearchRestaurantsForm = ({
   restaurantName,
   setRestaurantName,
   category,
-  // handleSelectCreateNew,
   setRedirectAction,
   setSelectedRestaurant,
   setShowWarningModal,
@@ -21,7 +27,38 @@ const SearchRestaurantsForm = ({
   const { nominatedRestaurants } = useContext(NomsContext);
   const [googleSessionId, setGoogleSessionId] = useState('');
   const [googleResults, setGoogleResults] = useState([]);
+  const [showFloatingResults, setShowFloatingResults] = useState(false);
+  const [searchResultPosition, setSearchResultPosition] = useState({
+    top: 0,
+    width: 0,
+  });
+  const searchInputRef = useRef(null);
   const history = useHistory();
+
+  useEffect(() => {
+    if (searchInputRef.current) {
+      setSearchResultPosition({
+        top: searchInputRef.current.getBoundingClientRect().bottom,
+        width: searchInputRef.current.getBoundingClientRect().width,
+      });
+    }
+  }, [searchInputRef]);
+
+  useLayoutEffect(() => {
+    function updatePosition() {
+      setSearchResultPosition({
+        top: searchInputRef.current.getBoundingClientRect().bottom,
+        width: searchInputRef.current.getBoundingClientRect().width,
+      });
+    }
+    window.addEventListener('resize', updatePosition);
+    updatePosition();
+    return () => window.removeEventListener('resize', updatePosition);
+  }, []);
+
+  const toggleFloatingSearchResults = () => {
+    setShowFloatingResults((showRes) => !showRes);
+  };
 
   const handleSearchInputChange = (searchString) => {
     if (searchString.length > 2) {
@@ -47,28 +84,32 @@ const SearchRestaurantsForm = ({
           }
           throw new Error('Google search results could not be fetched');
         })
+        // eslint-disable-next-line no-console
         .catch((err) => console.error(err.message));
     }
   };
 
   const setNewSearchString = (e) => {
-    setRestaurantName({
-      value: e.target.value,
-      touched: true,
-    });
+    setRestaurantName(e.target.value);
     handleSearchInputChange(e.target.value);
+  };
+  const clearTextField = () => {
+    setRestaurantName('');
+  };
+
+  const handleOnFocus = () => {
+    setGoogleSessionId(uuid());
+    toggleFloatingSearchResults();
   };
 
   const handleSelectResult = (resultIndex) => {
+    setRestaurantName('');
     const googleRestaurantAlreadyNominated = nominatedRestaurants.filter(
       ({ food_category, googleid }) =>
         food_category === category && googleid === googleResults[resultIndex].id
     );
     if (googleRestaurantAlreadyNominated.length) {
-      setRestaurantName({
-        value: '',
-        touched: false,
-      });
+      // setRestaurantName('');
       setRedirectAction(() => () =>
         history.push(
           `/category/${category}/${googleRestaurantAlreadyNominated[0].id}`
@@ -89,26 +130,32 @@ const SearchRestaurantsForm = ({
   return (
     <>
       <h3>Search For Restaurant</h3>
-      <div className="search-form flex-container--space-around">
-        <div className="search-form--left">
+      <div className="search-form">
+        {/* height is fixed at 57 for consistency of anchored results flyout */}
+        <div ref={searchInputRef} style={{ height: 57 }}>
           <TextField
-            value={restaurantName.value}
-            id="filled-basic"
-            label="Enter Restaurant Name"
+            value={restaurantName}
+            fullWidth
+            label="Search Restaurants by Name"
             variant="filled"
             onChange={setNewSearchString}
-            onFocus={() => setGoogleSessionId(uuid())}
+            onFocus={handleOnFocus}
             autoFocus
             autoComplete="off"
           />
-          {restaurantName.value.length > 2 && (
-            <GoogleAutocompleteResults
-              results={googleResults}
-              onSelectResult={handleSelectResult}
-              onSelectCreateNew={() => setCurrentForm('create')}
-            />
-          )}
         </div>
+        {showFloatingResults && restaurantName.length > 2 && (
+          <GoogleAutocompleteResults
+            position={searchResultPosition}
+            showFloatingResults={showFloatingResults}
+            setShowFloatingResults={setShowFloatingResults}
+            toggleFloatingSearchResults={toggleFloatingSearchResults}
+            results={googleResults}
+            clearTextField={clearTextField}
+            onSelectResult={handleSelectResult}
+            setCurrentForm={setCurrentForm}
+          />
+        )}
         {/* <div className="search-form--right" style={{ width: "50%" }}>
           <h4>Already Nominated Restaurants</h4>
           <h5>...avoid nominating the same restaurant twice for the same category</h5>
@@ -123,23 +170,35 @@ const SearchRestaurantsForm = ({
       </div>
       <div className="form-buttons">
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           onClick={() => setCurrentForm('category')}
         >
           Previous
         </Button>
-        {/* <Button
-          disabled
-          variant="contained"
-          color="primary"
-          onClick={() => setCurrentForm('search')}
-        >
-          Next
-        </Button> */}
       </div>
     </>
   );
+};
+
+SearchRestaurantsForm.propTypes = {
+  setCurrentForm: func,
+  restaurantName: string,
+  setRestaurantName: func,
+  category: string,
+  setRedirectAction: func,
+  setSelectedRestaurant: func,
+  setShowWarningModal: func,
+};
+
+SearchRestaurantsForm.defaultProps = {
+  setCurrentForm: () => {},
+  restaurantName: '',
+  category: '',
+  setRestaurantName: () => {},
+  setRedirectAction: () => {},
+  setSelectedRestaurant: () => {},
+  setShowWarningModal: () => {},
 };
 
 export default SearchRestaurantsForm;

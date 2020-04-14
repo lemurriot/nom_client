@@ -10,13 +10,22 @@ import {
   faCopyright,
   faStar,
   faSearch,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import 'normalize.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import './index.css';
 
-library.add(faHamburger, faCopyright, faStar, faSearch, faCheckSquare, faCheck);
+library.add(
+  faHamburger,
+  faCopyright,
+  faStar,
+  faSearch,
+  faCheckSquare,
+  faCheck,
+  faPlus
+);
 
 ReactDOM.render(
   <BrowserRouter>

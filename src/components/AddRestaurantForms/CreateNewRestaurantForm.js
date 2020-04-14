@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, string, shape } from 'prop-types';
 import {
   Button,
   TextField,
@@ -7,7 +7,7 @@ import {
   MenuItem,
   InputLabel,
 } from '@material-ui/core';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { portlandCities } from '../../constants/portlandGeoConstants';
 import { validateZipCode } from '../../utils';
@@ -22,8 +22,8 @@ const CreateNewRestaurantForm = ({
       initialValues={{ name, address, city, zip }}
       validate={(values) => {
         const errors = {};
-        if (values.name.length > 65) {
-          errors.name = 'Restaurant name cannot exceed 65 characters';
+        if (values.name.length > 50) {
+          errors.name = 'Restaurant name cannot exceed 50 characters';
         }
         if (!validateZipCode(values.zip)) {
           errors.zip = 'Not a valid Portland area zip code';
@@ -48,7 +48,7 @@ const CreateNewRestaurantForm = ({
         }, 400);
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().max(65).required('Required'),
+        name: Yup.string().max(50).required('Required'),
         address: Yup.string().required('Required'),
         zip: Yup.string().length(5).required('Required'),
       })}
@@ -63,135 +63,93 @@ const CreateNewRestaurantForm = ({
         handleBlur,
       }) => (
         <form onSubmit={handleSubmit}>
-          <TextField
-            required
-            label="Restaurant Name"
-            name="name"
-            value={values.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            autoComplete="off"
-          />
-          <TextField
-            required
-            label="Restaurant Address"
-            name="address"
-            value={values.address}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            autoComplete="off"
-          />
-          <InputLabel id="city-select-menu">City</InputLabel>
-          <Select
-            required
-            labelId="city-select-menu"
-            label="City"
-            value={values.city}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          >
-            {portlandCities.map((_city) => (
-              <MenuItem key={_city} value={_city}>
-                {_city}
-              </MenuItem>
-            ))}
-          </Select>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            autoComplete="off"
-            onChange={handleChange}
-            error={errors.zip && touched.zip}
-            helperText={errors.zip && touched.zip && errors.zip}
-          />
-          {/* <ErrorMessage name="zip" component="div" /> */}
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+          <div className="create-form__fields flex-container--column">
+            <TextField
+              required
+              label="Restaurant Name"
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              autoComplete="off"
+              error={errors.name && touched.name}
+              helperText={touched.name && errors.name}
+            />
+            <TextField
+              required
+              label="Restaurant Address"
+              name="address"
+              value={values.address}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              autoComplete="off"
+              error={errors.address && touched.address}
+              helperText={touched.address && errors.address}
+            />
+            <div className="create-form__fields--inline">
+              <span className="flex-container--column">
+                <InputLabel id="city-select-menu">City</InputLabel>
+                <Select
+                  required
+                  labelId="city-select-menu"
+                  value={values.city}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                >
+                  {portlandCities.map((_city) => (
+                    <MenuItem key={_city} value={_city}>
+                      {_city}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </span>
+              <TextField
+                className="create-form__zip-field"
+                required
+                id="zip"
+                name="zip"
+                label="Zip / Postal code"
+                autoComplete="off"
+                onChange={handleChange}
+                error={errors.zip && touched.zip}
+                helperText={touched.zip && errors.zip}
+              />
+            </div>
+          </div>
+          <div className="create-form__btns flex-container--space-between">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setCurrentForm('search')}
+            >
+              Previous
+            </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </div>
         </form>
       )}
     </Formik>
-    <div className="form-buttons">
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setCurrentForm('search')}
-      >
-        Previous
-      </Button>
-      {/* <Button
-        disabled={!value}
-        variant="contained"
-        color="primary"
-        onClick={() => setCurrentForm('search')}
-      >
-        Next
-      </Button> */}
-    </div>
   </>
 );
-
-// const CreateNewRestaurantForm = ({
-//   // setShowCreateForm,
-//   // setShowSubmitForm,
-//   setCurrentForm,
-//   setSelectedRestaurant,
-//   // category,
-// }) => (
-//   <div className="submit-form--outer">
-//     <div className="submit-form--inner">
-//       <div className="submit-form--container">
-//         {/* <h4>Nominate a New Restaurant for Best {category}</h4> */}
-//         <Formik
-//           initialValues={{ name: '', address: '' }}
-//           validate={(values) => {
-//             const errors = {};
-//             if (values.name.length > 185) {
-//               errors.name = 'Comment cannot exceed 185 characters';
-//             }
-//             return errors;
-//           }}
-//           onSubmit={(values, { setSubmitting }) => {
-//             setTimeout(() => {
-//               setSelectedRestaurant({
-//                 name: values.name,
-//                 address: values.address,
-//                 subtitle: '',
-//                 id: '',
-//                 apiReferred: false,
-//               });
-//               setSubmitting(false);
-//               setShowSubmitForm(true);
-//               setShowCreateForm(false);
-//             }, 400);
-//           }}
-//         >
-//           {({ isSubmitting }) => (
-//             <Form>
-//               <label htmlFor="name">Restaurant Name:</label>
-//               <Field type="text" name="name" />
-//               <ErrorMessage name="name" component="div" />
-//               <label htmlFor="address">Restaurant Address:</label>
-//               <Field type="text" name="address" />
-//               <ErrorMessage name="address" component="div" />
-//               <button type="submit" disabled={isSubmitting}>
-//                 Submit
-//               </button>
-//             </Form>
-//           )}
-//         </Formik>
-//       </div>
-//     </div>
-//   </div>
-// );
 
 CreateNewRestaurantForm.propTypes = {
   // category: PropTypes.string.isRequired,
   // setShowCreateForm: PropTypes.func,
-  setCurrentForm: PropTypes.func,
-  setSelectedRestaurant: PropTypes.func,
+  setCurrentForm: func,
+  setSelectedRestaurant: func,
+  selectedRestaurant: shape({
+    name: string.isRequired,
+    address: string.isRequired,
+    city: string.isRequired,
+    zip: string.isRequired,
+  }).isRequired,
 };
 
 CreateNewRestaurantForm.defaultProps = {

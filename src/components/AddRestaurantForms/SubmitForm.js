@@ -53,7 +53,7 @@ const SubmitForm = ({
         </div>
         <div className="form-buttons">
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             onClick={
               apiReferred

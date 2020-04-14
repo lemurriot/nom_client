@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import { sortRestaurants } from '../../utils';
 import { sortConstants } from '../../constants/sortConstants';
-import restaurantType from '../../types';
+import { restaurantType } from '../../types';
 import NomsContext from '../../NomsContext';
 import RestaurantPreview from '../RestaurantPreview/RestaurantPreview';
 import './CategoryPreview.css';
