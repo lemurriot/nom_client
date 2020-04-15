@@ -109,7 +109,6 @@ const SearchRestaurantsForm = ({
         food_category === category && googleid === googleResults[resultIndex].id
     );
     if (googleRestaurantAlreadyNominated.length) {
-      // setRestaurantName('');
       setRedirectAction(() => () =>
         history.push(
           `/category/${category}/${googleRestaurantAlreadyNominated[0].id}`
@@ -129,7 +128,6 @@ const SearchRestaurantsForm = ({
 
   return (
     <>
-      <h3>Search For Restaurant</h3>
       <div className="search-form">
         {/* height is fixed at 57 for consistency of anchored results flyout */}
         <div ref={searchInputRef} style={{ height: 57 }}>
@@ -156,19 +154,8 @@ const SearchRestaurantsForm = ({
             setCurrentForm={setCurrentForm}
           />
         )}
-        {/* <div className="search-form--right" style={{ width: "50%" }}>
-          <h4>Already Nominated Restaurants</h4>
-          <h5>...avoid nominating the same restaurant twice for the same category</h5>
-          <div className="current-restaurants-container">
-            <CurrentNominatedRestaurants
-              nominatedRestaurants={nominatedRestaurants}
-              searchString={restaurantName.value}
-              category={category}
-            />
-          </div>
-        </div> */}
       </div>
-      <div className="form-buttons">
+      <div className="form-buttons form-buttons__container">
         <Button
           variant="outlined"
           color="primary"

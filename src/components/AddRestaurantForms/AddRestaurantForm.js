@@ -13,9 +13,7 @@ import SubmitForm from './SubmitForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const AddRestaurantForm = () => {
-  const { nominateNewRestaurant, user, uniqueCategories } = useContext(
-    NomsContext
-  );
+  const { nominateNewRestaurant, user } = useContext(NomsContext);
   const history = useHistory();
   const [restaurantName, setRestaurantName] = useState('');
   const [category, setCategory] = useState('');
@@ -36,6 +34,21 @@ const AddRestaurantForm = () => {
     setCategory(foodCategory);
   };
 
+  const formSubtitle = () => {
+    switch (currentForm) {
+      case 'category':
+        return 'First select a category';
+      case 'search':
+        return 'Search Portland restaurants';
+      case 'create':
+        return 'Enter restaurant information';
+      case 'submit':
+        return 'Last Step: Comment and confirm entry!';
+      default:
+        return '';
+    }
+  };
+
   const handleSubmitForm = (comment) => {
     const newRestaurant = {
       restaurantName: selectedRestaurant.name,
@@ -51,7 +64,7 @@ const AddRestaurantForm = () => {
   };
 
   return (
-    <main className="add-restaurant-form--page page" id="add-restaurant-view">
+    <main className="add-restaurant-form__page page">
       <section className="add-restaurant-form--outer">
         <>
           <div className="buttons">
@@ -64,12 +77,14 @@ const AddRestaurantForm = () => {
             </Button>
           </div>
           <div className="content-container page-content-container flex-container--column add-new-restaurant__container">
-            <h2 className="center add-new-restaurant__title montserrat">
-              Nominate a Restaurant for Best {category || 'in Category'}
-            </h2>
+            <div className="add-new-restaurant__header">
+              <h2 className="center add-new-restaurant__title montserrat">
+                Nominate a Restaurant for Best {category || 'in Category'}
+              </h2>
+              <h3 className="add-new-restaurant__subtitle">{formSubtitle()}</h3>
+            </div>
             {currentForm === 'category' && (
               <SelectCategoryForm
-                menuOptions={uniqueCategories}
                 value={category}
                 setSortBy={handleCategoryChange}
                 setCurrentForm={setCurrentForm}

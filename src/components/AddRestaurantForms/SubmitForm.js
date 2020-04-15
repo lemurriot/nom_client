@@ -4,76 +4,74 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button } from '@material-ui/core';
 
 const SubmitForm = ({
-  selectedRestaurant: { name, subtitle, id, apiReferred },
-  // setShowSubmitForm,
+  selectedRestaurant: { name, subtitle, apiReferred },
   setCurrentForm,
   onSubmitForm,
   category,
 }) => {
-  // const closeSubmitForm = () => setShowSubmitForm(false);
   return (
-    <div className="submit-form--outer">
-      <div className="submit-form--inner">
-        {/* <button type="button" onClick={closeSubmitForm}>
-          Cancel
-        </button> */}
-        <div className="submit-form--container">
-          <div className="prepop-title">You Are Nominating</div>
-          <div className="restaurant-title">{name}</div>
-          <div className="restaurant-subtitle">{subtitle}</div>
-          <div className="restaurant-title">For Best {category}</div>
-          <Formik
-            initialValues={{ comment: '' }}
-            validate={(values) => {
-              const errors = {};
-              if (values.comment.length > 185) {
-                errors.comment = 'Comment cannot exceed 185 characters';
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                onSubmitForm(values.comment);
-                setSubmitting(false);
-                setCurrentForm('');
-              }, 400);
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <label htmlFor="comment">Add a Comment (optional):</label>
-                <Field type="text" name="comment" />
-                <ErrorMessage name="comment" component="div" />
-                <button type="submit" disabled={isSubmitting}>
-                  Submit
-                </button>
-              </Form>
-            )}
-          </Formik>
-        </div>
-        <div className="form-buttons">
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={
-              apiReferred
-                ? () => setCurrentForm('search')
-                : () => setCurrentForm('create')
-            }
-          >
-            Previous
-          </Button>
-          {/* <Button
-        disabled={!value}
-        variant="contained"
-        color="primary"
-        onClick={() => setCurrentForm('search')}
-      >
-        Next
-      </Button> */}
-        </div>
+    <>
+      <div className="submit-form-info__container">
+        <div className="submit-form-info__guide-text">You Are Nominating</div>
+        <div className="submit-form-info__restaurant-title">{name}</div>
+        <div className="submit-form-info__restaurant-subtitle">{subtitle}</div>
+        <div className="submit-form-info__guide-text">For Best {category}</div>
       </div>
-    </div>
+      <Formik
+        initialValues={{ comment: '' }}
+        validate={(values) => {
+          const errors = {};
+          if (values.comment.length > 185) {
+            errors.comment = 'Comment cannot exceed 185 characters';
+          }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            onSubmitForm(values.comment);
+            setSubmitting(false);
+            setCurrentForm('');
+          }, 400);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <Field
+              as="textarea"
+              name="comment"
+              placeholder="Add a Comment... (optional)"
+              style={{ width: '100%', border: '1px solid grey' }}
+            />
+            <ErrorMessage
+              name="comment"
+              component="div"
+              style={{ color: 'red' }}
+            />
+            <div className="form-buttons__container form-buttons__container--submit">
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={
+                  apiReferred
+                    ? () => setCurrentForm('search')
+                    : () => setCurrentForm('create')
+                }
+              >
+                Previous
+              </Button>
+              <Button
+                disabled={isSubmitting}
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                Submit!
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 
@@ -85,11 +83,13 @@ SubmitForm.propTypes = {
     id: string.isRequired,
     apiReferred: bool.isRequired,
   }).isRequired,
-  setShowSubmitForm: func,
+  onSubmitForm: func,
+  setCurrentForm: func,
 };
 
 SubmitForm.defaultProps = {
-  setShowSubmitForm: () => {},
+  onSubmitForm: () => {},
+  setCurrentForm: () => {},
 };
 
 export default SubmitForm;

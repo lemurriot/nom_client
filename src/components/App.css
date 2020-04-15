@@ -63,6 +63,7 @@
 .restaurant-list-header {
   padding: 0 2% 1%;
   font-weight: 500;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 .restaurant-list-header--left {

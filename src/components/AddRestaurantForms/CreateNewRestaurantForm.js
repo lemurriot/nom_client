@@ -108,7 +108,7 @@ const CreateNewRestaurantForm = ({
                 required
                 id="zip"
                 name="zip"
-                label="Zip / Postal code"
+                label="Zip"
                 autoComplete="off"
                 onChange={handleChange}
                 error={errors.zip && touched.zip}
@@ -116,7 +116,7 @@ const CreateNewRestaurantForm = ({
               />
             </div>
           </div>
-          <div className="create-form__btns flex-container--space-between">
+          <div className="form-buttons__container flex-container--space-between">
             <Button
               variant="outlined"
               color="primary"
@@ -130,7 +130,7 @@ const CreateNewRestaurantForm = ({
               variant="contained"
               color="primary"
             >
-              Submit
+              Next!
             </Button>
           </div>
         </form>
@@ -140,8 +140,6 @@ const CreateNewRestaurantForm = ({
 );
 
 CreateNewRestaurantForm.propTypes = {
-  // category: PropTypes.string.isRequired,
-  // setShowCreateForm: PropTypes.func,
   setCurrentForm: func,
   setSelectedRestaurant: func,
   selectedRestaurant: shape({
@@ -153,7 +151,6 @@ CreateNewRestaurantForm.propTypes = {
 };
 
 CreateNewRestaurantForm.defaultProps = {
-  // setShowCreateForm: () => {},
   setCurrentForm: () => {},
   setSelectedRestaurant: () => {},
 };

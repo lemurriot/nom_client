@@ -1,8 +1,17 @@
 .add-new-restaurant__container {
-  min-height: 300px;
+  min-height: 400px;
+  max-height: 450px;
   max-width: 550px !important;
   justify-content: space-between;
   margin: 0 auto;
+  padding: 50px !important;
+}
+.add-new-restaurant__title {
+  min-height: 60px;
+}
+.add-new-restaurant__subtitle {
+  margin: 5% 0 5% 1%;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 .create-form__fields {
   width: 80%;
@@ -21,7 +30,13 @@
 }
 .form-buttons__container {
   width: 100%;
+  justify-self: flex-end;
   display: flex;
+}
+.form-buttons__container--submit {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .category-select__next-btn-container {
   display: flex;
@@ -38,7 +53,7 @@
   border-radius: 8px;
 }
 .result-list-item--api:hover {
-  background-color: rgb(253, 253, 199);
+  background-color: rgb(255, 255, 65);
   cursor: pointer;
 }
 .result-list__name {
@@ -62,4 +77,26 @@
   position: absolute;
   z-index: 1;
   border-top: none;
+}
+.form-buttons__container {
+  margin-top: 50px;
+}
+.submit-form-info__container {
+  margin: 5%;
+}
+.submit-form-info__guide-text {
+  font-size: 0.8em;
+  font-family: 'Montserrat';
+}
+.submit-form-info__restaurant-title,
+.submit-form-info__restaurant-subtitle {
+  color: blueviolet;
+  font-weight: 600;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+.submit-form-info__restaurant-title {
+  font-size: 1.05em;
+}
+.submit-form-info__restaurant-subtitle {
+  font-size: 0.9em;
 }

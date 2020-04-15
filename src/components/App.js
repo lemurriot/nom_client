@@ -46,6 +46,7 @@ export default class App extends Component {
       likesAndComments: [],
       voteTallies: {},
       uniqueCategories: [],
+      showErrorFiveHundred: false,
       showWarningModal: false,
       warningModalMessages: {},
       warningModalProceedAction: () => {},
@@ -79,7 +80,8 @@ export default class App extends Component {
   getRestaurants = () =>
     fetchRestaurantsData().then((restaurantData) => {
       if (restaurantData.error) {
-        this.handleShowFeedbackSnackbar(restaurantData.message);
+        this.setState({ showErrorFiveHundred: true });
+        return this.handleShowFeedbackSnackbar(restaurantData.message);
       }
       restaurantData.forEach((restaurant) => {
         // eslint-disable-next-line no-param-reassign
@@ -138,6 +140,8 @@ export default class App extends Component {
     newRestaurantFromDb.vote_count = Number(newRestaurantFromDb.vote_count);
     this.setState(
       (prevState) => ({
+        showFeedbackMessage: true,
+        feedbackMessage: 'Success!',
         nominatedRestaurants: [
           ...prevState.nominatedRestaurants,
           newRestaurantFromDb,
@@ -273,6 +277,7 @@ export default class App extends Component {
       likesAndComments,
       uniqueCategories,
       feedbackMessage,
+      showErrorFiveHundred,
       showFeedbackMessage,
       showWarningModal,
       warningModalProceedAction,
@@ -343,6 +348,24 @@ export default class App extends Component {
                 })
               }
               message={feedbackMessage}
+            />
+          )}
+          {showErrorFiveHundred && (
+            <WarningModal
+              showWarningModal={showErrorFiveHundred}
+              setShowWarningModal={() =>
+                this.setState((prevState) => ({
+                  showErrorFiveHundred: !prevState.showErrorFiveHundred,
+                }))
+              }
+              proceedAction={() =>
+                this.setState((prevState) => ({
+                  showErrorFiveHundred: !prevState.showErrorFiveHundred,
+                }))
+              }
+              headingText="Error 500"
+              buttonText="Ok"
+              subtext="Uh oh. It looks like we are unable to reach our servers. Please check back later!"
             />
           )}
           <Footer />
