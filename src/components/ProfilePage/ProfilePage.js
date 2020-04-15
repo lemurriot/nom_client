@@ -35,7 +35,7 @@ const ProfilePage = () => {
   const [value, setValue] = useState(0);
   const classes = useStyles();
 
-  const handleChangeTabs = (event, newValue) => {
+  const handleChangeTabs = (_event, newValue) => {
     setValue(newValue);
   };
 
@@ -88,7 +88,7 @@ const ProfilePage = () => {
           Change username
         </Button>
       </div>
-      <div className={classes.profileTabsRoot}>
+      <div className={`page-content-container ${classes.profileTabsRoot}`}>
         <AppBar
           position="static"
           style={{ flexDirection: 'row', borderRadius: '8px 8px 0 0' }}

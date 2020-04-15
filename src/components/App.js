@@ -25,7 +25,7 @@ import LandingPage from './LandingPage/LandingPage';
 import LoginForm from './LoginForm/LoginForm';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import RestaurantPage from './RestaurantPage/RestaurantPage';
-import AddRestaurantForm from './AddRestaurantForms/AddRestaurantForm';
+import AddRestaurantFormMaster from './AddRestaurantForms/AddRestaurantFormMaster';
 import ProfilePage from './ProfilePage/ProfilePage';
 import CategoryPage from './CategoryPage/CategoryPage';
 import WarningModal from './WarningModal/WarningModal';
@@ -306,9 +306,10 @@ export default class App extends Component {
             <ProtectedRoute
               path="/add-new-nom"
               authenticated={!isEmpty(user)}
-              component={AddRestaurantForm}
+              component={AddRestaurantFormMaster}
             />
-            {/* <Route path="/add-new-nom" component={AddRestaurantForm} /> */}
+            {/* <Route path="/add-new-nom" component={AddRestaurantFormMaster} /> */}
+            {/* <Route path="/profile" component={ProfilePage} /> */}
             <Route
               path="/category/:food_category/:restaurant_id"
               component={RestaurantPage}

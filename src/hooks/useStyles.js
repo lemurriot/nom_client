@@ -41,6 +41,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   profileTabsRoot: {
     flexGrow: 1,
+    flexDirection: 'column',
     borderRadius: 8,
     marginTop: '5%',
     boxShadow:

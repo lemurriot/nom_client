@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Button } from '@material-ui/core';
 import { number, string, func } from 'prop-types';
 import './AddCommentForm.css';
 
@@ -19,15 +20,16 @@ const AddCommentForm = ({
   return (
     <div className="form-container--outer">
       <div className="form-container--inner">
-        <button
-          className="close-modal"
-          type="button"
+        <Button
+          variant="contained"
+          size="small"
+          className="go-back-btn"
           onClick={closeCommentsForm}
         >
-          Go Back
-        </button>
-        <h2>{instructionText}</h2>
-        <span>Comment</span>
+          Cancel
+        </Button>
+        <h2 className="montserrat center">{instructionText}</h2>
+        <span style={{ fontSize: '.7em' }}>Comment:</span>
         <Formik
           initialValues={{ comment }}
           onSubmit={(values, { setSubmitting }) => {
@@ -45,20 +47,37 @@ const AddCommentForm = ({
             }, 400);
           }}
         >
-          {({ isSubmitting }) => (
+          {({ values, isSubmitting }) => (
             <Form>
-              <Field type="text" name="comment" />
+              <Field
+                type="text"
+                as="textarea"
+                name="comment"
+                style={{
+                  border: '1px solid grey',
+                  borderRadius: 2,
+                  width: '100%',
+                }}
+              />
               <ErrorMessage name="comment" component="div" />
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={deleteComment}
-              >
-                Delete Comment
-              </button>
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
+              <div className="comment-form__buttons-container">
+                <Button
+                  variant="outlined"
+                  size="small"
+                  disabled={!values.comment || isSubmitting}
+                  onClick={deleteComment}
+                >
+                  Delete
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={!values.comment || isSubmitting}
+                >
+                  Submit
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

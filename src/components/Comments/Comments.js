@@ -1,17 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 import './Comments.css';
 
 const Comments = ({ comment, username }) => (
   <div className="comment-card">
-    <span className="comment-quote">"{comment}"</span>
-    <span className="comment-user">-{username}</span>
+    <span className="comment-card__quote">&quot;{comment}&quot;</span>
+    <span className="comment-card__user roboto">-{username}</span>
   </div>
 );
 
 Comments.propTypes = {
-  comment: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
+  comment: string.isRequired,
+  username: string.isRequired,
 };
 
 export default Comments;

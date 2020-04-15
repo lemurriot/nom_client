@@ -9,7 +9,7 @@
   padding: 5%;
   background-color: rgb(226, 226, 226);
   min-height: 100vh;
-  padding-bottom: 8%;
+  padding-bottom: 15%;
 }
 
 .content-container {
@@ -49,6 +49,14 @@
 
 .montserrat {
   font-family: 'Montserrat', sans-serif;
+}
+
+.roboto {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.verdana {
+  font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
 }
 
 .center {

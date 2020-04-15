@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Chip } from '@material-ui/core';
 import { findUserDidLike } from '../../utils';
 import NomsContext from '../../NomsContext';
 import Comments from '../Comments/Comments';
@@ -44,7 +44,6 @@ const RestaurantPage = () => {
     comments,
     id,
     date_nominated: dateNominated,
-    // id: restaurantId
   } = restaurantInfo;
 
   const closeCommentsForm = () => {
@@ -52,7 +51,6 @@ const RestaurantPage = () => {
   };
 
   const handleAddEditCommentSubmit = async (updatedComment) => {
-    // closeCommentsForm();
     await getrestaurantInfo();
     const newrestaurantInfo = { ...restaurantInfo };
     const userComment = newrestaurantInfo.comments.findIndex(
@@ -91,80 +89,96 @@ const RestaurantPage = () => {
   return (
     <main className="page">
       {restaurantInfo.id && (
-        <article>
+        <>
           <Button onClick={goBack} variant="contained" className="go-back-btn">
             Go back
           </Button>
-          <h2>{name}</h2>
-          {subtitle && <h3>{subtitle}</h3>}
-          {address && <h3>{address}</h3>}
-          <VoteButtons
-            restaurantId={restaurantId}
-            userDidLike={findIfUserDidLike.length}
-            likeId={likeId}
-          />
-          {!!likeId && !findIfUserDidLike[0].comment.length && (
-            <span
-              className="comment-action"
-              role="link"
-              tabIndex={0}
-              onKeyDown={() => setShowCommentsForm(true)}
-              onClick={() => setShowCommentsForm(true)}
-            >
-              Add Comment
-            </span>
-          )}
-          {!!likeId && !!findIfUserDidLike[0].comment.length && (
-            <>
-              <span
-                className="comment-action"
-                role="link"
-                tabIndex={0}
-                onKeyDown={() => setShowCommentsForm(true)}
-                onClick={() => setShowCommentsForm(true)}
-              >
-                Edit Comment
+          <section className="content-container page-content-container restaurant-page__container">
+            <div className="restaurant-page__container-top-line flex-container--space-between">
+              <div className="restaurant-page__title">
+                <h2 className="montserrat">{name}</h2>
+                <h3 className="restaurant-page__subtitle montserrat">
+                  {address || subtitle}
+                </h3>
+                <Chip label={`Best ${category} Nominee`} />
+              </div>
+              <div className="restaurant-page__vote-btns flex-container--column">
+                <VoteButtons
+                  restaurantId={restaurantId}
+                  userDidLike={findIfUserDidLike.length}
+                  likeId={likeId}
+                />
+                <span className="montserrat center">
+                  {findIfUserDidLike.length
+                    ? 'You upvoted this!'
+                    : 'Click to upvote'}
+                </span>
+              </div>
+            </div>
+            <section className="restaurant-page__secondary-info flex-container--space-between">
+              <span className="restaurant-page__secondary-info--votes">
+                Votes:{' '}
+                <span style={{ fontSize: '1.2em' }}>{voteTallies[id]}</span>
               </span>
-              <span
-                className="comment-action"
-                role="button"
-                tabIndex={0}
-                onKeyDown={() => setShowCommentsForm(true)}
-                onClick={deleteComment}
-              >
-                Delete Comment
+              <span className="restaurant-page__secondary-info--date">
+                Nominated on: {new Date(dateNominated).toDateString()}
               </span>
-            </>
-          )}
-          {commentsFormIsShown && (
-            <AddCommentForm
-              restaurantName={name}
-              restaurantId={restaurantId}
-              commentId={likeId}
-              comment={findIfUserDidLike[0].comment}
-              handleSubmit={handleAddEditCommentSubmit}
-              addEditComment={addEditComment}
-              closeCommentsForm={closeCommentsForm}
-              deleteComment={deleteComment}
-            />
-          )}
-          <p>
-            <span className="restaurant-page-label">Current Votes: </span>
-            {voteTallies[id]}
-          </p>
-          <p>
-            <span className="restaurant-page-label">
-              Nominated for Best {category} on:{' '}
-              {new Date(dateNominated).toDateString()}
-            </span>
-          </p>
-          <section className="comment-section">
-            <h3>Comments</h3>
-            {mapComments()}
+            </section>
+            <section className="restaurant-page__comments">
+              <h3 className="montserrat">Comments</h3>
+              <div className="restaurant-page__btn-container flex-container--space-between">
+                {!!likeId && !findIfUserDidLike[0].comment.length && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => setShowCommentsForm(true)}
+                  >
+                    Add Comment
+                  </Button>
+                )}
+                {!!likeId && !!findIfUserDidLike[0].comment.length && (
+                  <>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => setShowCommentsForm(true)}
+                    >
+                      Edit Comment
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="primary"
+                      onClick={deleteComment}
+                    >
+                      Delete Comment
+                    </Button>
+                  </>
+                )}
+              </div>
+              {mapComments().length ? (
+                mapComments()
+              ) : (
+                <div className="center">No Comments Yet</div>
+              )}
+            </section>
           </section>
-        </article>
+        </>
       )}
-      ;
+      {commentsFormIsShown && (
+        <AddCommentForm
+          restaurantName={name}
+          restaurantId={restaurantId}
+          commentId={likeId}
+          comment={findIfUserDidLike[0].comment}
+          handleSubmit={handleAddEditCommentSubmit}
+          addEditComment={addEditComment}
+          closeCommentsForm={closeCommentsForm}
+          deleteComment={deleteComment}
+        />
+      )}
     </main>
   );
 };

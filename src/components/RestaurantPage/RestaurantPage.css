@@ -1,8 +1,30 @@
-.comment-action {
-  color: rgb(50, 50, 231);
-  margin-right: 5%;
-  text-decoration: underline;
+.restaurant-page__container-top-line {
+  border-bottom: 2px solid #cccccc;
+  margin-bottom: 2%;
 }
-.comment-action:hover {
-  cursor: pointer;
+.restaurant-page__title {
+  width: 65%;
+  margin-bottom: 2%;
+}
+.restaurant-page__vote-btns {
+  width: 30%;
+  align-items: center;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+.restaurant-page__subtitle {
+  font-size: 1em;
+  margin-bottom: 2%;
+}
+.restaurant-page__secondary-info {
+  height: 100%;
+  font-size: 0.7em;
+  font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+  margin-bottom: 2%;
+}
+.restaurant-page__secondary-info--date {
+  align-self: flex-end;
+}
+.restaurant-page__btn-container {
+  width: 96%;
+  margin: 2%;
 }
