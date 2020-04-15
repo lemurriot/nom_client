@@ -39,4 +39,22 @@ export const useStyles = makeStyles((theme) => ({
       width: '20ch',
     },
   },
+  profileTabsRoot: {
+    flexGrow: 1,
+    borderRadius: 8,
+    marginTop: '5%',
+    boxShadow:
+      '0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)',
+    backgroundColor: theme.palette.background.paper,
+  },
+  snackbarRoot: {
+    borderRadius: 8,
+  },
+  formControl: {
+    margin: theme.spacing(2),
+    minWidth: 220,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(1),
+  },
 }));

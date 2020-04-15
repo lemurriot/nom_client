@@ -1,15 +1,7 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
-// import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    borderRadius: 8,
-    // width: '100%',
-  },
-}));
+import { useStyles } from '../../hooks/useStyles';
 
 export default function FeedbackSnackbar({ setOpen, open, message }) {
   const classes = useStyles();
@@ -23,7 +15,7 @@ export default function FeedbackSnackbar({ setOpen, open, message }) {
 
   return (
     <Snackbar
-      className={classes.root}
+      className={classes.snackbarRoot}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'center',

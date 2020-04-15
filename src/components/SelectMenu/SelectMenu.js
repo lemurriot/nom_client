@@ -1,23 +1,13 @@
 import React from 'react';
 import {
   InputLabel,
-  makeStyles,
   MenuItem,
   FormHelperText,
   FormControl,
   Select,
 } from '@material-ui/core';
 import { func, arrayOf, string, bool } from 'prop-types';
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(2),
-    minWidth: 220,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(1),
-  },
-}));
+import { useStyles } from '../../hooks/useStyles';
 
 const SelectMenu = ({
   value,

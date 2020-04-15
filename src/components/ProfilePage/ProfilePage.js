@@ -1,19 +1,28 @@
 /* eslint-disable camelcase */
 import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Button, Tabs, Tab, AppBar } from '@material-ui/core';
+import { useStyles } from '../../hooks/useStyles';
+import TabPanel from '../TabPanel/TabPanel';
 import { putNewUsername } from '../../api/routes';
+import UserDidUpvoteList from './UserDidUpvoteList';
+import UserDidNominateList from './UserDidNominateList';
 import FormDialog from '../Dialog/FormDialogue';
 import NomsContext from '../../NomsContext';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import './ProfilePage.css';
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
 const ProfilePage = () => {
   const {
     user,
     username,
-    nominatedRestaurants,
-    likesAndComments,
     addEditComment,
     changeUsernameLocally,
     setShowFeedbackSnackbar,
@@ -23,6 +32,12 @@ const ProfilePage = () => {
   const [changeUsernameFormIsShown, setChangeUsernameFormIsShown] = useState(
     false
   );
+  const [value, setValue] = useState(0);
+  const classes = useStyles();
+
+  const handleChangeTabs = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const [commentsData, setCommentsData] = useState({});
 
@@ -30,16 +45,14 @@ const ProfilePage = () => {
     setShowCommentsForm(false);
   };
 
-  const deleteComment = (likeId, restaurantId) => {
-    addEditComment(likeId, '', restaurantId);
-    handleAddEditCommentSubmit('');
-  };
-
   const handleAddEditCommentSubmit = () => {
     closeCommentsForm();
   };
 
-  const userDidUpvoteStore = {};
+  const deleteComment = (likeId, restaurantId) => {
+    addEditComment(likeId, '', restaurantId);
+    handleAddEditCommentSubmit('');
+  };
 
   const handleShowCommentForm = (commentData) => {
     setCommentsData({ ...commentData });
@@ -59,111 +72,47 @@ const ProfilePage = () => {
     });
   };
 
-  const userNominatedRestaurants = nominatedRestaurants.filter(
-    ({ nominated_by_user }) => nominated_by_user === user.id
-  );
-
-  const userNominatedRestaurantsList = userNominatedRestaurants.map(
-    ({ id, name, subtitle, food_category, vote_count }) => (
-      <div key={id} style={{ borderBottom: '1px solid black' }}>
-        <h5>
-          <Link to={`/category/${food_category}/${id}`}>{name}</Link>
-        </h5>
-        <h6>{subtitle}</h6>
-        <div>Nominated for best {food_category}</div>
-        <span>Votes: {vote_count}</span>
-      </div>
-    )
-  );
-
-  likesAndComments
-    .filter(({ user_id }) => user_id === user.id)
-    .forEach((likeObject) => {
-      userDidUpvoteStore[likeObject.restaurant_id] = likeObject;
-    });
-
-  nominatedRestaurants.forEach((restaurant) => {
-    if (userDidUpvoteStore[restaurant.id]) {
-      userDidUpvoteStore[restaurant.id].restaurantInfo = restaurant;
-    }
-  });
-  // console.log(userDidUpvoteStore);
-  const userDidUpvoteList = Object.keys(userDidUpvoteStore).map((key) => {
-    if (userDidUpvoteStore[key].restaurantInfo) {
-      const {
-        id,
-        comment,
-        restaurantInfo: {
-          name,
-          subtitle,
-          food_category,
-          vote_count,
-          id: restaurantId,
-        },
-      } = userDidUpvoteStore[key];
-      const editFormText = comment.length ? 'Edit Comment' : 'Add Comment';
-      return (
-        <div key={id} style={{ borderBottom: '1px solid black' }}>
-          <h5>
-            <Link to={`/category/${food_category}/${restaurantId}`}>
-              {name}
-            </Link>
-          </h5>
-          <h5>{subtitle}</h5>
-          <div>Nominated for Best {food_category}</div>
-          <div>Total Votes: {vote_count}</div>
-          <div>
-            {!!comment.length && <span>Your comment: "{comment}"</span>}
-            <Button
-              variant="outlined"
-              color="primary"
-              href="#text-buttons"
-              onClick={() =>
-                handleShowCommentForm({
-                  name,
-                  comment,
-                  id,
-                  restaurantId,
-                })
-              }
-            >
-              {editFormText}
-            </Button>
-          </div>
-        </div>
-      );
-    }
-    return [];
-  });
-
   return (
     <main className="page">
       <Button onClick={goBack} variant="contained" className="go-back-btn">
         Go back
       </Button>
-      <h2>Hello {username}</h2>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={() => setChangeUsernameFormIsShown(true)}
-      >
-        Change username
-      </Button>
-      <section
-        className="user-nominated-restaurants--list"
-        style={{ padding: '2%' }}
-      >
-        <h4>Your Restaurant Nominations</h4>
-        {userNominatedRestaurantsList.length
-          ? userNominatedRestaurantsList
-          : 'You have not nominated any restaurants'}
-      </section>
-      <section className="user-did-upvote--list" style={{ padding: '2%' }}>
-        <h4>You Upvoted</h4>
-        {userDidUpvoteList.length
-          ? userDidUpvoteList
-          : 'You have not upvoted any restaurants'}
-      </section>
+      <div className="user-info">
+        <h4>Hello {username}</h4>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => setChangeUsernameFormIsShown(true)}
+        >
+          Change username
+        </Button>
+      </div>
+      <div className={classes.profileTabsRoot}>
+        <AppBar
+          position="static"
+          style={{ flexDirection: 'row', borderRadius: '8px 8px 0 0' }}
+        >
+          <Tabs
+            value={value}
+            onChange={handleChangeTabs}
+            aria-label="profile information tabs"
+          >
+            <Tab label="Your Restaurant Nominations" {...a11yProps(0)} />
+            <Tab label="Your Upvotes" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          <h4 className="montserrat center tab-title">
+            Your Restaurant Nominations
+          </h4>
+          <UserDidNominateList />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <h4 className="montserrat center tab-title">You Upvoted</h4>
+          <UserDidUpvoteList onShowCommentForm={handleShowCommentForm} />
+        </TabPanel>
+      </div>
       {commentsFormIsShown && (
         <AddCommentForm
           restaurantName={commentsData.name}
