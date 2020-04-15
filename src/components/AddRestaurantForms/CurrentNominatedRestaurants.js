@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { string, arrOf, shape } from 'prop-types';
+// import { string, arrOf, shape } from 'prop-types';
 import RestaurantPreview from '../RestaurantPreview/RestaurantPreview';
 
+// TO DO: add existant recommendations to ui
 const CurrentNominatedRestaurants = ({
   nominatedRestaurants,
   category,
@@ -15,18 +16,6 @@ const CurrentNominatedRestaurants = ({
       ({ food_category, name }) => food_category === category && name.match(re)
     );
   }
-  // if (!category) {
-  //   currentRestaurantFilter = nominatedRestaurants;
-  // } else if (category && !searchString) {
-  //   currentRestaurantFilter = nominatedRestaurants.filter(
-  //     restaurant => restaurant.food_category === category
-  //   );
-  // } else {
-  //   currentRestaurantFilter = nominatedRestaurants.filter(
-  //     restaurant =>
-  //       restaurant.food_category === category && restaurant.name.match(re)
-  //   );
-  // }
 
   if (!currentRestaurantFilter.length) {
     return <span>No Matches</span>;

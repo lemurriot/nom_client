@@ -7,12 +7,11 @@ import SelectCategoryForm from './SelectCategoryForm';
 import SearchRestaurantsForm from './SearchRestaurantsForm';
 import WarningModal from '../WarningModal/WarningModal';
 import NomsContext from '../../NomsContext';
-// import CurrentNominatedRestaurants from './CurrentNominatedRestaurants';
 import CreateNewRestaurantForm from './CreateNewRestaurantForm';
 import SubmitForm from './SubmitForm';
 
 // eslint-disable-next-line react/prefer-stateless-function
-const AddRestaurantForm = () => {
+const AddRestaurantFormMaster = () => {
   const { nominateNewRestaurant, user } = useContext(NomsContext);
   const history = useHistory();
   const [restaurantName, setRestaurantName] = useState('');
@@ -134,4 +133,4 @@ const AddRestaurantForm = () => {
   );
 };
 
-export default AddRestaurantForm;
+export default AddRestaurantFormMaster;
