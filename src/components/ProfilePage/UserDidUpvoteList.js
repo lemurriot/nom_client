@@ -38,14 +38,18 @@ const UserDidUpvoteList = ({ onShowCommentForm }) => {
       const editFormText = comment.length ? 'Edit Comment' : 'Add Comment';
       return (
         <div key={id} className="profile-page__list-item">
-          <h5>
+          <h5 className="profile-page__list-item--title">
             <Link to={`/category/${food_category}/${restaurantId}`}>
               {name}
             </Link>
           </h5>
-          <h5>{subtitle}</h5>
-          <div>Nominated for Best {food_category}</div>
-          <div>Total Votes: {vote_count}</div>
+          <h6 className="profile-page__list-item--subtitle">{subtitle}</h6>
+          <div className="profile-page__list-item--category">
+            Nominated for Best {food_category}
+          </div>
+          <div className="profile-page__list-item--vote-count">
+            Total Votes: {vote_count}
+          </div>
           <div>
             {!!comment.length && <div>Your comment: "{comment}"</div>}
             <Button

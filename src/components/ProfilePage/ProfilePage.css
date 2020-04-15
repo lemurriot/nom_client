@@ -14,3 +14,13 @@
   border-bottom: 1px solid grey;
   padding: 2%;
 }
+.profile-page__list-item--title {
+  font-size: 1em;
+}
+.profile-page__list-item--title {
+  font-size: 0.9em;
+}
+.profile-page__list-item--category,
+.profile-page__list-item--vote-count {
+  font-size: 0.85em;
+}

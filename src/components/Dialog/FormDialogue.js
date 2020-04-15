@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { bool, func } from 'prop-types';
 import {
   Button,
   Dialog,
@@ -11,6 +12,19 @@ import {
 
 const FormDialog = ({ open, handleClose, handleSubmit }) => {
   const [newUsername, setNewUsername] = useState('');
+  const [error, setError] = useState('');
+  const handleSetNewUsername = (e) => {
+    if (error && e.target.value.trim().length > 2) {
+      setError('');
+    }
+    setNewUsername(e.target.value);
+  };
+  const handleSubmitNewUsername = () => {
+    if (newUsername.trim().length < 2) {
+      return setError('Username must be at least 2 characters long');
+    }
+    return handleSubmit(newUsername);
+  };
   return (
     <Dialog
       open={open}
@@ -27,19 +41,27 @@ const FormDialog = ({ open, handleClose, handleSubmit }) => {
           label="New Username"
           type="text"
           fullWidth
-          onChange={(e) => setNewUsername(e.target.value)}
+          error={error.length}
+          onChange={handleSetNewUsername}
+          helperText={!!error.length && error}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={() => handleSubmit(newUsername)} color="primary">
+        <Button onClick={handleSubmitNewUsername} color="primary">
           Submit
         </Button>
       </DialogActions>
     </Dialog>
   );
+};
+
+FormDialog.propTypes = {
+  open: bool.isRequired,
+  handleClose: func.isRequired,
+  handleSubmit: func.isRequired,
 };
 
 export default FormDialog;
