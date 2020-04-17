@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Link, useLocation } from 'react-router-dom';
+import isEmpty from 'lodash.isempty';
 import { useSpring, animated } from 'react-spring';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import config from '../../config';
@@ -13,7 +13,8 @@ const Header = () => {
     from: { opacity: 0 },
     // duration: 4000,
   });
-  const { user } = useContext(NomsContext);
+  const { user, username } = useContext(NomsContext);
+  const { pathname } = useLocation();
   const linkStyles = { textDecoration: 'none', color: 'white' };
   const loginLink = (
     <a
@@ -21,33 +22,66 @@ const Header = () => {
       href={`${config.API_ENDPOINT}/auth/google-oauth`}
       className="login-btn google-oauth-btn"
     >
-      <Button variant="contained" color="primary">
-        Login with Google
-      </Button>
+      Login with Google
     </a>
   );
 
   const logoutLink = (
     <a style={linkStyles} href={`${config.API_ENDPOINT}/auth/logout`}>
-      <Button>Logout</Button>
+      Logout
     </a>
   );
 
-  const navLinks = user.id ? logoutLink : loginLink;
+  const loginLinks = user.id ? logoutLink : loginLink;
 
   return (
     <header className="header">
-      <div className="brand">
-        <animated.div style={logoAnimation}>
-          <div className="logo">
-            <FlyoutMenu />
-          </div>
-        </animated.div>
-        <Link to="/" style={{ textDecoration: 'none', height: '100%' }}>
-          <h1>NomsPDX</h1>
-        </Link>
+      <div className="header-top">
+        <div className="brand">
+          <animated.div style={logoAnimation}>
+            <div className="logo">
+              <FlyoutMenu />
+            </div>
+          </animated.div>
+          <Link to="/" style={{ textDecoration: 'none', height: '100%' }}>
+            <h1>NomsPDX</h1>
+          </Link>
+        </div>
+        <span className="header-top__greeting">
+          {!isEmpty(user) && `Hi ${username}`}
+        </span>
       </div>
-      <nav>{navLinks}</nav>
+      <div className="header-bottom">
+        <nav>
+          <ul className="nav__links ul-reset">
+            <li
+              className={
+                pathname === '/about'
+                  ? 'nav__link nav__link--active'
+                  : 'nav__link'
+              }
+            >
+              <Link to="/about" style={linkStyles}>
+                About
+              </Link>
+            </li>
+            {!isEmpty(user) && (
+              <li
+                className={
+                  pathname === '/profile'
+                    ? 'nav__link nav__link--active'
+                    : 'nav__link'
+                }
+              >
+                <Link to="/profile" style={linkStyles}>
+                  Profile
+                </Link>
+              </li>
+            )}
+            <li className="nav__link">{loginLinks}</li>
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 };

@@ -49,7 +49,7 @@ const GoogleAutocompleteResults = ({
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <ul
-        className="results-container"
+        className="results-container ul-reset roboto"
         id="google-results-flyout"
         role="listbox"
         style={{ top, width }}

@@ -23,6 +23,9 @@ const FormDialog = ({ open, handleClose, handleSubmit }) => {
     if (newUsername.trim().length < 2) {
       return setError('Username must be at least 2 characters long');
     }
+    if (newUsername.length > 25) {
+      return setError('Username must not be longer than 25 characters');
+    }
     return handleSubmit(newUsername);
   };
   return (
@@ -41,7 +44,7 @@ const FormDialog = ({ open, handleClose, handleSubmit }) => {
           label="New Username"
           type="text"
           fullWidth
-          error={error.length}
+          error={Boolean(error.length)}
           onChange={handleSetNewUsername}
           helperText={!!error.length && error}
         />
