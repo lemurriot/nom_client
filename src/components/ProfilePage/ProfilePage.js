@@ -78,7 +78,7 @@ const ProfilePage = () => {
         Go back
       </Button>
       <div className="user-info">
-        <h4>Hello {username}</h4>
+        <h4>{`Hello ${username}`}</h4>
         <Button
           variant="outlined"
           color="primary"

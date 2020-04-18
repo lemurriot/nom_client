@@ -39,7 +39,7 @@ const CategoryPreview = ({ categoryRestaurants, category }) => {
   return (
     <section className="content-container category-card">
       <div className="category-card__title flex-container--space-between">
-        <h3 className="montserrat center">Top 5 {category} Noms</h3>
+        <h3 className="montserrat center">{`Top 5 ${category} Noms`}</h3>
         <Link to={`/category/${category}`}>See All</Link>
       </div>
       <SelectMenu
@@ -49,10 +49,10 @@ const CategoryPreview = ({ categoryRestaurants, category }) => {
         helperText="Sort By"
       />
       <div className="restaurant-review-preview-box">
-        <div className="restaurant-list-header flex-container--space-between">
-          <span className="restaurant-list-header--left">Restaurant</span>
-          <span className="restaurant-list-header--middle">Vote Count</span>
-          <span className="restaurant-list-header--right">Vote Button</span>
+        <div className="restaurant-list__header flex-container--space-between">
+          <span className="restaurant-list__header--left">Restaurant</span>
+          <span className="restaurant-list__header--middle">Vote Count</span>
+          <span className="restaurant-list__header--right">Vote Button</span>
         </div>
         {CategoryRestaurantList}
       </div>

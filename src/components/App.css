@@ -69,18 +69,18 @@
   margin: 2% 0 !important;
 }
 
-.restaurant-list-header {
+.restaurant-list__header {
   padding: 0 2% 1%;
   font-weight: 500;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
-.restaurant-list-header--left {
+.restaurant-list__header--left {
   width: 40%;
 }
 
-.restaurant-list-header--middle,
-.restaurant-list-header--right {
+.restaurant-list__header--middle,
+.restaurant-list__header--right {
   text-align: center;
   width: 30%;
 }

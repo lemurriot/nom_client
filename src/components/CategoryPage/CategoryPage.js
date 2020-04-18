@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button, InputBase } from '@material-ui/core';
@@ -60,7 +61,7 @@ const CategoryPage = () => {
         Go back
       </Button>
       <section className="content-container page-content-container">
-        <h3>Nominated for Best {category}</h3>
+        <h3>{`Nominated for Best ${category}`}</h3>
         <div className="content-container-controls flex-container--space-between">
           <SelectMenu
             menuOptions={sortConstants}
@@ -86,10 +87,10 @@ const CategoryPage = () => {
           </span>
         </div>
         <div className="restaurant-review__preview-box">
-          <div className="restaurant-list-header flex-container--space-between">
-            <span className="restaurant-list-header--left">Restaurant</span>
-            <span className="restaurant-list-header--middle">Vote Count</span>
-            <span className="restaurant-list-header--right">Vote Button</span>
+          <div className="restaurant-list__header flex-container--space-between">
+            <span className="restaurant-list__header--left">Restaurant</span>
+            <span className="restaurant-list__header--middle">Vote Count</span>
+            <span className="restaurant-list__header--right">Vote Button</span>
           </div>
           {CategoryRestaurantList}
         </div>

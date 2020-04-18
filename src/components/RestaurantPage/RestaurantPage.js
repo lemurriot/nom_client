@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
@@ -54,7 +55,7 @@ const RestaurantPage = () => {
     await getrestaurantInfo();
     const newrestaurantInfo = { ...restaurantInfo };
     const userComment = newrestaurantInfo.comments.findIndex(
-      ({ id }) => id === likeId
+      ({ id: _id }) => _id === likeId
     );
     if (userComment !== -1) {
       newrestaurantInfo.comments[userComment].comment = updatedComment;

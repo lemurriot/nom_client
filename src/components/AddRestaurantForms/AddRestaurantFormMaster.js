@@ -10,7 +10,6 @@ import NomsContext from '../../NomsContext';
 import CreateNewRestaurantForm from './CreateNewRestaurantForm';
 import SubmitForm from './SubmitForm';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const AddRestaurantFormMaster = () => {
   const { nominateNewRestaurant, user } = useContext(NomsContext);
   const history = useHistory();
@@ -78,7 +77,7 @@ const AddRestaurantFormMaster = () => {
           <div className="content-container page-content-container flex-container--column add-new-restaurant__container">
             <div className="add-new-restaurant__header">
               <h2 className="center add-new-restaurant__title montserrat">
-                Nominate a Restaurant for Best {category || 'in Category'}
+                {`Nominate a Restaurant for Best ${category || 'in Category'}`}
               </h2>
               <h3 className="add-new-restaurant__subtitle">{formSubtitle()}</h3>
             </div>

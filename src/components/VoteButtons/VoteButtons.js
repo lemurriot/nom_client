@@ -17,7 +17,6 @@ const VoteButtons = ({ userDidLike, restaurantId, likeId }) => (
             }
             onClick={() => voteForRestaurant(user.id, restaurantId)}
           >
-            {/* Upvote! */}
             <FontAwesomeIcon icon="check-square" color="white" />
           </button>
           <button
@@ -29,7 +28,6 @@ const VoteButtons = ({ userDidLike, restaurantId, likeId }) => (
             }
             onClick={() => undoVoteForRestaurant(user.id, restaurantId, likeId)}
           >
-            {/* You upvoted this */}
             <FontAwesomeIcon
               icon="check"
               color="red"

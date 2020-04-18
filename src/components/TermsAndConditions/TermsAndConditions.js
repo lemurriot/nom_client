@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
@@ -13,7 +14,7 @@ const TermsAndConditions = () => {
         <h2>Welcome to NomsPDX</h2>
         <p>
           These terms and conditions outline the rules and regulations for the
-          use of NomsPDX's Website.
+          use of NomsPDX&apos;s Website.
         </p>{' '}
         <br />
         <span style={{ textTransform: 'capitalize' }}> NomsPDX</span> is located
@@ -25,31 +26,34 @@ const TermsAndConditions = () => {
         </address>
         <p>
           By accessing this website we assume you accept these terms and
-          conditions in full. Do not continue to use NomsPDX's website if you do
-          not accept all of the terms and conditions stated on this page.
+          conditions in full. Do not continue to use NomsPDX&apos;s website if
+          you do not accept all of the terms and conditions stated on this page.
         </p>
         <p>
           The following terminology applies to these Terms and Conditions,
           Privacy Statement and Disclaimer Notice and any or all Agreements:
-          "Client", "You" and "Your" refers to you, the person accessing this
-          website and accepting the Company's terms and conditions. "The
-          Company", "Ourselves", "We", "Our" and "Us", refers to our Company.
-          "Party", "Parties", or "Us", refers to both the Client and ourselves,
-          or either the Client or ourselves. All terms refer to the offer,
-          acceptance and consideration of payment necessary to undertake the
-          process of our assistance to the Client in the most appropriate
+          &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to
+          you, the person accessing this website and accepting the
+          Company&apos;s terms and conditions. &quot;The Company&quot;,
+          &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and
+          &quot;Us&quot;, refers to our Company. &quot;Party&quot;,
+          &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client and
+          ourselves, or either the Client or ourselves. All terms refer to the
+          offer, acceptance and consideration of payment necessary to undertake
+          the process of our assistance to the Client in the most appropriate
           manner, whether by formal meetings of a fixed duration, or any other
-          means, for the express purpose of meeting the Client's needs in
-          respect of provision of the Company's stated services/products, in
-          accordance with and subject to, prevailing law of USA. Any use of the
-          above terminology or other words in the singular, plural,
+          means, for the express purpose of meeting the Client&apos;s needs in
+          respect of provision of the Company&apos;s stated services/products,
+          in accordance with and subject to, prevailing law of USA. Any use of
+          the above terminology or other words in the singular, plural,
           capitalisation and/or he/she or they, are taken as interchangeable and
           therefore as referring to same.
         </p>
         <h3>Cookies</h3>
         <p>
-          We employ the use of cookies. By using NomsPDX's website you consent
-          to the use of cookies in accordance with NomsPDX's privacy policy.
+          We employ the use of cookies. By using NomsPDX&apos;s website you
+          consent to the use of cookies in accordance with NomsPDX&apos;s
+          privacy policy.
         </p>
         <p>
           Most of the modern day interactive web sites use cookies to enable us
@@ -60,7 +64,7 @@ const TermsAndConditions = () => {
         </p>
         <h3>License</h3>
         <p>
-          Unless otherwise stated, NomsPDX and/or it's licensors own the
+          Unless otherwise stated, NomsPDX and/or it&apos;s licensors own the
           intellectual property rights for all material on NomsPDX. All
           intellectual property rights are reserved. You may view and/or print
           pages from https://nomspdx.com/ for your own personal use subject to
@@ -84,15 +88,15 @@ const TermsAndConditions = () => {
           <li>
             Certain parts of this website offer the opportunity for users to
             post and exchange opinions, information, material and data
-            ('Comments') in areas of the website. NomsPDX does not screen, edit,
-            publish or review Comments prior to their appearance on the website
-            and Comments do not reflect the views or opinions ofNomsPDX, its
-            agents or affiliates. Comments reflect the view and opinion of the
-            person who posts such view or opinion. To the extent permitted by
-            applicable laws NomsPDXshall not be responsible or liable for the
-            Comments or for any loss cost, liability, damages or expenses caused
-            and or suffered as a result of any use of and/or posting of and/or
-            appearance of the Comments on this website.
+            (&apos;Comments&apos;) in areas of the website. NomsPDX does not
+            screen, edit, publish or review Comments prior to their appearance
+            on the website and Comments do not reflect the views or opinions
+            ofNomsPDX, its agents or affiliates. Comments reflect the view and
+            opinion of the person who posts such view or opinion. To the extent
+            permitted by applicable laws NomsPDXshall not be responsible or
+            liable for the Comments or for any loss cost, liability, damages or
+            expenses caused and or suffered as a result of any use of and/or
+            posting of and/or appearance of the Comments on this website.
           </li>
           <li>
             NomsPDXreserves the right to monitor all Comments and to remove any
@@ -158,7 +162,7 @@ const TermsAndConditions = () => {
             other Web site information so long as the link: (a) is not in any
             way misleading; (b) does not falsely imply sponsorship, endorsement
             or approval of the linking party and its products or services; and
-            (c) fits within the context of the linking party's site.
+            (c) fits within the context of the linking party&apos;s site.
           </li>
           <li>
             We may consider and approve in our sole discretion other link
@@ -202,7 +206,7 @@ const TermsAndConditions = () => {
           other Web site information so long as the link: (a) is not in any way
           misleading; (b) does not falsely imply sponsorship, endorsement or
           approval of the linking party and it products or services; and (c)
-          fits within the context of the linking party's site.
+          fits within the context of the linking party&apos;s site.
         </p>
         <p>
           If you are among the organizations listed in paragraph 2 above and are
@@ -230,12 +234,12 @@ const TermsAndConditions = () => {
           <li>
             By use of any other description of our Web site or material being
             linked to that makes sense within the context and format of content
-            on the linking party's site.
+            on the linking party&apos;s site.
           </li>
         </ol>
         <p>
-          No use of NomsPDX's logo or other artwork will be allowed for linking
-          absent a trademark license agreement.
+          No use of NomsPDX&apos;s logo or other artwork will be allowed for
+          linking absent a trademark license agreement.
         </p>
         <h3>Iframes</h3>
         <p>

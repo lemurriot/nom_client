@@ -23,7 +23,7 @@ const UserDidNominateList = () => {
           <div className="profile-page__list-item-chip-container">
             <Chip size="small" label={`Best ${food_category}`} />
             <div className="profile-page__list-item--vote-count">
-              Total Votes: {vote_count}
+              {`Total Votes: ${vote_count}`}
             </div>
           </div>
         </section>

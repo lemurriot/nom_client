@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -51,7 +50,7 @@ const UserDidUpvoteList = ({ onShowCommentForm }) => {
             <div className="profile-page__list-item-chip-container">
               <Chip size="small" label={`Best ${food_category}`} />
               <div className="profile-page__list-item--vote-count">
-                Total Votes: {vote_count}
+                {`Total Votes: ${vote_count}`}
               </div>
             </div>
           </section>
@@ -62,7 +61,7 @@ const UserDidUpvoteList = ({ onShowCommentForm }) => {
                   Your comment:
                 </span>
                 <div className="profile-page__list-item--quote">
-                  &quot;{comment}&quot;
+                  {`"${comment}"`}
                 </div>
               </>
             )}
