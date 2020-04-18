@@ -4,7 +4,7 @@
   padding: 5% !important;
 }
 
-h2,
-h3 {
+.terms-content-container h2,
+.terms-content-container h3 {
   text-align: center;
 }

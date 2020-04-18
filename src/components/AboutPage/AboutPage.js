@@ -10,34 +10,65 @@ export default function About() {
       <Button onClick={goBack} variant="contained" className="go-back-btn">
         Go Back
       </Button>
-      <h2>Hello! Welcome to NomsPDX</h2>
-      <article>
+      <section className="page-content-container content-container about-page__content-container">
+        <h2 className="montserrat center about-page__title">
+          Welcome to NomsPDX
+        </h2>
+        <article className="about-page__content">
+          <h3 className="montserrat center">What is NomsPDX?</h3>
+          <p className="about-page__first-paragraph">
+            NomsPDX is a voting app where you upvote your favorite
+            burger/pizza/coffee, et al, in Portland. Do you love a
+            restaurant&apos;s burger? Give it an upvote!
+          </p>
+          <p>
+            NomsPDX is designed to foster a positive community. No downvotes,
+            either upvote or leave it be. If you don&apos;t see a restaurant,
+            you can nominate a new restaurant in any category.
+          </p>
+        </article>
+        <h3 className="montserrat center">Basic Rules</h3>
+        <ul>
+          <li>
+            You can give an upvote to as many restaurants as you like, but you
+            only get one upvote per restaurant.
+          </li>
+          <li>
+            You can leave a comment on a restaurant&apos;s page only if you have
+            upvoted the restaurant. This is designed to maintain positive
+            feedback.
+          </li>
+          <li>
+            Comments that are off-topic, overtly disrespectful, or offensive
+            will be deleted.
+          </li>
+          <li>
+            A restaurant can only be nominated once per category. However, the
+            same restaurant can be nominated in a different category.
+          </li>
+          <li>Duplicate nominations will be either deleted or consolidated.</li>
+          <li>
+            Once a user nominates a restaurant, that nomination cannot be
+            deleted by the user. The user can undo their upvote, but the post
+            itself will remain. This is because, in theory, a restaurant can
+            have a hundred votes, and it would be unfair for a user to delete
+            that collection of votes.
+          </li>
+        </ul>
+        <h3 className="montserrat center">Contact</h3>
         <p>
-          This is a very basic static version of what will, over time, become a
-          bigger better app.
+          NomsPDX is the creation of Kevin Boyle, a web developer in Portland,
+          OR.
         </p>
         <p>
-          The idea is: You, the user, can nominate a new restaurant for being
-          really really awesome in a category. You can also vote on someone
-          else's nomination.
+          Please reach out to me at{' '}
+          <a href="mailto:omnomnom.pdx@gmail.com?Subject=Hello%20From%20Noms">
+            omnomnom.pdx@gmail.com
+          </a>{' '}
+          with any questions/feedback/concerns. Alternatively you can visit my
+          personal webpage <a href="http://pdxwebdev.io">pdxwebdev.io</a>.
         </p>
-        <p>
-          Right now, there's only three categories - Burgers, Burritos and
-          Falafels. Also, the vision of the app will be for it to be
-          city-centric. I live in Portland, Oregon, so the first version intends
-          on being a voting platform for the best of these restaurants in
-          Portland. A later implementation will to expand this to other cities,
-          and maybe even just base itself on "10 miles of your location" or
-          something! A wild future awaits.
-        </p>
-        <p>
-          Because this is the 'static' version, please don't take it too
-          seriously. The information you put in is not saved anywhere, and if
-          you refresh the page, the information will be lost forever! This is
-          just the test version, the next stage is to wire it up to a database
-          and implement features for authorized users.
-        </p>
-      </article>
+      </section>
     </main>
   );
 }

@@ -1,11 +1,17 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { useSpring, animated } from 'react-spring';
 import CategoryPreview from '../CategoryPreview/CategoryPreview';
 import './LandingPage.css';
 import NomsContext from '../../NomsContext';
 
 const LandingPage = () => {
+  const logoAnimation = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    duration: 1000,
+  });
   const { nominatedRestaurants, uniqueCategories } = useContext(NomsContext);
   const restaurantsFilteredByCategory = [...uniqueCategories].map((category) =>
     nominatedRestaurants.filter(
@@ -33,7 +39,7 @@ const LandingPage = () => {
         </Link>
       </Button>
       <section className="flex-container--space-around">
-        {categoryPreviewList}
+        <animated.div style={logoAnimation}>{categoryPreviewList}</animated.div>
       </section>
     </main>
   );

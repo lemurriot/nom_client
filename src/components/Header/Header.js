@@ -11,7 +11,7 @@ const Header = () => {
   const logoAnimation = useSpring({
     opacity: 1,
     from: { opacity: 0 },
-    // duration: 4000,
+    duration: 500,
   });
   const { user, username } = useContext(NomsContext);
   const { pathname } = useLocation();
@@ -37,16 +37,16 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-top">
-        <div className="brand">
-          <animated.div style={logoAnimation}>
+        <animated.div style={logoAnimation}>
+          <div className="brand">
             <div className="logo">
               <FlyoutMenu />
             </div>
-          </animated.div>
-          <Link to="/" style={{ textDecoration: 'none', height: '100%' }}>
-            <h1>NomsPDX</h1>
-          </Link>
-        </div>
+            <Link to="/" style={{ textDecoration: 'none', height: '100%' }}>
+              <h1>NomsPDX</h1>
+            </Link>
+          </div>
+        </animated.div>
         <span className="header-top__greeting">
           {!isEmpty(user) && `Hi ${username}`}
         </span>

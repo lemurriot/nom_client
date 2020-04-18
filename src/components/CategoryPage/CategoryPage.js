@@ -8,6 +8,7 @@ import RestaurantPreview from '../RestaurantPreview/RestaurantPreview';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import { sortRestaurants } from '../../utils';
 import { sortConstants } from '../../constants/sortConstants';
+import './CategoryPage.css';
 
 const CategoryPage = () => {
   const { food_category: category } = useParams();
@@ -84,7 +85,7 @@ const CategoryPage = () => {
             </div>
           </span>
         </div>
-        <div className="restaurant-review-preview-box">
+        <div className="restaurant-review__preview-box">
           <div className="restaurant-list-header flex-container--space-between">
             <span className="restaurant-list-header--left">Restaurant</span>
             <span className="restaurant-list-header--middle">Vote Count</span>
