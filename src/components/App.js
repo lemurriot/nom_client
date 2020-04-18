@@ -64,11 +64,11 @@ export default class App extends Component {
   getUser = () => {
     fetchUserData().then((userData) => {
       if (userData.error) {
-        this.handleShowFeedbackSnackbar(userData.message);
+        return this.handleShowFeedbackSnackbar(userData.message);
       }
       return this.setState({
         user: userData,
-        username: localStorage.getItem('username') || userData.user_name,
+        username: userData.user_name || localStorage.getItem('username'),
       });
     });
   };

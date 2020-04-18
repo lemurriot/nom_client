@@ -98,19 +98,19 @@ const ProfilePage = () => {
             onChange={handleChangeTabs}
             aria-label="profile information tabs"
           >
-            <Tab label="Your Restaurant Nominations" {...a11yProps(0)} />
-            <Tab label="Your Upvotes" {...a11yProps(1)} />
+            <Tab label="Your Upvotes" {...a11yProps(0)} />
+            <Tab label="Your Nominations" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
+          <h4 className="montserrat center tab-title">You Upvoted</h4>
+          <UserDidUpvoteList onShowCommentForm={handleShowCommentForm} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
           <h4 className="montserrat center tab-title">
             Your Restaurant Nominations
           </h4>
           <UserDidNominateList />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <h4 className="montserrat center tab-title">You Upvoted</h4>
-          <UserDidUpvoteList onShowCommentForm={handleShowCommentForm} />
         </TabPanel>
       </div>
       {commentsFormIsShown && (

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import {
   Button,
   ClickAwayListener,
@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NomsContext from '../../NomsContext';
 import './FlyoutMenu.css';
 
 const linksList = [
@@ -33,10 +34,20 @@ const linksList = [
     path: '/termsandconditions',
     text: 'Terms and Conditions',
   },
+  {
+    id: 5,
+    path: '/privacypolicy',
+    text: 'Privacy Policy',
+  },
 ];
+
+const linkStyles = {
+  textDecoration: 'none',
+};
 
 const FlyoutMenu = () => {
   const [open, setOpen] = useState(false);
+  const { uniqueCategories } = useContext(NomsContext);
   const anchorRef = useRef(null);
 
   const handleToggle = () => {
@@ -97,24 +108,45 @@ const FlyoutMenu = () => {
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  autoFocusItem={open}
-                  id="menu-list-grow"
-                  onKeyDown={handleListKeyDown}
-                >
-                  {linksList.map((link, index) => (
-                    <MenuItem key={link.id} onClick={handleClose}>
-                      <Link to={linksList[index].path}>
-                        {linksList[index].text}
-                      </Link>
+                <div className="menuList-container">
+                  <MenuList
+                    autoFocusItem={open}
+                    id="menu-list-grow"
+                    onKeyDown={handleListKeyDown}
+                  >
+                    <h4 className="roboto">Pages</h4>
+                    {linksList.map((link, index) => (
+                      <MenuItem key={link.id} onClick={handleClose}>
+                        <Link style={linkStyles} to={linksList[index].path}>
+                          {linksList[index].text}
+                        </Link>
+                      </MenuItem>
+                    ))}
+                    <h4 className="roboto">Categories</h4>
+                    {uniqueCategories.map((category) => (
+                      <MenuItem key={category} onClick={handleClose}>
+                        <Link style={linkStyles} to={`/category/${category}`}>
+                          {category}
+                        </Link>
+                      </MenuItem>
+                    ))}
+                    <MenuItem key="new" onClick={handleClose}>
+                      <Button variant="contained" color="primary">
+                        <Link
+                          size="small"
+                          style={{
+                            ...linkStyles,
+                            color: 'white',
+                            padding: '0 3%',
+                          }}
+                          to="/add-new-nom"
+                        >
+                          Nominate a New Restaurant
+                        </Link>
+                      </Button>
                     </MenuItem>
-                  ))}
-                  <MenuItem key="new" onClick={handleClose}>
-                    <Button variant="contained" color="primary">
-                      <Link to="/add-new-nom">Nominate a New Restaurant</Link>
-                    </Button>
-                  </MenuItem>
-                </MenuList>
+                  </MenuList>
+                </div>
               </ClickAwayListener>
             </Paper>
           </Grow>

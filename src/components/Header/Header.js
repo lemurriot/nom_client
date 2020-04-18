@@ -53,7 +53,16 @@ const Header = () => {
       </div>
       <div className="header-bottom">
         <nav>
-          <ul className="nav__links ul-reset">
+          <ul className="nav__links ul-reset roboto">
+            <li
+              className={
+                pathname === '/' ? 'nav__link nav__link--active' : 'nav__link'
+              }
+            >
+              <Link to="/" style={linkStyles}>
+                Home
+              </Link>
+            </li>
             <li
               className={
                 pathname === '/about'

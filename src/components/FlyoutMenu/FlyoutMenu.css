@@ -1,0 +1,5 @@
+.menuList-container {
+  padding: 5%;
+  max-height: 85vh;
+  overflow-y: scroll;
+}

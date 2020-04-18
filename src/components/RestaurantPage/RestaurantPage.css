@@ -1,3 +1,6 @@
+.restaurant-page__container {
+  padding: 5% !important;
+}
 .restaurant-page__container-top-line {
   border-bottom: 2px solid #cccccc;
   margin-bottom: 2%;
