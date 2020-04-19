@@ -117,6 +117,9 @@ const AddRestaurantFormMaster = () => {
           </div>
         </>
       </section>
+      {/* if the window height is too small, it pushes the absolute-ly positioned results up above the
+       search input, so this empty div provides space for the results */}
+      {currentForm === 'search' && <div style={{ minHeight: 500 }} />}
       {showWarningModal && (
         <WarningModal
           showWarningModal={showWarningModal}
