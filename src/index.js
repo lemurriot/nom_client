@@ -13,6 +13,8 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import 'normalize.css';
+import ReactGA from 'react-ga';
+import config from './config';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import './index.css';
@@ -26,6 +28,9 @@ library.add(
   faCheck,
   faPlus
 );
+
+ReactGA.initialize(config.GOOGLE_TRACKING_ID);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
   <BrowserRouter>

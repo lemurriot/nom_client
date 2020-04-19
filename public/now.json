@@ -1,14 +1,14 @@
 {
-    "version": 2,
-    "name": "nomspdx",
-    "routes": [
-        {
-          "src": "^/static/(.*)",
-          "dest": "/static/$1"
-        },
-        {
-          "src": ".*",
-          "dest": "/index.html"
-        }
-    ]
-  }
+  "version": 2,
+  "alias": ["nomspdx.com", "nom_client"],
+  "routes": [
+    {
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": ".*",
+      "dest": "/index.html"
+    }
+  ]
+}
