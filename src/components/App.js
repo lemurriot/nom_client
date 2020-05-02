@@ -19,6 +19,7 @@ import {
   patchComment,
   postNewRestaurant,
 } from '../api/routes';
+import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
@@ -52,6 +53,7 @@ export default class App extends Component {
       warningModalProceedAction: () => {},
       feedbackMessage: '',
       showFeedbackMessage: false,
+      loading: true,
     };
   }
 
@@ -80,17 +82,26 @@ export default class App extends Component {
   getRestaurants = () =>
     fetchRestaurantsData().then((restaurantData) => {
       if (restaurantData.error) {
-        this.setState({ showErrorFiveHundred: true });
+        this.setState({
+          loading: false,
+          showErrorFiveHundred: true,
+        });
         return this.handleShowFeedbackSnackbar(restaurantData.message);
       }
       restaurantData.forEach((restaurant) => {
         // eslint-disable-next-line no-param-reassign
         restaurant.vote_count = Number(restaurant.vote_count);
       });
-      return this.setState({ nominatedRestaurants: restaurantData }, () => {
-        this.getVoteTallies();
-        this.getUniqueCategories();
-      });
+      return this.setState(
+        {
+          nominatedRestaurants: restaurantData,
+          loading: false,
+        },
+        () => {
+          this.getVoteTallies();
+          this.getUniqueCategories();
+        }
+      );
     });
 
   getUniqueCategories = () => {
@@ -275,6 +286,7 @@ export default class App extends Component {
       username,
       voteTallies,
       likesAndComments,
+      loading,
       uniqueCategories,
       feedbackMessage,
       showErrorFiveHundred,
@@ -301,6 +313,7 @@ export default class App extends Component {
       <NomsContext.Provider value={contextVal}>
         <div className="App">
           <Header />
+          {loading && <LoadingSpinner />}
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <ProtectedRoute
