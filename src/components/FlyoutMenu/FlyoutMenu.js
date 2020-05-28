@@ -9,6 +9,7 @@ import {
   MenuList,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { faHamburger } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NomsContext from '../../NomsContext';
 import './FlyoutMenu.css';
@@ -88,7 +89,7 @@ const FlyoutMenu = () => {
         onClick={handleToggle}
       >
         <div className="burger flex-container--centered">
-          <FontAwesomeIcon icon="hamburger" color="white" />
+          <FontAwesomeIcon icon={faHamburger} color="white" />
         </div>
       </Button>
       <Popper

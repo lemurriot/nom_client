@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import isEmpty from 'lodash.isempty';
 import config from '../config';
 import { generateUniqueCategoriesArray, generateVoteTallies } from '../utils';
@@ -311,79 +311,84 @@ export default class App extends Component {
     };
     return (
       <NomsContext.Provider value={contextVal}>
-        <div className="App">
-          <Header />
-          {loading && <LoadingSpinner />}
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <ProtectedRoute
-              path="/add-new-nom"
-              authenticated={!isEmpty(user)}
-              component={AddRestaurantFormMaster}
-            />
-            {/* <Route path="/add-new-nom" component={AddRestaurantFormMaster} /> */}
-            {/* <Route path="/profile" component={ProfilePage} /> */}
-            <Route
-              path="/category/:food_category/:restaurant_id"
-              component={RestaurantPage}
-            />
-            <Route path="/category/:food_category" component={CategoryPage} />
-            <Route path="/about" component={AboutPage} />
-            <ProtectedRoute
-              path="/profile"
-              authenticated={!isEmpty(user)}
-              component={ProfilePage}
-            />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/termsandconditions" component={TermsAndConditions} />
-            <Route path="/privacypolicy" component={PrivacyPolicy} />
-            <Route component={NotFoundPage} />
-          </Switch>
-          {showWarningModal && (
-            <WarningModal
-              showWarningModal={showWarningModal}
-              setShowWarningModal={() =>
-                this.setState((prevState) => ({
-                  showWarningModal: !prevState.showWarningModal,
-                }))
-              }
-              proceedAction={warningModalProceedAction}
-              headingText={headingText}
-              buttonText={buttonText}
-              subtext={subtext}
-            />
-          )}
-          {showFeedbackMessage && (
-            <FeedbackSnackbar
-              open={showFeedbackMessage}
-              setOpen={() =>
-                this.setState({
-                  showFeedbackMessage: false,
-                })
-              }
-              message={feedbackMessage}
-            />
-          )}
-          {showErrorFiveHundred && (
-            <WarningModal
-              showWarningModal={showErrorFiveHundred}
-              setShowWarningModal={() =>
-                this.setState((prevState) => ({
-                  showErrorFiveHundred: !prevState.showErrorFiveHundred,
-                }))
-              }
-              proceedAction={() =>
-                this.setState((prevState) => ({
-                  showErrorFiveHundred: !prevState.showErrorFiveHundred,
-                }))
-              }
-              headingText="Error 500"
-              buttonText="Ok"
-              subtext="Uh oh. It looks like we are unable to reach our servers. Please check back later!"
-            />
-          )}
-          <Footer />
-        </div>
+        <BrowserRouter>
+          <div className="App">
+            <Header />
+            {loading && <LoadingSpinner />}
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <ProtectedRoute
+                path="/add-new-nom"
+                authenticated={!isEmpty(user)}
+                component={AddRestaurantFormMaster}
+              />
+              {/* <Route path="/add-new-nom" component={AddRestaurantFormMaster} /> */}
+              {/* <Route path="/profile" component={ProfilePage} /> */}
+              <Route
+                path="/category/:food_category/:restaurant_id"
+                component={RestaurantPage}
+              />
+              <Route path="/category/:food_category" component={CategoryPage} />
+              <Route path="/about" component={AboutPage} />
+              <ProtectedRoute
+                path="/profile"
+                authenticated={!isEmpty(user)}
+                component={ProfilePage}
+              />
+              <Route path="/login" component={LoginForm} />
+              <Route
+                path="/termsandconditions"
+                component={TermsAndConditions}
+              />
+              <Route path="/privacypolicy" component={PrivacyPolicy} />
+              <Route component={NotFoundPage} />
+            </Switch>
+            {showWarningModal && (
+              <WarningModal
+                showWarningModal={showWarningModal}
+                setShowWarningModal={() =>
+                  this.setState((prevState) => ({
+                    showWarningModal: !prevState.showWarningModal,
+                  }))
+                }
+                proceedAction={warningModalProceedAction}
+                headingText={headingText}
+                buttonText={buttonText}
+                subtext={subtext}
+              />
+            )}
+            {showFeedbackMessage && (
+              <FeedbackSnackbar
+                open={showFeedbackMessage}
+                setOpen={() =>
+                  this.setState({
+                    showFeedbackMessage: false,
+                  })
+                }
+                message={feedbackMessage}
+              />
+            )}
+            {showErrorFiveHundred && (
+              <WarningModal
+                showWarningModal={showErrorFiveHundred}
+                setShowWarningModal={() =>
+                  this.setState((prevState) => ({
+                    showErrorFiveHundred: !prevState.showErrorFiveHundred,
+                  }))
+                }
+                proceedAction={() =>
+                  this.setState((prevState) => ({
+                    showErrorFiveHundred: !prevState.showErrorFiveHundred,
+                  }))
+                }
+                headingText="Error 500"
+                buttonText="Ok"
+                subtext="Uh oh. It looks like we are unable to reach our servers. Please check back later!"
+              />
+            )}
+            <Footer />
+          </div>
+        </BrowserRouter>
       </NomsContext.Provider>
     );
   }
