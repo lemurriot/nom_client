@@ -47,6 +47,7 @@ export default class App extends Component {
       likesAndComments: [],
       voteTallies: {},
       uniqueCategories: [],
+      upvoteAnimation: null,
       showErrorFiveHundred: false,
       showWarningModal: false,
       warningModalMessages: {},
@@ -126,6 +127,12 @@ export default class App extends Component {
       return this.setState({ likesAndComments });
     });
 
+  handleUpvoteAnimation = (restaurantId) => {
+    this.setState({ upvoteAnimation: restaurantId }, () =>
+      setTimeout(() => this.setState({ upvoteAnimation: null }), 1000)
+    );
+  };
+
   handleAddRestaurant = async (newRestaurant) => {
     const {
       restaurantName,
@@ -199,6 +206,7 @@ export default class App extends Component {
       }
       const newVoteTallies = { ...voteTallies };
       ++newVoteTallies[restaurantId];
+      this.handleUpvoteAnimation(restaurantId);
       return this.setState((prevState) => ({
         likesAndComments: [...prevState.likesAndComments, newUpvote],
         voteTallies: newVoteTallies,
@@ -288,6 +296,7 @@ export default class App extends Component {
       likesAndComments,
       loading,
       uniqueCategories,
+      upvoteAnimation,
       feedbackMessage,
       showErrorFiveHundred,
       showFeedbackMessage,
@@ -302,6 +311,7 @@ export default class App extends Component {
       voteTallies,
       likesAndComments,
       uniqueCategories,
+      upvoteAnimation,
       setShowFeedbackSnackbar: this.handleShowFeedbackSnackbar,
       changeUsernameLocally: this.changeUsernameLocally,
       nominateNewRestaurant: this.handleAddRestaurant,

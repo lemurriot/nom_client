@@ -14,16 +14,23 @@ const RestaurantPreview = ({
   voteCount,
 }) => (
   <NomsContext.Consumer>
-    {({ likesAndComments, user }) => {
+    {({ likesAndComments, user, upvoteAnimation }) => {
       const findIfUserDidLike = findUserDidLike(
         likesAndComments,
         restaurantId,
         user.id
       );
       const likeId = findIfUserDidLike.length ? findIfUserDidLike[0].id : 0;
+      const applyUpvoteAnimation = upvoteAnimation === restaurantId;
 
       return (
-        <div className="restaurant-preview-card flex-container--space-between">
+        <div
+          className={
+            applyUpvoteAnimation
+              ? 'restaurant-preview-card flex-container--space-between upvote-animation'
+              : 'restaurant-preview-card flex-container--space-between'
+          }
+        >
           <div className="restaurant-preview-card--left restaurant-preview-card--section">
             <Link to={`/category/${category}/${restaurantId}`}>
               <h5>{name}</h5>
