@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import isEmpty from 'lodash.isempty';
+import GoogleButton from 'react-google-button';
+import config from '../../config';
 import CategoryPreview from '../CategoryPreview/CategoryPreview';
 import './LandingPage.css';
 import NomsContext from '../../NomsContext';
 
 const LandingPage = () => {
-  const { nominatedRestaurants, uniqueCategories } = useContext(NomsContext);
+  const { nominatedRestaurants, uniqueCategories, user } = useContext(
+    NomsContext
+  );
   const restaurantsFilteredByCategory = [...uniqueCategories].map((category) =>
     nominatedRestaurants.filter(
       (restaurant) => restaurant.food_category === category
@@ -24,16 +29,40 @@ const LandingPage = () => {
 
   return (
     <main className="page">
-      <Button variant="contained" color="primary" size="medium">
-        <Link
-          to="/add-new-nom"
-          style={{ textDecoration: 'none', height: '100%', color: 'white' }}
+      {!isEmpty(user) && (
+        <Button variant="contained" color="primary" size="medium">
+          <Link
+            to="/add-new-nom"
+            style={{ textDecoration: 'none', height: '100%', color: 'white' }}
+          >
+            Nominate a New Restaurant!
+          </Link>
+        </Button>
+      )}
+      {!!isEmpty(user) && (
+        <a
+          style={{ textDecoration: 'none' }}
+          href={`${config.API_ENDPOINT}/auth/google-oauth`}
+          className="login-btn google-oauth-btn"
         >
-          Nominate a New Restaurant!
-        </Link>
-      </Button>
+          <GoogleButton />
+        </a>
+      )}
       <section className="flex-container--space-around">
         {categoryPreviewList}
+      </section>
+      <section className="pre-footer center flex-container--space-around">
+        <ul className="ul-reset roboto">
+          <li>
+            <Link to="/privacypolicy">Privacy Policy</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/termsandconditions">Terms &amp; Conditions</Link>
+          </li>
+        </ul>
       </section>
     </main>
   );

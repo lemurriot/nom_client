@@ -41,7 +41,7 @@ function PrivacyPolicy() {
           collection of information from other sources.
         </p>
         <p>
-          This Privacy Policy, together with the Terms and conditions posted on
+          This Privacy Policy, together with the Terms and Conditions posted on
           our Website, set forth the general rules and policies governing your
           use of our Website. Depending on your activities when visiting our
           Website, you may be required to agree to additional terms and
@@ -59,22 +59,15 @@ function PrivacyPolicy() {
           non-personally-identifying information in the aggregate, e.g., by
           publishing a report on trends in the usage of its website.
         </p>
-        <p>
-          NomsPDX also collects potentially personally-identifying information
-          like Internet Protocol (IP) addresses for logged in users and for
-          users leaving comments on https://nomspdx.com/ blog posts. NomsPDX
-          only discloses logged in user and commenter IP addresses under the
-          same circumstances that it uses and discloses personally-identifying
-          information as described below.
-        </p>
         <h3>Gathering of Personally-Identifying Information</h3>
         <p>
           Certain visitors to NomsPDX&apos;s websites choose to interact with
           NomsPDX in ways that require NomsPDX to gather personally-identifying
           information. The amount and type of information that NomsPDX gathers
           depends on the nature of the interaction. For example, we ask visitors
-          who sign up for a blog at https://nomspdx.com/ to provide a username
-          and email address.
+          who sign up for voting, nominating, and commenting at
+          https://nomspdx.com/ to provide a username and email address through
+          Google OAuth 2.0.
         </p>
         <h3>Security</h3>
         <p>
@@ -107,7 +100,7 @@ function PrivacyPolicy() {
           privacy policies or practices of any third party sites, products or
           services.
         </p>
-        <h3>Https://nomspdx.com/ uses Google AdWords for remarketing</h3>
+        <h3>NomsPDX uses Google AdWords for remarketing</h3>
         <p>
           Https://nomspdx.com/ uses the remarketing services to advertise on
           third party websites (including Google) to previous visitors to our

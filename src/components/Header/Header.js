@@ -16,23 +16,12 @@ const Header = () => {
   const { user, username } = useContext(NomsContext);
   const { pathname } = useLocation();
   const linkStyles = { textDecoration: 'none', color: 'white' };
-  const loginLink = (
-    <a
-      style={linkStyles}
-      href={`${config.API_ENDPOINT}/auth/google-oauth`}
-      className="login-btn google-oauth-btn"
-    >
-      Login with Google
-    </a>
-  );
 
   const logoutLink = (
     <a style={linkStyles} href={`${config.API_ENDPOINT}/auth/logout`}>
       Logout
     </a>
   );
-
-  const loginLinks = user.id ? logoutLink : loginLink;
 
   return (
     <header className="header">
@@ -75,19 +64,21 @@ const Header = () => {
               </Link>
             </li>
             {!isEmpty(user) && (
-              <li
-                className={
-                  pathname === '/profile'
-                    ? 'nav__link nav__link--active'
-                    : 'nav__link'
-                }
-              >
-                <Link to="/profile" style={linkStyles}>
-                  Profile
-                </Link>
-              </li>
+              <>
+                <li
+                  className={
+                    pathname === '/profile'
+                      ? 'nav__link nav__link--active'
+                      : 'nav__link'
+                  }
+                >
+                  <Link to="/profile" style={linkStyles}>
+                    Profile
+                  </Link>
+                </li>
+                <li className="nav__link">{logoutLink}</li>
+              </>
             )}
-            <li className="nav__link">{loginLinks}</li>
           </ul>
         </nav>
       </div>

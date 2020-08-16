@@ -31,7 +31,7 @@ const VoteButtons = ({ userDidLike, restaurantId, likeId }) => (
             <FontAwesomeIcon
               icon="check"
               color="red"
-              transform="right-2 up-3"
+              transform="right-2 up-2"
             />
           </button>
         </div>
