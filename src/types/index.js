@@ -13,7 +13,6 @@ export const restaurantType = {
 
 export const googleSearchResultsShape = {
   description: string.isRequired,
-  id: string.isRequired,
   matched_substrings: arrayOf(
     shape({
       length: number.isRequired,

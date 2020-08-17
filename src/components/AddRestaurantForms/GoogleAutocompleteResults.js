@@ -34,7 +34,7 @@ const GoogleAutocompleteResults = ({
       role="option"
       aria-selected={i === focusedLi}
       tabIndex={0}
-      key={result.id}
+      key={result.place_id}
       onClick={() => onSelectResult(i)}
       onKeyDown={(e) => handleKeyDown(e, 'SELECT', i)}
     >

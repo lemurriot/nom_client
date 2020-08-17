@@ -107,7 +107,8 @@ const SearchRestaurantsForm = ({
     setRestaurantName('');
     const googleRestaurantAlreadyNominated = nominatedRestaurants.filter(
       ({ food_category, googleid }) =>
-        food_category === category && googleid === googleResults[resultIndex].id
+        food_category === category &&
+        googleid === googleResults[resultIndex].place_id
     );
     if (googleRestaurantAlreadyNominated.length) {
       setRedirectAction(() => () =>
@@ -121,7 +122,7 @@ const SearchRestaurantsForm = ({
       name: googleResults[resultIndex].structured_formatting.main_text,
       subtitle: googleResults[resultIndex].structured_formatting.secondary_text,
       address: '',
-      id: googleResults[resultIndex].id,
+      id: googleResults[resultIndex].place_id,
       apiReferred: true,
     });
     return setCurrentForm('submit');
