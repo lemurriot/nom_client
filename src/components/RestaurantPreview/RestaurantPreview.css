@@ -17,7 +17,7 @@
   margin: 0;
 }
 .upvote-animation {
-  background-color: rgb(248, 225, 93);
+  background-color: rgb(248, 93, 235);
   animation: fade-out-bg-color 1s;
 }
 .hide {
@@ -25,7 +25,7 @@
 }
 @keyframes fade-out-bg-color {
   from {
-    background-color: rgb(248, 225, 93);
+    background-color: rgb(248, 130, 238);
   }
   to {
     background-color: white;

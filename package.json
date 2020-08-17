@@ -10,6 +10,7 @@
     "dotenv": "^8.2.0",
     "formik": "^2.1.4",
     "lodash.isempty": "^4.4.0",
+    "mo-js": "^0.288.2",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
