@@ -332,8 +332,6 @@ export default class App extends Component {
                 authenticated={!isEmpty(user)}
                 component={AddRestaurantFormMaster}
               />
-              {/* <Route path="/add-new-nom" component={AddRestaurantFormMaster} /> */}
-              {/* <Route path="/profile" component={ProfilePage} /> */}
               <Route
                 path="/category/:food_category/:restaurant_id"
                 component={RestaurantPage}

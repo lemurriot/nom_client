@@ -16,12 +16,13 @@
 .restaurant-preview-card h5 {
   margin: 0;
 }
-.upvote-animation {
-  background-color: rgb(248, 93, 235);
-  animation: fade-out-bg-color 1s;
-}
 .hide {
   display: none;
+}
+@media screen and (min-width: 450px) {
+  .upvote-animation {
+    animation: fade-out-bg-color 1s;
+  }
 }
 @keyframes fade-out-bg-color {
   from {
