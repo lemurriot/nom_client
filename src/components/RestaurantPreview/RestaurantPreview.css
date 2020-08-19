@@ -19,10 +19,8 @@
 .hide {
   display: none;
 }
-@media screen and (min-width: 450px) {
-  .upvote-animation {
-    animation: fade-out-bg-color 1s;
-  }
+.upvote-animation {
+  animation: fade-out-bg-color 1s;
 }
 @keyframes fade-out-bg-color {
   from {
