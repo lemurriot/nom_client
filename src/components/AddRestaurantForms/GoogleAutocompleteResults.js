@@ -9,7 +9,7 @@ const GoogleAutocompleteResults = ({
   results,
   setShowFloatingResults,
   clearTextField,
-  position: { top, width },
+  width,
   onSelectResult,
   setCurrentForm,
 }) => {
@@ -52,7 +52,7 @@ const GoogleAutocompleteResults = ({
         className="results-container ul-reset roboto"
         id="google-results-flyout"
         role="listbox"
-        style={{ top, width }}
+        style={{ width, top: 58 }}
       >
         {resultsList}
         <li
@@ -76,10 +76,7 @@ const GoogleAutocompleteResults = ({
 
 GoogleAutocompleteResults.propTypes = {
   results: arrayOf(shape(googleSearchResultsShape)),
-  position: shape({
-    top: number,
-    width: number,
-  }),
+  width: number,
   setShowFloatingResults: func,
   clearTextField: func,
   onSelectResult: func,
@@ -88,10 +85,7 @@ GoogleAutocompleteResults.propTypes = {
 
 GoogleAutocompleteResults.defaultProps = {
   results: [],
-  position: {
-    top: 0,
-    width: 0,
-  },
+  width: 0,
   setShowFloatingResults: () => {},
   clearTextField: () => {},
   onSelectResult: () => {},

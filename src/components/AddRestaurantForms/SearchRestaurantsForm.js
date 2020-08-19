@@ -29,32 +29,27 @@ const SearchRestaurantsForm = ({
   const [googleSessionId, setGoogleSessionId] = useState('');
   const [googleResults, setGoogleResults] = useState([]);
   const [showFloatingResults, setShowFloatingResults] = useState(false);
-  const [searchResultPosition, setSearchResultPosition] = useState({
-    top: 0,
-    width: 0,
-  });
+  const [searchResultWidth, setSearchResultWidth] = useState(0);
   const searchInputRef = useRef(null);
   const history = useHistory();
 
   useEffect(() => {
     if (searchInputRef.current) {
-      setSearchResultPosition({
-        top: searchInputRef.current.getBoundingClientRect().bottom,
-        width: searchInputRef.current.getBoundingClientRect().width,
-      });
+      setSearchResultWidth(
+        searchInputRef.current.getBoundingClientRect().width
+      );
     }
   }, [searchInputRef]);
 
   useLayoutEffect(() => {
-    function updatePosition() {
-      setSearchResultPosition({
-        top: searchInputRef.current.getBoundingClientRect().bottom,
-        width: searchInputRef.current.getBoundingClientRect().width,
-      });
+    function updateWidth() {
+      setSearchResultWidth(
+        searchInputRef.current.getBoundingClientRect().width
+      );
     }
-    window.addEventListener('resize', updatePosition);
-    updatePosition();
-    return () => window.removeEventListener('resize', updatePosition);
+    window.addEventListener('resize', updateWidth);
+    updateWidth();
+    return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
   const toggleFloatingSearchResults = () => {
@@ -132,7 +127,7 @@ const SearchRestaurantsForm = ({
     <>
       <div className="search-form">
         {/* height is fixed at 57 for consistency of anchored results flyout */}
-        <div ref={searchInputRef} style={{ height: 57 }}>
+        <div ref={searchInputRef} style={{ position: 'relative' }}>
           <TextField
             value={restaurantName}
             fullWidth
@@ -143,19 +138,19 @@ const SearchRestaurantsForm = ({
             autoFocus
             autoComplete="off"
           />
+          {showFloatingResults && restaurantName.length > 2 && (
+            <GoogleAutocompleteResults
+              width={searchResultWidth}
+              showFloatingResults={showFloatingResults}
+              setShowFloatingResults={setShowFloatingResults}
+              toggleFloatingSearchResults={toggleFloatingSearchResults}
+              results={googleResults}
+              clearTextField={clearTextField}
+              onSelectResult={handleSelectResult}
+              setCurrentForm={setCurrentForm}
+            />
+          )}
         </div>
-        {showFloatingResults && restaurantName.length > 2 && (
-          <GoogleAutocompleteResults
-            position={searchResultPosition}
-            showFloatingResults={showFloatingResults}
-            setShowFloatingResults={setShowFloatingResults}
-            toggleFloatingSearchResults={toggleFloatingSearchResults}
-            results={googleResults}
-            clearTextField={clearTextField}
-            onSelectResult={handleSelectResult}
-            setCurrentForm={setCurrentForm}
-          />
-        )}
       </div>
       <div className="form-buttons form-buttons__container">
         <Button
