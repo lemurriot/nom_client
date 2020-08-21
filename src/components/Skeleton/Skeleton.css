@@ -1,0 +1,70 @@
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.skeleton::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  animation: sweep 2s infinite;
+  background-image: linear-gradient(
+    to left,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+}
+
+.skeleton__fake-button {
+  /* background-color: rgb(66, 133, 244); */
+  position: relative;
+  overflow: hidden;
+  height: 50px;
+  width: 240px;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px 0px;
+  line-height: 48px;
+  display: block;
+  border-radius: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgb(238, 243, 252),
+    rgb(104, 159, 248),
+    rgb(66, 133, 244)
+  );
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.skeleton__title {
+  height: 75px;
+  width: 100%;
+  border-radius: 3px;
+  background-color: rgba(116, 116, 116, 0.3);
+}
+.skeleton__subsection {
+  height: 45px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: rgba(199, 199, 199, 0.3);
+}

@@ -19,7 +19,7 @@ import {
   patchComment,
   postNewRestaurant,
 } from '../api/routes';
-import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
+import Skeleton from './Skeleton/Skeleton';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LandingPage from './LandingPage/LandingPage';
@@ -324,7 +324,7 @@ export default class App extends Component {
         <BrowserRouter>
           <div className="App">
             <Header />
-            {loading && <LoadingSpinner />}
+            {loading && <Skeleton />}
             <Switch>
               <Route exact path="/" component={LandingPage} />
               <ProtectedRoute
