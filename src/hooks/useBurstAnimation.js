@@ -32,16 +32,16 @@ const useBurstAnimation = ({ duration: tlDuration, burstEl }) => {
 
     const circleBurst = new mojs.Burst({
       parent: burstEl,
-      radius: { 10: 95 },
-      angle: 25,
+      radius: { 10: 45 },
+      angle: 110,
       duration: tlDuration * 2,
       children: {
         shape: 'circle',
-        fill: 'rgba(100,165,66)',
-        delay: 30,
-        speed: 0.1,
-        radius: { 3: 50 },
-        easing: mojs.easing.bezier(0.1, 1, 0.3, 1),
+        fill: '#65aae6',
+        delay: 10,
+        speed: 5,
+        radius: 20,
+        easing: mojs.easing.bezier(-0.1, -1, 0.3, 3),
       },
     });
 

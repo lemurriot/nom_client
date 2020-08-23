@@ -11,7 +11,7 @@ const VoteButtons = ({ userDidLike, restaurantId, likeId }) => {
   );
   const buttonRef = useRef(null);
   const animationTimeline = useBurstAnimation({
-    duration: 300,
+    duration: 400,
     burstEl: buttonRef,
   });
 

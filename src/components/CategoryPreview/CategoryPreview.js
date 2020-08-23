@@ -48,7 +48,16 @@ const CategoryPreview = ({ categoryRestaurants, category }) => {
               }`}
             </div>
           </div>
-          <Link to={`/category/${category}`}>See All</Link>
+          <Link to={`/category/${category}`}>
+            <span
+              style={{
+                fontFamily: 'Arial',
+                letterSpacing: '.8px',
+              }}
+            >
+              See All
+            </span>
+          </Link>
         </div>
       </div>
       <SelectMenu
