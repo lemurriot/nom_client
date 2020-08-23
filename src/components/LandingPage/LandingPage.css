@@ -15,22 +15,13 @@
   width: 100vw;
   max-width: 500px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 0;
 }
-.pre-footer ul li {
-  margin-left: 40px;
-}
-.pre-footer ul li:first-child {
-  margin-left: 0;
-}
-.pre-footer ul li {
-  margin-left: 40px;
-}
 .pre-footer ul li a {
   text-decoration: none;
-  color: grey;
+  color: rgb(97, 97, 97);
   letter-spacing: 1.2px;
   font-variant: small-caps;
   font-stretch: ultra-condensed;

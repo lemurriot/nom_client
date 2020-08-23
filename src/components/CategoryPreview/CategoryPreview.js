@@ -40,7 +40,16 @@ const CategoryPreview = ({ categoryRestaurants, category }) => {
     <section className="content-container category-card">
       <div className="category-card__title flex-container--space-between">
         <h3 className="montserrat center">{`Top 5 ${category} Noms`}</h3>
-        <Link to={`/category/${category}`}>See All</Link>
+        <div style={{ textAlign: 'right' }}>
+          <div className="category-card__title--right">
+            <div className="category-card__list-count">
+              {`Showing ${Math.min(sortedCategoryRestaurants.length, 5)} of ${
+                sortedCategoryRestaurants.length
+              }`}
+            </div>
+          </div>
+          <Link to={`/category/${category}`}>See All</Link>
+        </div>
       </div>
       <SelectMenu
         menuOptions={sortConstants}

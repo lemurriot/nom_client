@@ -6,3 +6,11 @@
 .category-card__title {
   margin: 0 5%;
 }
+.category-card__title--right {
+  font-size: 0.8rem;
+}
+.category-card__list-count {
+  font-variant: small-caps;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}

@@ -40,13 +40,15 @@ const LandingPage = () => {
         </Button>
       )}
       {!!isEmpty(user) && (
-        <a
-          style={{ textDecoration: 'none' }}
-          href={`${config.API_ENDPOINT}/auth/google-oauth`}
-          className="login-btn google-oauth-btn"
-        >
-          <GoogleButton />
-        </a>
+        <span style={{}}>
+          <a
+            style={{ textDecoration: 'none' }}
+            href={`${config.API_ENDPOINT}/auth/google-oauth`}
+            className="login-btn google-oauth-btn"
+          >
+            <GoogleButton />
+          </a>
+        </span>
       )}
       <section className="flex-container--space-around">
         {categoryPreviewList}
@@ -55,9 +57,6 @@ const LandingPage = () => {
         <ul className="ul-reset roboto">
           <li>
             <Link to="/privacypolicy">Privacy Policy</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
           </li>
           <li>
             <Link to="/termsandconditions">Terms &amp; Conditions</Link>

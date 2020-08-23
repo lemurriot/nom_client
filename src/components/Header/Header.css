@@ -74,9 +74,6 @@ nav ul {
 .nav__link:last-child {
   margin-right: 5px;
 }
-.nav__link .google-oauth-btn {
-  min-width: 145px;
-}
 .nav__link--active {
   border-bottom: 2px solid rgb(216, 67, 67);
   transition: 0.2s linear;
